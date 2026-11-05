@@ -1,0 +1,135 @@
+---
+import { site } from '../../config/site';
+
+const days = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+const order = [1, 2, 3, 4, 5, 6, 0];
+const waText = encodeURIComponent(`Ciao ${site.name}! Vorrei ordinare per asporto:`);
+---
+
+<section id="superficie" class="stratum superficie" data-stratum="superficie" data-theme="light">
+  <div class="wrap">
+    <div class="superficie__head">
+      <p class="eyebrow" data-reveal>Strato 05 · Ritorno in superficie</p>
+      <h2 data-reveal>Sali a<br /><em>Milo</em>.</h2>
+    </div>
+
+    <div class="superficie__grid">
+      <article class="meteo" data-meteo data-reveal aria-live="polite">
+        <p class="meteo__kicker">Stasera, in tempo reale</p>
+        <div class="meteo__pair" data-meteo-pair hidden>
+          <div>
+            <span class="meteo__place">Milo · 720 m</span>
+            <span class="meteo__temp" data-temp-milo>--°</span>
+          </div>
+          <div>
+            <span class="meteo__place">Giarre · mare</span>
+            <span class="meteo__temp meteo__temp--coast" data-temp-coast>--°</span>
+          </div>
+        </div>
+        <p class="meteo__line" data-meteo-line>D'estate, la sera, quassù fa più fresco che sulla costa. Porta una giacca leggera.</p>
+      </article>
+
+      <article class="book" data-reveal>
+        <p class="book__status"><span class="dot" data-open-dot aria-hidden="true"></span> <span data-open-status>Orari qui sotto</span></p>
+        <h3>Prenota il tuo tavolo</h3>
+        <p>Nel weekend e d'estate i tavoli all'aperto finiscono presto. Per l'asporto scrivici su WhatsApp.</p>
+        <div class="book__ctas">
+          <a class="btn" href={site.bookingUrl} target="_blank" rel="noopener">Prenota online</a>
+          <a class="btn btn--ghost" href={`https://wa.me/${site.whatsapp}?text=${waText}`} target="_blank" rel="noopener"><span>Asporto su WhatsApp</span></a>
+          <a class="btn btn--ghost" href={`tel:${site.phone.replace(/\s/g, '')}`}><span>Chiama</span></a>
+        </div>
+      </article>
+
+      <article class="hours" data-reveal>
+        <h3>Orari</h3>
+        <table>
+          <caption class="sr-only">Orari di apertura settimanali</caption>
+          <tbody>
+            {order.map((d) => (
+              <tr data-day={d}>
+                <th scope="row">{days[d]}</th>
+                <td>{site.hours[d].length ? site.hours[d].map(([a, b]) => `${a}–${b}`).join(' · ') : 'Chiuso'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </article>
+
+      <article class="route" data-reveal>
+        <h3>Come arrivare</h3>
+        <p class="route__addr">{site.address.street}, {site.address.postalCode} {site.address.city} ({site.address.province})</p>
+        <ul role="list">
+          {site.travel.map((t) => (
+            <li><span>da {t.from}</span><span class="route__min">{t.minutes} min</span></li>
+          ))}
+        </ul>
+        <a class="btn btn--ghost" href={site.mapsUrl} target="_blank" rel="noopener"><span>Apri in Google Maps</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .superficie {
+    background:
+      radial-gradient(70% 50% at 100% 0%, rgba(242, 194, 48, 0.25), transparent 70%),
+      var(--osso-2);
+    color: var(--basalto);
+  }
+  .superficie em { font-style: italic; color: var(--brace); font-variation-settings: 'SOFT' 100, 'WONK' 1; }
+  .superficie h2 { font-size: clamp(3rem, 1.8rem + 7vw, 8rem); }
+
+  .superficie__grid {
+    display: grid; gap: 1.25rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px) {
+    .superficie__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1100px) {
+    .superficie__grid { grid-template-columns: 1.1fr 1fr 0.9fr; }
+    .meteo { grid-row: span 1; }
+    .book { grid-column: 2 / 4; }
+  }
+
+  .superficie article {
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--osso);
+    border: 1px solid rgba(15, 13, 12, 0.1);
+  }
+  .superficie h3 { margin-bottom: 1rem; }
+
+  .meteo { background: var(--basalto) !important; color: var(--osso); border: 0 !important; }
+  .meteo__kicker { margin: 0; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; }
+  .meteo__pair[hidden] { display: none; }
+  .meteo__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+  .meteo__place { display: block; font-size: 0.78rem; font-weight: 700; opacity: 0.7; }
+  .meteo__temp {
+    display: block; font-family: var(--font-display); font-size: clamp(3rem, 2rem + 4vw, 5rem); line-height: 1;
+    color: var(--pistacchio); font-variant-numeric: tabular-nums;
+  }
+  .meteo__temp--coast { color: var(--lava); }
+  .meteo__line { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; line-height: 1.35; }
+
+  .book { background: var(--basalto) !important; color: var(--osso); border: 0 !important; }
+  .book > p { max-width: 34rem; opacity: 0.8; }
+  .book__status {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0 1rem;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  }
+  .book__ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+
+  .hours table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .hours th { text-align: left; font-weight: 600; padding: 0.55rem 0; }
+  .hours td { text-align: right; font-variant-numeric: tabular-nums; padding: 0.55rem 0; }
+  .hours tr { border-top: 1px solid rgba(15, 13, 12, 0.1); }
+  :global(.hours tr.is-today) { color: var(--magma); font-weight: 700; }
+
+  .route__addr { margin: 0 0 1rem; font-weight: 600; }
+  .route ul { list-style: none; margin: 0 0 1.5rem; padding: 0; }
+  .route li { display: flex; justify-content: space-between; padding: 0.55rem 0; border-top: 1px solid rgba(15, 13, 12, 0.1); font-size: 0.92rem; }
+  .route__min { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .route .btn--ghost:hover span, .hours .btn--ghost:hover span { color: var(--osso); }
+</style>

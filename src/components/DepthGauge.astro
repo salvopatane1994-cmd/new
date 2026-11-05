@@ -1,0 +1,46 @@
+---
+import { strati } from '../data/strati';
+---
+
+<aside class="gauge" aria-hidden="true" data-gauge>
+  <div class="gauge__track"><div class="gauge__fill" data-gauge-fill></div></div>
+  <ol>
+    {strati.map((s, i) => (
+      <li data-gauge-item={s.id}>
+        <span class="gauge__n">{String(i + 1).padStart(2, '0')}</span>
+        <span class="gauge__label">{s.label}</span>
+      </li>
+    ))}
+  </ol>
+</aside>
+
+<style>
+  .gauge {
+    position: fixed; left: 1.4rem; top: 50%; z-index: 40;
+    transform: translateY(-50%);
+    display: flex; gap: 0.9rem;
+    color: var(--osso);
+    transition: color 0.4s var(--ease), opacity 0.4s var(--ease);
+    mix-blend-mode: normal;
+  }
+  :global(.gauge.is-light) { color: var(--basalto); }
+  .gauge__track { width: 2px; background: currentColor; opacity: 0.25; position: relative; border-radius: 2px; }
+  .gauge__fill {
+    position: absolute; inset: 0 0 auto 0; height: 0%;
+    background: var(--lava); border-radius: 2px; opacity: 1;
+  }
+  .gauge ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.6rem; }
+  .gauge li {
+    display: flex; gap: 0.5rem; align-items: baseline;
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: 0.4; transition: opacity 0.4s var(--ease);
+  }
+  .gauge__label { max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 0.5s var(--ease); }
+  :global(.gauge li.is-active) { opacity: 1; }
+  :global(.gauge li.is-active .gauge__label) { max-width: 8rem; }
+  .gauge:hover .gauge__label { max-width: 8rem; }
+
+  @media (max-width: 1100px) {
+    .gauge { display: none; }
+  }
+</style>

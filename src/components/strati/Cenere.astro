@@ -1,0 +1,113 @@
+---
+import { site } from '../../config/site';
+---
+
+<section id="cenere" class="cenere" data-stratum="cenere" data-theme="dark">
+  <canvas class="cenere__canvas" data-embers aria-hidden="true"></canvas>
+  <div class="cenere__glow" aria-hidden="true"></div>
+
+  <div class="wrap cenere__inner">
+    <p class="eyebrow cenere__eyebrow" data-hero-fade>
+      {site.tagline} · {site.address.city}, versante est dell'Etna
+    </p>
+
+    <h1 class="cenere__title" aria-label={site.name}>
+      {site.name.split('').map((ch) => <span class="ch" aria-hidden="true">{ch}</span>)}
+    </h1>
+
+    <div class="cenere__bottom">
+      <p class="lead" data-hero-fade>
+        {site.claim}<br />
+        A <strong>{site.address.altitude} metri</strong>, dove l'aria della sera è più fresca e il vino nasce solo qui.
+      </p>
+
+      <p class="cenere__live" data-hero-fade>
+        <span class="dot" aria-hidden="true"></span>
+        <span data-live-status>Forno a legna, lievitazione lunga</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span data-live-temp>Milo, {site.address.altitude} m</span>
+      </p>
+    </div>
+  </div>
+
+  <a class="cenere__scroll" href="#fuoco" data-hero-fade>
+    <span>Scendi negli strati</span>
+    <svg viewBox="0 0 24 48" aria-hidden="true"><path d="M12 2v42M4 36l8 8 8-8" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+  </a>
+</section>
+
+<style>
+  .cenere {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    padding-block: 8rem 6rem;
+    background:
+      radial-gradient(80% 60% at 70% 115%, rgba(143, 36, 19, 0.55), transparent 70%),
+      radial-gradient(60% 50% at 15% -10%, rgba(142, 133, 128, 0.16), transparent 70%),
+      var(--basalto);
+    overflow: hidden;
+  }
+  .cenere__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cenere__glow {
+    position: absolute; left: 50%; bottom: -30vh; width: 120vw; height: 60vh;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(255, 122, 47, 0.28), transparent);
+    filter: blur(20px);
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+  }
+
+  .cenere__inner { position: relative; z-index: 2; }
+
+  .cenere__title {
+    font-size: clamp(2.6rem, 11.5vw, 12rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+    margin: 0 0 2.5rem -0.04em;
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) {
+    .cenere__title { font-size: 15vw; }
+    .cenere__live { border-radius: 1rem; }
+  }
+  .cenere__title .ch { display: inline-block; will-change: transform; }
+
+  .cenere__bottom {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 2rem;
+  }
+  .cenere__bottom .lead { margin: 0; color: rgba(239, 231, 220, 0.85); }
+  .cenere__bottom strong { color: var(--osso); font-weight: 700; }
+
+  .cenere__live {
+    margin: 0;
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(239, 231, 220, 0.2);
+    border-radius: 999px;
+    background: rgba(15, 13, 12, 0.4);
+    backdrop-filter: blur(6px);
+  }
+  .cenere__live .sep { opacity: 0.4; }
+  .cenere__scroll {
+    position: absolute; z-index: 2; right: var(--gutter); top: 50%;
+    display: none; flex-direction: column; align-items: center; gap: 0.8rem;
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none; writing-mode: vertical-rl;
+    opacity: 0.7;
+  }
+  .cenere__scroll svg { width: 14px; height: 48px; writing-mode: horizontal-tb; animation: drop 2.2s var(--ease) infinite; }
+  @keyframes drop { 0% { transform: translateY(-6px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
+
+  @media (min-width: 900px) {
+    .cenere__scroll { display: flex; transform: translateY(-50%); }
+  }
+</style>

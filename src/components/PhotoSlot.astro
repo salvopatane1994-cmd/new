@@ -1,0 +1,13 @@
+---
+// Spazio per una foto reale. La didascalia è il brief per il fotografo e sparisce quando arriva l'immagine.
+interface Props {
+  brief: string;
+  ratio?: string;
+  class?: string;
+}
+const { brief, ratio = '4 / 5', class: className = '' } = Astro.props;
+---
+
+<figure class={`photo-slot ${className}`} style={`aspect-ratio:${ratio}`}>
+  <figcaption><strong>Scatto da fare</strong>{brief}</figcaption>
+</figure>

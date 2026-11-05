@@ -1,0 +1,303 @@
+---
+import { places, ingredients, pizzas, wines, project, MAP } from '../../data/terra';
+
+const placeById = Object.fromEntries(places.map((p) => [p.id, { ...p, ...project(p.lat, p.lon) }]));
+const milo = placeById.milo;
+
+// Curve di livello del vulcano: anelli irregolari attorno al cratere,
+// con l'incavo della Valle del Bove verso Milo (est-sud-est).
+const { x: cx, y: cy } = MAP.summit;
+const bove = (20 * Math.PI) / 180; // direzione della valle, in radianti sotto l'orizzontale verso est
+function ring(r: number, k: number) {
+  const pts: string[] = [];
+  for (let i = 0; i <= 96; i++) {
+    const a = (i / 96) * Math.PI * 2;
+    let rr =
+      r *
+      (1 +
+        0.07 * Math.sin(3 * a + k * 0.9) +
+        0.04 * Math.sin(5 * a + k * 1.7) +
+        0.025 * Math.sin(11 * a + k));
+    // Valle del Bove: depressione che si apre a ferro di cavallo verso est
+    const d = Math.atan2(Math.sin(a - bove), Math.cos(a - bove));
+    if (r < 150) rr -= Math.exp(-(d * d) / 0.09) * (150 - r) * 0.38;
+    const x = cx + rr * Math.cos(a);
+    const y = cy + rr * Math.sin(a) * 0.92;
+    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+  }
+  return `M${pts.join(' L')} Z`;
+}
+const rings = Array.from({ length: 11 }, (_, i) => ({ d: ring(18 + i * 21, i), major: i % 3 === 0 }));
+
+// Linea di costa approssimativa (da Fiumefreddo a Catania) e mare a est.
+const coast = 'M492,0 L486,60 L478,120 L470,180 L474,228 L466,270 L455,330 L446,380 L420,430 L392,470 L372,520';
+const sea = `${coast} L${MAP.width},${MAP.height} L${MAP.width},0 Z`;
+
+// Posizione delle etichette sulla mappa, sistemata a mano per evitare sovrapposizioni.
+const labelPos: Record<string, { anchor: 'start' | 'end'; dx: number; dy: number }> = {
+  santalfio: { anchor: 'end', dx: -4, dy: -10 },
+  riposto: { anchor: 'start', dx: 10, dy: 4 },
+  linguaglossa: { anchor: 'end', dx: -12, dy: 4 },
+  acireale: { anchor: 'end', dx: -12, dy: 4 },
+};
+
+const originsOf = (ids: string[]) => ids.map((id) => ingredients.find((i) => i.id === id)!).filter(Boolean);
+const wineName = (id: string) => wines.find((w) => w.id === id)?.name ?? '';
+const fmt = (n: number) => n.toLocaleString('it-IT', { minimumFractionDigits: 0 });
+
+const months = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+const calendar = months.map((label, i) => ({
+  label,
+  month: i + 1,
+  items: ingredients
+    .filter((ing) => ing.months.includes(i + 1))
+    .map((ing) => (ing.id === 'carricante' ? 'Vendemmia' : ing.name.split(' ')[0])),
+}));
+---
+
+<section id="terra" class="stratum terra" data-stratum="terra" data-theme="light">
+  <div class="wrap">
+    <div class="terra__head">
+      <p class="eyebrow" data-reveal>Strato 03 · La terra</p>
+      <h2 data-reveal>Ogni pizza ha<br />un <em>indirizzo</em>.</h2>
+      <p class="lead" data-reveal>
+        La cenere del vulcano rende la terra intorno a Milo tra le più fertili d'Europa. Passa sopra una pizza: sulla mappa
+        si accendono i paesi da cui arrivano i suoi ingredienti.
+      </p>
+    </div>
+
+    <div class="terra__grid">
+      <div class="terra__map-wrap">
+        <figure class="terra__map" data-map>
+          <svg viewBox={`0 0 ${MAP.width} ${MAP.height}`} role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">Mappa dell'Etna con i luoghi di provenienza degli ingredienti</title>
+            <desc id="map-desc">
+              {ingredients.map((i) => `${i.name} da ${placeById[i.origin].name}`).join('; ')}.
+            </desc>
+            <defs>
+              <linearGradient id="sea-fade" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stop-color="#c9d3d2" stop-opacity="0.8" />
+                <stop offset="100%" stop-color="#c9d3d2" stop-opacity="0" />
+              </linearGradient>
+              <radialGradient id="crater" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e2531f" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#e2531f" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <g class="rings">
+              {rings.map((r) => <path d={r.d} class={r.major ? 'ring ring--major' : 'ring'} />)}
+            </g>
+            <circle cx={cx} cy={cy} r="26" fill="url(#crater)" class="crater" />
+            <text x={cx} y={cy - 32} class="map-label map-label--peak">Crateri sommitali</text>
+            <text x={cx + 105} y={cy + 46} text-anchor="end" class="map-label map-label--valley">Valle del Bove</text>
+
+            <path d={sea} class="sea" />
+            <path d={coast} class="coast" />
+            <text x="505" y="330" class="map-label map-label--sea">Mar Ionio</text>
+
+            <g class="routes">
+              {ingredients
+                .filter((i) => i.origin !== 'milo')
+                .map((i) => {
+                  const p = placeById[i.origin];
+                  const mx = (milo.x + p.x) / 2;
+                  const my = (milo.y + p.y) / 2 - 30;
+                  return <path d={`M${milo.x},${milo.y} Q${mx},${my} ${p.x},${p.y}`} class="route" data-route={i.id} pathLength="1" />;
+                })}
+            </g>
+
+            <g class="places">
+              {places
+                .filter((p) => p.id !== 'milo')
+                .map((p) => {
+                  const pp = placeById[p.id];
+                  const ings = ingredients.filter((i) => i.origin === p.id).map((i) => i.id);
+                  const pos = labelPos[p.id] ?? { anchor: 'start', dx: 12, dy: 4 };
+                  const { anchor, dx, dy } = pos;
+                  return (
+                    <g class="place" data-place={p.id} data-ings={ings.join(' ')}>
+                      <circle cx={pp.x} cy={pp.y} r="5" />
+                      <circle cx={pp.x} cy={pp.y} r="14" class="halo" />
+                      <text x={pp.x + dx} y={pp.y + dy} text-anchor={anchor} class="map-label">{p.name}</text>
+                    </g>
+                  );
+                })}
+              <g class="place place--home">
+                <circle cx={milo.x} cy={milo.y} r="9" />
+                <text x={milo.x - 14} y={milo.y + 26} class="map-label map-label--home">Milo · 720 m</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption class="terra__legend" data-map-legend aria-live="polite">
+            Passa sopra o tocca una pizza per vedere da dove arriva.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="terra__menu">
+        <div class="menu__top">
+          <h3>Menu di esempio</h3>
+          <p class="menu__season">In carta adesso: <strong data-season-label>autunno</strong></p>
+        </div>
+        <ol class="menu" role="list">
+          {pizzas.map((p) => (
+            <li
+              class="pizza"
+              data-pizza={p.id}
+              data-origins={p.origins.join(' ')}
+              data-seasons={p.seasons.join(' ')}
+              tabindex="0"
+            >
+              <div class="pizza__row">
+                <h4>{p.name}</h4>
+                <span class="pizza__dots" aria-hidden="true"></span>
+                <span class="pizza__price">€ {fmt(p.price)}</span>
+              </div>
+              <p class="pizza__meaning">{p.meaning}</p>
+              <p class="pizza__ing">{p.ingredients.join(' · ')}</p>
+              <p class="pizza__meta">
+                {originsOf(p.origins).length > 0 && (
+                  <span>{originsOf(p.origins).map((i) => placeById[i.origin].name).join(', ')}</span>
+                )}
+                <span class="pizza__wine">Con {wineName(p.wine)}</span>
+                {p.seasons.length > 0 && <span class="pizza__tag">Di stagione</span>}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="calendar" data-reveal>
+      <h3>Il calendario della terra</h3>
+      <p>Il menu cambia con le stagioni del vulcano. Il mese in corso è evidenziato.</p>
+      <ol class="calendar__months">
+        {calendar.map((m) => (
+          <li data-month={m.month}>
+            <span class="calendar__label">{m.label}</span>
+            <span class="calendar__items">{m.items.length ? m.items.join(', ') : 'Agrumi e ricotta'}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .terra {
+    background: var(--osso);
+    color: var(--basalto);
+  }
+  .terra em { font-style: italic; color: var(--terra); font-variation-settings: 'SOFT' 100, 'WONK' 1; }
+  .terra__head .lead { margin: 2rem 0 0; opacity: 0.85; }
+
+  .terra__grid {
+    display: grid; gap: clamp(2.5rem, 5vw, 5rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px) {
+    .terra__grid { grid-template-columns: 1.1fr 1fr; align-items: start; }
+    .terra__map-wrap { position: sticky; top: 6rem; }
+  }
+
+  .terra__map { margin: 0; }
+  .terra__map svg { width: 100%; height: auto; overflow: visible; }
+
+  .ring { fill: none; stroke: var(--terra); stroke-width: 0.8; opacity: 0.35; }
+  .ring--major { stroke-width: 1.3; opacity: 0.6; }
+  .crater { animation: crater 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes crater { 50% { opacity: 0.55; transform: scale(1.15); } }
+  .sea { fill: url(#sea-fade); }
+  .coast { fill: none; stroke: var(--basalto); stroke-width: 1.2; opacity: 0.5; }
+
+  .map-label {
+    font-family: var(--font-body); font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em;
+    fill: var(--basalto); opacity: 0.7; text-transform: uppercase;
+  }
+  .map-label--peak { text-anchor: middle; font-size: 10px; opacity: 0.55; }
+  .map-label--valley { font-style: italic; text-transform: none; font-family: var(--font-display); font-size: 13px; letter-spacing: 0; opacity: 0.6; }
+  .map-label--sea { font-family: var(--font-display); font-style: italic; text-transform: none; font-size: 14px; letter-spacing: 0.02em; opacity: 0.5; text-anchor: middle; }
+  .map-label--home { font-size: 12.5px; opacity: 1; fill: var(--magma); }
+
+  .place circle { fill: var(--basalto); transition: fill 0.3s var(--ease), r 0.3s var(--ease); }
+  .place .halo { fill: var(--brace); opacity: 0; transition: opacity 0.3s var(--ease); }
+  .place--home circle { fill: var(--brace); }
+  :global(.place.is-on circle) { fill: var(--brace); }
+  :global(.place.is-on .halo) { opacity: 0.25; }
+  :global(.place.is-on .map-label) { opacity: 1; fill: var(--magma); }
+
+  .route {
+    fill: none; stroke: var(--brace); stroke-width: 2; stroke-linecap: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.7s var(--ease);
+  }
+  :global(.route.is-on) { stroke-dashoffset: 0; }
+
+  @media (max-width: 640px) {
+    .map-label { font-size: 17px; }
+    .map-label--home { font-size: 17px; }
+    .map-label--peak, .map-label--valley { display: none; }
+    .place:not(.place--home) .map-label { opacity: 0; transition: opacity 0.3s var(--ease); }
+    :global(.place.is-on .map-label) { opacity: 1; }
+  }
+
+  .terra__legend {
+    margin-top: 1rem; min-height: 3em;
+    font-size: 0.9rem; padding-left: 1rem; border-left: 2px solid var(--brace);
+  }
+
+  .menu__top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem 1rem; margin-bottom: 1.25rem; }
+  .menu__season { margin: 0; font-size: 0.85rem; }
+  .menu__season strong { color: var(--terra); text-transform: capitalize; }
+
+  .menu { list-style: none; margin: 0; padding: 0; }
+  .pizza {
+    padding: 1.4rem 1rem 1.4rem 1rem; margin-inline: -1rem;
+    border-top: 1px solid rgba(15, 13, 12, 0.14);
+    border-radius: var(--radius);
+    cursor: default;
+    transition: background 0.3s var(--ease);
+  }
+  .pizza:last-child { border-bottom: 1px solid rgba(15, 13, 12, 0.14); }
+  :global(.pizza.is-active) { background: rgba(185, 141, 104, 0.18); }
+  .pizza:focus-visible { outline-offset: -2px; }
+  .pizza__row { display: flex; align-items: baseline; gap: 0.75rem; }
+  .pizza h4 {
+    margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.85rem);
+    letter-spacing: -0.01em;
+  }
+  .pizza__dots { flex: 1; border-bottom: 1px dotted rgba(15, 13, 12, 0.35); transform: translateY(-0.3em); }
+  .pizza__price { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pizza__meaning { margin: 0.35rem 0 0; font-family: var(--font-display); font-style: italic; opacity: 0.75; }
+  .pizza__ing { margin: 0.5rem 0 0; font-size: 0.92rem; }
+  .pizza__meta {
+    margin: 0.75rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65;
+  }
+  .pizza__wine { color: var(--terra); }
+  .pizza__tag { display: none; color: var(--magma); }
+  :global(.pizza.is-season .pizza__tag) { display: inline; }
+  :global(.pizza.is-season) { position: relative; }
+  :global(.pizza.is-season)::before {
+    content: ''; position: absolute; left: 0; top: 1.6rem; width: 3px; height: 1.5rem; background: var(--stagione); border-radius: 2px;
+  }
+
+  .calendar { margin-top: clamp(4rem, 8vw, 7rem); }
+  .calendar > p { margin: 0.5rem 0 1.75rem; opacity: 0.75; }
+  .calendar__months {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+    background: rgba(15, 13, 12, 0.12);
+    border: 1px solid rgba(15, 13, 12, 0.12);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  @media (min-width: 640px) { .calendar__months { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (min-width: 1000px) { .calendar__months { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .calendar__months li { background: var(--osso); padding: 1rem; min-height: 6rem; display: grid; align-content: start; gap: 0.4rem; }
+  .calendar__label { font-family: var(--font-display); font-size: 1.25rem; }
+  .calendar__items { font-size: 0.8rem; opacity: 0.7; }
+  :global(.calendar__months li.is-now) { background: var(--basalto); color: var(--osso); }
+  :global(.calendar__months li.is-now .calendar__label) { color: var(--lava); }
+</style>

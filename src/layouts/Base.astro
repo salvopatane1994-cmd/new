@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import { site } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} · ${site.tagline} a Milo, Etna`, description = site.description } = Astro.props;
+
+const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const openingHours = Object.entries(site.hours).flatMap(([day, slots]) =>
+  slots.map(([opens, closes]) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: dayNames[Number(day)],
+    opens,
+    closes,
+  })),
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: site.name,
+  description: site.description,
+  servesCuisine: ['Pizza', 'Siciliana'],
+  priceRange: '€€',
+  url: site.url,
+  telephone: site.phone,
+  acceptsReservations: true,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.province,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lon },
+  openingHoursSpecification: openingHours,
+  hasMenu: `${site.url}/#terra`,
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f0d0c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={site.locale} />
+    <script is:inline>
+      // Prima del rendering: stagione corrente e preferenza sul movimento.
+      (function () {
+        var m = new Date().getMonth() + 1;
+        var s = m === 12 || m <= 2 ? 'inverno' : m <= 5 ? 'primavera' : m <= 8 ? 'estate' : 'autunno';
+        var root = document.documentElement;
+        root.dataset.season = s;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) root.classList.add('motion');
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+    <slot />
+  </body>
+</html>

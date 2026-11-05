@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import DepthGauge from '../components/DepthGauge.astro';
+import Edge from '../components/Edge.astro';
+import Footer from '../components/Footer.astro';
+import Cenere from '../components/strati/Cenere.astro';
+import Fuoco from '../components/strati/Fuoco.astro';
+import Terra from '../components/strati/Terra.astro';
+import Vigna from '../components/strati/Vigna.astro';
+import Superficie from '../components/strati/Superficie.astro';
+---
+
+<Base>
+  <Header />
+  <DepthGauge />
+  <main id="contenuto">
+    <Cenere />
+    <Edge from="#0f0d0c" to="#1c0e09" seed={1} />
+    <Fuoco />
+    <Edge from="#130b08" to="#efe7dc" seed={2} />
+    <Terra />
+    <Edge from="#efe7dc" to="#141a0f" seed={3} />
+    <Vigna />
+    <Edge from="#0e120b" to="#e4d8c8" seed={4} />
+    <Superficie />
+    <Edge from="#e4d8c8" to="#0f0d0c" seed={5} />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { initPage } from '../scripts/main';
+  initPage();
+</script>
