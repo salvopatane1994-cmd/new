@@ -1,25 +1,22 @@
-# Settecentoventi · prototipo della homepage
+# Settecentoventi · prototipo del sito
 
-Prototipo del sito per una nuova pizzeria a **Milo (CT)**, sul versante est dell'Etna, a 720 m.
+Prototipo del sito per una nuova pizzeria **solo da asporto** a **Milo (CT)**, sul versante est dell'Etna, a 720 m.
 Il nome «Settecentoventi» è **provvisorio** e si cambia da un solo file.
 
-## Il concept: «Stratigrafia»
+Pensato prima per lo smartphone: le azioni stanno in basso, a portata di pollice, e il sito serve a una cosa sola,
+**far ordinare**.
 
-La homepage si legge scorrendo come una discesa negli strati della terra dell'Etna:
+## La pagina
 
-| # | Strato | Contenuto |
-|---|--------|-----------|
-| 01 | **Cenere** | Hero nera con cenere che cade e braci che salgono (il puntatore lascia scintille), stato del forno in tempo reale |
-| 02 | **Fuoco** | Il forno che si accende scorrendo, numeri della cottura, card «L'impasto di oggi» con il contatore della lievitazione |
-| 03 | **Terra** | Mappa dell'Etna con le curve di livello e la Valle del Bove: passando su una pizza si accendono i paesi da cui arrivano gli ingredienti; calendario stagionale |
-| 04 | **Vigna** | Etna Bianco Superiore (si produce solo a Milo), abbinamenti pizza e vino, ViniMilo |
-| 05 | **Tavola** | Meteo in tempo reale Milo e costa, stato aperto/chiuso, prenotazione, WhatsApp per l'asporto, orari, come arrivare |
-
-Elementi che cambiano da soli:
-- **Stagione**: colore d'accento, pizze «di stagione» e mese evidenziato nel calendario cambiano con la data.
-- **Aperto o chiuso**: calcolato sugli orari, nel fuso orario di Roma.
-- **Meteo**: temperatura attuale a Milo e a Giarre da [Open-Meteo](https://open-meteo.com) (gratuito, senza chiave e senza cookie). Se il servizio non risponde, resta una frase di riserva.
-- **Lievitazione**: contatore delle ore dall'avvio dell'impasto.
+| Sezione | Cosa succede |
+|---------|--------------|
+| **Dal cratere al forno** | La scena resta ferma sullo schermo e lo scroll muove la camera: l'Etna di notte con le luci di Milo, il tuffo nel cratere, la lava (1.100 °C), la lava che diventa fiamma, la bocca del forno dove entra la pizza e cuoce in 90 secondi. Un indicatore mostra la temperatura che cambia. |
+| **Il menu** | Ogni pizza è disegnata in codice e si compone mentre sale nello schermo (impasto, base, condimenti, leopardatura del forno). Pulsante «Aggiungi» su ogni pizza. |
+| **Da dove arriva** | Un ingrediente per volta, a tutto schermo, con la mappa dell'Etna che accende il paese di provenienza. |
+| **Vino** | La frase sull'Etna Bianco Superiore si accende parola per parola; le bottiglie si aggiungono all'ordine. |
+| **Ritiro** | Indirizzo, Maps, orari con il giorno corrente, tempi di percorrenza, telefono. |
+| **Barra «Ordina»** | Sempre in basso. Mostra se il forno è acceso e il primo orario di ritiro; con pizze nel carrello diventa «Ordine · 3 · € 32» e apre il pannello. |
+| **Pannello d'ordine** | Quantità, orario di ritiro (calcolato sugli orari del forno, fuso di Roma), nome, note. «Invia su WhatsApp» apre la chat con il messaggio già scritto. |
 
 ## Avvio
 
@@ -32,16 +29,12 @@ npm run build    # sito statico in dist/
 npm run preview  # anteprima della build
 ```
 
-`dist/` si pubblica su qualsiasi hosting statico (Netlify, Cloudflare Pages, Vercel).
-
 ## Dove si modificano i contenuti
 
 | File | Cosa contiene |
 |------|---------------|
-| `src/config/site.ts` | Nome, indirizzo, telefono, WhatsApp, link di prenotazione, orari, tempi di percorrenza |
-| `src/data/terra.ts` | Paesi sulla mappa, ingredienti e stagionalità, pizze, vini |
-| `src/data/impasto.ts` | Farina, idratazione, temperatura del forno, fuori menu della sera |
-| `src/data/strati.ts` | Nomi degli strati nell'indicatore laterale |
+| `src/config/site.ts` | Nome, indirizzo, telefono, numero WhatsApp, orari del forno, minuti di preparazione, intervallo tra orari di ritiro |
+| `src/data/terra.ts` | Pizze (prezzi, ingredienti, cosa disegnare), ingredienti e paesi della mappa, vini e prezzi delle bottiglie |
 
 I valori segnati `SEGNAPOSTO` vanno sostituiti con i dati reali del cliente.
 
@@ -49,30 +42,31 @@ I valori segnati `SEGNAPOSTO` vanno sostituiti con i dati reali del cliente.
 
 ```
 src/
-  components/
-    strati/        Cenere, Fuoco, Terra, Vigna, Superficie (le cinque sezioni)
-    Edge.astro     confine a onde tra uno strato e l'altro
-    DepthGauge     indicatore degli strati a sinistra (desktop)
-    PhotoSlot      spazio per le foto reali, con il brief dello scatto
+  components/   Discesa (scena), Menu, Terra, Vino, Ritiro, Ordine (barra e pannello), TopBar, Fascia, Footer
   scripts/
-    main.ts        animazioni GSAP/ScrollTrigger, header, indicatore
-    embers.ts      cenere e braci su canvas
-    live.ts        stagione, apertura, meteo, lievitazione
-    map.ts         collegamento menu e mappa
-  styles/global.css  palette, tipografia, componenti comuni
+    scene.ts    scena guidata dallo scroll: Etna, cratere, forno, testi e indicatore di temperatura
+    lava.ts     shader WebGL per lava e fiamme, a risoluzione ridotta per restare fluido sui telefoni
+    pizza.ts    disegno delle pizze viste dall'alto, costruite per strati
+    order.ts    carrello, orari di ritiro, messaggio WhatsApp (il carrello resta salvato nel browser)
+    live.ts     forno acceso o spento, orari di ritiro, pizze di stagione
+    main.ts     un solo gestore dello scroll per menu, ingredienti, frase sul vino, fasce di testo
+  styles/global.css  colori, tipografia, pulsanti
 ```
 
 ## Scelte tecniche
 
-- **Astro 7** genera HTML statico: la pagina si carica veloce anche su mobile in montagna. Il JavaScript serve solo alle animazioni e ai dati in tempo reale.
-- **GSAP ScrollTrigger** per le animazioni legate allo scroll.
-- **Font locali** (Fraunces e Manrope via Fontsource): nessuna richiesta a Google Fonts, quindi niente problemi di GDPR.
-- **Accessibilità**: con `prefers-reduced-motion` le animazioni sono disattivate e tutto il contenuto resta visibile; la mappa ha titolo e descrizione testuale; menu navigabile da tastiera.
+- **Astro 7**, sito statico. JavaScript totale circa 30 KB, nessuna libreria di animazione.
+- **Fluido sui telefoni**: lo shader della lava gira a metà risoluzione, i canvas si fermano quando escono dallo schermo,
+  le pizze vengono ridisegnate solo quando cambia lo stato.
+- **Mobile first**: barra d'ordine fissa in basso, pulsanti da almeno 44 px, campi a 16 px (niente zoom automatico su iPhone),
+  rispetto delle aree sicure di iPhone (`viewport-fit=cover`).
+- **Accessibilità**: con «riduci movimento» attivo la scena non è guidata dallo scroll e tutto il contenuto resta visibile.
+- **Font locali** (Archivo con asse di larghezza e IBM Plex Mono): nessuna richiesta a Google Fonts.
 - **SEO locale**: dati strutturati Schema.org `Restaurant` con indirizzo, coordinate e orari.
 
 ## Prossimi passi
 
-1. Nome definitivo, logo e servizio fotografico e video: ogni `PhotoSlot` contiene il brief dello scatto.
-2. Menu, prezzi, produttori e cantine reali.
-3. Collegare un CMS leggero (Sanity o Decap) per menu, eventi e «impasto di oggi».
-4. Versione inglese, pagine Privacy e Cookie, link reale di prenotazione (TheFork o altro sistema).
+1. Nome definitivo e logo.
+2. Shooting foto e video: le pizze vere possono sostituire o affiancare quelle disegnate, e un video del forno può chiudere la scena.
+3. Menu, prezzi, produttori e numero WhatsApp reali.
+4. Valutare un sistema di ordini con pagamento online quando i volumi lo giustificano.

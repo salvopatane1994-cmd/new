@@ -1,0 +1,19 @@
+---
+// Fascia di testo che scorre in orizzontale seguendo lo scroll.
+interface Props { text: string; reverse?: boolean }
+const { text, reverse = false } = Astro.props;
+const run = Array.from({ length: 6 }, () => text).join(' — ') + ' — ';
+---
+
+<div class="fascia" aria-hidden="true">
+  <p class="fascia__run" data-fascia data-dir={reverse ? '1' : '-1'}>{run}{run}</p>
+</div>
+
+<style>
+  .fascia { background: var(--lava); color: var(--notte); overflow: hidden; padding-block: 0.5rem; }
+  .fascia__run {
+    margin: 0; white-space: nowrap; will-change: transform;
+    font-weight: 900; font-stretch: 62%; text-transform: uppercase;
+    font-size: clamp(2.6rem, 13vw, 7rem); line-height: 0.95;
+  }
+</style>

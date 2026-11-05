@@ -1,141 +1,137 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initEmbers } from './embers';
-import { initImpasto, initMeteo, initOpenStatus, initSeason } from './live';
-import { initMap } from './map';
+import { initScene } from './scene';
+import { drawPizza, type PizzaSpec } from './pizza';
+import { initLive } from './live';
+import { initOrder } from './order';
 
-// Header e indicatore degli strati: funzionano anche senza animazioni.
-function initChrome() {
-  const header = document.querySelector<HTMLElement>('[data-header]');
-  const gauge = document.querySelector<HTMLElement>('[data-gauge]');
-  const fill = document.querySelector<HTMLElement>('[data-gauge-fill]');
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-stratum]'));
-  const gaugeItems = Array.from(document.querySelectorAll<HTMLElement>('[data-gauge-item]'));
-  let lastY = window.scrollY;
-  let ticking = false;
+const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
-  const themeAt = (y: number) =>
-    sections.find((s) => {
-      const r = s.getBoundingClientRect();
-      return r.top <= y && r.bottom > y;
-    });
+// Pizze del menu: si compongono mentre salgono nello schermo e girano come sulla pala.
+function menuPizzas(motion: boolean) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const items = Array.from(document.querySelectorAll<HTMLCanvasElement>('[data-pizza-canvas]')).map((canvas) => ({
+    canvas,
+    ctx: canvas.getContext('2d')!,
+    spec: JSON.parse(canvas.dataset.spec ?? '{}') as PizzaSpec,
+    last: -1,
+    size: 0,
+  }));
 
-  const update = () => {
-    ticking = false;
-    const y = window.scrollY;
-
-    if (header) {
-      header.classList.toggle('is-scrolled', y > 40);
-      header.classList.toggle('is-hidden', y > lastY && y > window.innerHeight * 0.8);
-      header.classList.toggle('is-light', themeAt(36)?.dataset.theme === 'light');
+  const draw = (it: (typeof items)[number], t: number) => {
+    const size = Math.round(it.canvas.clientWidth * dpr);
+    if (size !== it.size) {
+      it.size = size;
+      it.canvas.width = size;
+      it.canvas.height = size;
+      it.last = -1;
     }
-
-    const mid = window.innerHeight / 2;
-    const current = themeAt(mid);
-    gauge?.classList.toggle('is-light', current?.dataset.theme === 'light');
-    gaugeItems.forEach((g) => g.classList.toggle('is-active', g.dataset.gaugeItem === current?.dataset.stratum));
-    if (fill) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      fill.style.height = `${Math.min(100, (y / Math.max(1, max)) * 100)}%`;
-    }
-    lastY = y;
+    const q = Math.round(t * 50) / 50;
+    if (q === it.last) return;
+    it.last = q;
+    it.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    it.ctx.clearRect(0, 0, size, size);
+    drawPizza(it.ctx, size / 2, size / 2, size * 0.47, it.spec, q);
   };
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    },
-    { passive: true },
-  );
-  update();
+  if (!motion) {
+    items.forEach((it) => draw(it, 1));
+    return () => {};
+  }
+  return () => {
+    const vh = window.innerHeight;
+    for (const it of items) {
+      const r = it.canvas.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh + 50) continue;
+      const t = clamp((vh - r.top) / (vh * 0.62));
+      draw(it, t);
+      it.canvas.style.transform = `rotate(${(r.top * 0.08).toFixed(2)}deg)`;
+    }
+  };
 }
 
-function initMotion() {
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Hero: le lettere del nome emergono dalla cenere, poi il resto.
-  const letters = gsap.utils.toArray<HTMLElement>('.cenere__title .ch');
-  gsap
-    .timeline({ defaults: { ease: 'expo.out' } })
-    .from(letters, { yPercent: 110, rotate: 8, opacity: 0, filter: 'blur(8px)', duration: 1.4, stagger: 0.045 })
-    .from('[data-hero-fade]', { y: 24, opacity: 0, duration: 1, stagger: 0.12 }, '-=0.9');
-
-  // Scorrendo, il nome si disperde come cenere.
-  gsap.to(letters, {
-    yPercent: (i) => -30 - (i % 5) * 18,
-    opacity: 0,
-    ease: 'none',
-    stagger: { each: 0.02, from: 'random' },
-    scrollTrigger: { trigger: '#cenere', start: 'top top', end: 'bottom top', scrub: true },
-  });
-
-  // Elementi che entrano dal basso. Il contenuto resta visibile anche se lo script non parte.
-  ScrollTrigger.batch('[data-reveal]', {
-    start: 'top 92%',
-    once: true,
-    onEnter: (els) =>
-      gsap.fromTo(els, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 }),
-  });
-
-  // Numeri del forno che salgono.
-  gsap.utils.toArray<HTMLElement>('[data-count]').forEach((el) => {
-    const target = Number(el.dataset.count);
-    const obj = { v: 0 };
-    gsap.to(obj, {
-      v: target,
-      duration: 1.8,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      onUpdate: () => (el.textContent = String(Math.round(obj.v))),
+// Ingredienti uno alla volta, con la mappa che accende il paese.
+function terraSequence(motion: boolean) {
+  const root = document.querySelector<HTMLElement>('[data-terra]');
+  if (!root || !motion) return () => {};
+  root.classList.add('is-ready');
+  const words = Array.from(root.querySelectorAll<HTMLElement>('[data-word]'));
+  let current = -1;
+  return () => {
+    const r = root.getBoundingClientRect();
+    const total = root.offsetHeight - window.innerHeight;
+    const p = clamp(-r.top / Math.max(1, total));
+    const i = Math.min(words.length - 1, Math.floor(p * words.length));
+    if (i === current) return;
+    words.forEach((w, k) => {
+      w.classList.toggle('is-on', k === i);
+      w.classList.toggle('was-on', k < i);
     });
-  });
+    const id = words[i].dataset.word;
+    root.querySelectorAll<SVGElement>('[data-route]').forEach((el) => el.classList.toggle('is-on', el.dataset.route === id));
+    root.querySelectorAll<SVGElement>('[data-pin]').forEach((el) => el.classList.toggle('is-on', el.dataset.pin === id));
+    current = i;
+  };
+}
 
-  // Il forno si accende man mano che si scende nello strato del fuoco.
-  const fire = document.querySelector<HTMLElement>('[data-oven-fire]');
-  if (fire) {
-    gsap.fromTo(
-      fire,
-      { '--heat': 0.3 },
-      { '--heat': 1, ease: 'none', scrollTrigger: { trigger: '#fuoco', start: 'top 80%', end: 'center center', scrub: true } },
-    );
-  }
+// La frase sul vino si accende parola per parola.
+function statement(motion: boolean) {
+  const el = document.querySelector<HTMLElement>('[data-statement]');
+  if (!el || !motion) return () => {};
+  const words = Array.from(el.querySelectorAll<HTMLElement>('.w'));
+  return () => {
+    const r = el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const p = clamp((vh * 0.85 - r.top) / (vh * 0.55 + r.height * 0.5));
+    const lit = Math.round(p * words.length);
+    words.forEach((w, i) => w.classList.toggle('is-lit', i < lit));
+  };
+}
 
-  // La vite si disegna lungo lo strato della vigna.
-  const vine = document.querySelector<SVGPathElement>('[data-vine]');
-  if (vine) {
-    gsap.fromTo(
-      vine,
-      { '--draw': 1 },
-      { '--draw': 0, ease: 'none', scrollTrigger: { trigger: '#vigna', start: 'top 70%', end: 'bottom 60%', scrub: true } },
-    );
-  }
+// Fasce di testo che scorrono di lato insieme allo scroll.
+function bands(motion: boolean) {
+  const runs = Array.from(document.querySelectorAll<HTMLElement>('[data-fascia]'));
+  if (!motion) return () => {};
+  return () => {
+    for (const el of runs) {
+      const half = el.scrollWidth / 2;
+      const dir = Number(el.dataset.dir ?? -1);
+      const offset = ((window.scrollY * 0.4) % half) * dir;
+      el.style.transform = `translate3d(${dir < 0 ? offset : offset - half}px, 0, 0)`;
+    }
+  };
+}
 
-  // Confini tra strati: le onde scorrono a velocità diverse.
-  gsap.utils.toArray<SVGPathElement>('[data-edge-depth]').forEach((path) => {
-    const depth = Number(path.dataset.edgeDepth);
-    gsap.fromTo(
-      path,
-      { x: -40 * depth },
-      { x: 40 * depth, ease: 'none', scrollTrigger: { trigger: path.closest('.edge'), start: 'top bottom', end: 'bottom top', scrub: true } },
-    );
-  });
+function topBar() {
+  const top = document.querySelector<HTMLElement>('[data-top]');
+  const scene = document.querySelector<HTMLElement>('[data-discesa]');
+  return () => {
+    if (!top || !scene) return;
+    const end = scene.offsetTop + scene.offsetHeight - window.innerHeight;
+    top.classList.toggle('is-solid', window.scrollY > end - 10);
+  };
 }
 
 export function initPage() {
   const motion = document.documentElement.classList.contains('motion');
+  const scene = document.querySelector<HTMLElement>('[data-discesa]');
+  if (scene) initScene(scene, motion);
 
-  const canvas = document.querySelector<HTMLCanvasElement>('[data-embers]');
-  if (canvas) initEmbers(canvas, motion);
+  initLive();
+  initOrder();
 
-  initChrome();
-  initSeason();
-  initOpenStatus();
-  initImpasto();
-  initMap();
-  initMeteo();
-  if (motion) initMotion();
+  const updates = [menuPizzas(motion), terraSequence(motion), statement(motion), bands(motion), topBar()];
+  let ticking = false;
+  const run = () => {
+    ticking = false;
+    updates.forEach((u) => u());
+  };
+  const request = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(run);
+    }
+  };
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request);
+  document.fonts?.ready.then(request);
+  run();
 }

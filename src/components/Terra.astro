@@ -1,0 +1,127 @@
+---
+// "Da dove arriva": sequenza bloccata sullo schermo, un ingrediente per volta,
+// con la mappa dell'Etna che accende il paese di provenienza.
+import { places, ingredients, project, MAP } from '../data/terra';
+
+const shown = ingredients.filter((i) => !['salsiccia', 'carricante'].includes(i.id));
+const placeById = Object.fromEntries(places.map((p) => [p.id, { ...p, ...project(p.lat, p.lon) }]));
+const milo = placeById.milo;
+const { x: cx, y: cy } = MAP.summit;
+
+function ring(r: number, k: number) {
+  const pts: string[] = [];
+  for (let i = 0; i <= 72; i++) {
+    const a = (i / 72) * Math.PI * 2;
+    const rr = r * (1 + 0.07 * Math.sin(3 * a + k * 0.9) + 0.04 * Math.sin(5 * a + k * 1.7) + 0.02 * Math.sin(11 * a + k));
+    pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a) * 0.92).toFixed(1)}`);
+  }
+  return `M${pts.join(' L')} Z`;
+}
+const rings = Array.from({ length: 9 }, (_, i) => ring(24 + i * 25, i));
+const coast = 'M492,0 L486,60 L478,120 L470,180 L474,228 L466,270 L455,330 L446,380 L420,430 L392,470 L372,520';
+const word = (name: string) => name.split(' ')[0];
+---
+
+<section id="terra" class="terra" data-terra style={`--n:${shown.length}`} aria-labelledby="terra-title">
+  <div class="stage gutter">
+    <header class="terra__head">
+      <p class="label">Da dove arriva</p>
+      <h2 id="terra-title" class="big">Tutto intorno<br />al <span class="lava">vulcano</span>.</h2>
+    </header>
+
+    <svg class="map" viewBox={`0 0 ${MAP.width} ${MAP.height}`} aria-hidden="true">
+      {rings.map((d, i) => <path d={d} class={i % 3 === 0 ? 'ring ring--major' : 'ring'} />)}
+      <path d={coast} class="coast" />
+      {shown.map((ing) => {
+        const p = placeById[ing.origin];
+        const mx = (milo.x + p.x) / 2;
+        const my = (milo.y + p.y) / 2 - 30;
+        return <path class="route" data-route={ing.id} d={`M${milo.x},${milo.y} Q${mx},${my} ${p.x},${p.y}`} pathLength="1" />;
+      })}
+      {shown.map((ing) => {
+        const p = placeById[ing.origin];
+        return (
+          <g class="pin" data-pin={ing.id}>
+            <circle cx={p.x} cy={p.y} r="22" class="pin__halo" />
+            <circle cx={p.x} cy={p.y} r="7" />
+          </g>
+        );
+      })}
+      <circle cx={milo.x} cy={milo.y} r="9" class="home" />
+      <text x={milo.x + 14} y={milo.y + 26} class="home-label">MILO</text>
+    </svg>
+
+    <ol class="words" role="list">
+      {shown.map((ing, i) => (
+        <li class="word" data-word={ing.id} data-i={i}>
+          <p class="word__name">{word(ing.name)}</p>
+          <p class="label word__from">{placeById[ing.origin].name} · {ing.name}</p>
+          <p class="word__note">{ing.note}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .terra {
+    position: relative;
+    height: calc(var(--n) * 55svh + 100svh);
+    background: var(--basalto);
+  }
+  .stage {
+    position: sticky; top: 0; height: 100svh; overflow: hidden;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 80px);
+    padding-bottom: calc(var(--bar-h) + 24px + env(safe-area-inset-bottom, 0px));
+    gap: 0.5rem;
+  }
+  .terra__head { display: grid; gap: 0.5rem; }
+  .terra__head .big { font-size: clamp(2rem, 9vw, 4.5rem); }
+
+  .map { width: 100%; height: 100%; min-height: 0; justify-self: center; max-width: 34rem; }
+  .ring { fill: none; stroke: rgba(241, 235, 226, 0.12); stroke-width: 1; }
+  .ring--major { stroke: rgba(241, 235, 226, 0.25); }
+  .coast { fill: none; stroke: rgba(241, 235, 226, 0.35); stroke-width: 1.5; stroke-dasharray: 4 5; }
+  .route { fill: none; stroke: var(--lava); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.6s var(--ease); }
+  .pin circle { fill: rgba(241, 235, 226, 0.35); transition: fill 0.3s var(--ease); }
+  .pin .pin__halo { fill: var(--lava); opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity 0.3s var(--ease); }
+  :global(.route.is-on) { stroke-dashoffset: 0; }
+  :global(.pin.is-on circle) { fill: var(--lava); }
+  :global(.pin.is-on .pin__halo) { opacity: 0.25; animation: halo 1.6s ease-out infinite; }
+  @keyframes halo { from { transform: scale(0.6); opacity: 0.5; } to { transform: scale(1.6); opacity: 0; } }
+  .home { fill: var(--brace); }
+  .home-label { fill: var(--brace); font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; }
+
+  .words { list-style: none; margin: 0; padding: 0; display: grid; }
+  .word {
+    grid-area: 1 / 1;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+  }
+  :global(.word.is-on),
+  :global(.terra:not(.is-ready)) .word:first-child { opacity: 1; transform: none; }
+  :global(.word.was-on) { opacity: 0; transform: translateY(-24px); }
+  .word__name {
+    margin: 0;
+    font-weight: 900; font-stretch: 62%; text-transform: uppercase;
+    font-size: clamp(3.4rem, 17vw, 9rem); line-height: 0.86;
+    overflow-wrap: anywhere;
+  }
+  .word__from { color: var(--brace); margin-top: 0.5rem; }
+  .word__note { margin: 0.4rem 0 0; color: rgba(241, 235, 226, 0.78); }
+
+  /* Senza movimento: elenco semplice */
+  :global(html:not(.motion)) .terra { height: auto; }
+  :global(html:not(.motion)) .stage { position: relative; height: auto; }
+  :global(html:not(.motion)) .word { grid-area: auto; opacity: 1; transform: none; margin-bottom: 1.5rem; }
+  :global(html:not(.motion)) .map { max-height: 50svh; }
+
+  @media (min-width: 900px) {
+    .stage { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; column-gap: 3rem; align-items: center; }
+    .terra__head { grid-column: 1 / -1; }
+    .map { grid-column: 2; grid-row: 2; }
+    .words { grid-column: 1; grid-row: 2; }
+  }
+</style>

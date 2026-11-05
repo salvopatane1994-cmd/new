@@ -1,0 +1,65 @@
+---
+import { wines } from '../data/terra';
+const statement = "L'Etna Bianco Superiore si può fare in un solo posto al mondo: qui, a Milo.";
+---
+
+<section id="vino" class="vino gutter" aria-labelledby="vino-title">
+  <div class="inner">
+    <p class="label">Da portare a casa con la pizza</p>
+    <h2 id="vino-title" class="statement" data-statement>
+      {statement.split(' ').map((w) => <span class="w">{w} </span>)}
+    </h2>
+
+    <ul class="bottles" role="list">
+      {wines.map((w) => (
+        <li class="bottle">
+          <div class="bottle__text">
+            <h3>{w.name}</h3>
+            <p class="label">{w.grapes}</p>
+            <p class="bottle__note">{w.note}</p>
+          </div>
+          <div class="bottle__buy">
+            <span class="price">€ {w.price}</span>
+            <button class="qty-minus" type="button" data-remove={`vino-${w.id}`} aria-label={`Togli una bottiglia di ${w.name}`} hidden>−</button>
+            <button class="btn add" type="button" data-add={`vino-${w.id}`}><span data-add-label>Aggiungi</span></button>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="fine label">Prezzi e cantine di esempio, da definire con i produttori di Milo.</p>
+  </div>
+</section>
+
+<style>
+  .vino { padding-block: clamp(5rem, 14vw, 9rem); background: var(--notte); }
+  .inner { display: grid; gap: 1.5rem; }
+  .statement {
+    margin: 0;
+    font-weight: 900; font-stretch: 70%; text-transform: uppercase;
+    font-size: clamp(2.4rem, 12vw, 7rem); line-height: 0.92;
+    text-wrap: balance;
+  }
+  .w { color: rgba(241, 235, 226, 0.14); transition: color 0.25s linear; }
+  :global(.w.is-lit) { color: var(--osso); }
+  :global(.w.is-lit:nth-last-child(-n + 2)) { color: var(--vigna); }
+  :global(html:not(.motion)) .w { color: var(--osso); }
+
+  .bottles { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; }
+  .bottle {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem;
+    padding: 1.25rem 0; border-top: 1px solid rgba(241, 235, 226, 0.1);
+  }
+  .bottle:last-child { border-bottom: 1px solid rgba(241, 235, 226, 0.1); }
+  .bottle__text { min-width: 0; display: grid; gap: 0.25rem; }
+  .bottle h3 { margin: 0; font-weight: 800; font-stretch: 75%; text-transform: uppercase; font-size: 1.6rem; line-height: 1; }
+  .bottle__note { margin: 0; font-size: 0.92rem; color: rgba(241, 235, 226, 0.75); }
+  .bottle__buy { display: flex; align-items: center; gap: 0.5rem; }
+  .price { font-family: var(--mono); font-variant-numeric: tabular-nums; margin-right: 0.25rem; }
+  .add { min-height: 44px; padding: 0 1rem; font-size: 0.85rem; }
+  :global(.add.in-cart) { background: var(--brace); }
+  .qty-minus {
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(241, 235, 226, 0.1); font-size: 1.3rem; font-weight: 700;
+  }
+  .fine { margin-top: 0.5rem; }
+</style>

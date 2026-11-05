@@ -27,6 +27,8 @@ export interface Pizza {
   price: number;
   seasons: Season[]; // vuoto = sempre in carta
   wine: string; // id di Wine
+  base: 'rossa' | 'bianca' | 'crema';
+  draw: string[]; // condimenti disegnati sulla pizza (vedi scripts/pizza.ts)
 }
 
 export const places: Place[] = [
@@ -64,6 +66,8 @@ export const pizzas: Pizza[] = [
     price: 8,
     seasons: [],
     wine: 'bianco-superiore',
+    base: 'rossa',
+    draw: ['mozzarella', 'basilico', 'olio'],
   },
   {
     id: 'valle-del-bove',
@@ -74,6 +78,8 @@ export const pizzas: Pizza[] = [
     price: 12,
     seasons: ['autunno'],
     wine: 'rosso',
+    base: 'bianca',
+    draw: ['mozzarella', 'funghi', 'salsiccia', 'pecorino'],
   },
   {
     id: 'cento-cavalli',
@@ -84,6 +90,8 @@ export const pizzas: Pizza[] = [
     price: 13,
     seasons: ['autunno', 'inverno'],
     wine: 'rosso',
+    base: 'crema',
+    draw: ['provola', 'pancetta', 'castagne', 'miele'],
   },
   {
     id: 'verde-bronte',
@@ -94,6 +102,8 @@ export const pizzas: Pizza[] = [
     price: 14,
     seasons: [],
     wine: 'spumante',
+    base: 'bianca',
+    draw: ['mortadella', 'burrata', 'pistacchio'],
   },
   {
     id: 'riviera',
@@ -104,6 +114,8 @@ export const pizzas: Pizza[] = [
     price: 12,
     seasons: ['primavera', 'estate'],
     wine: 'bianco-superiore',
+    base: 'bianca',
+    draw: ['ricotta', 'alici', 'limone', 'origano'],
   },
   {
     id: 'lapilli',
@@ -114,6 +126,8 @@ export const pizzas: Pizza[] = [
     price: 13,
     seasons: ['estate', 'autunno'],
     wine: 'rosato',
+    base: 'bianca',
+    draw: ['ficodindia', 'crudo', 'ricotta', 'pepe'],
   },
 ];
 
@@ -122,6 +136,7 @@ export interface Wine {
   name: string;
   grapes: string;
   note: string;
+  price: number; // bottiglia da asporto, SEGNAPOSTO
 }
 
 export const wines: Wine[] = [
@@ -130,10 +145,11 @@ export const wines: Wine[] = [
     name: 'Etna Bianco Superiore',
     grapes: 'Carricante almeno 80%',
     note: 'Si produce soltanto nel comune di Milo.',
+    price: 18,
   },
-  { id: 'rosso', name: 'Etna Rosso', grapes: 'Nerello Mascalese e Nerello Cappuccio', note: 'Il rosso del vulcano, teso e minerale.' },
-  { id: 'rosato', name: 'Etna Rosato', grapes: 'Nerello Mascalese', note: 'Fresco, per le sere di fine estate.' },
-  { id: 'spumante', name: 'Etna Spumante', grapes: 'Nerello Mascalese, metodo classico', note: 'Bollicine di montagna.' },
+  { id: 'rosso', name: 'Etna Rosso', grapes: 'Nerello Mascalese e Nerello Cappuccio', note: 'Il rosso del vulcano, teso e minerale.', price: 16 },
+  { id: 'rosato', name: 'Etna Rosato', grapes: 'Nerello Mascalese', note: 'Fresco, per le sere di fine estate.', price: 14 },
+  { id: 'spumante', name: 'Etna Spumante', grapes: 'Nerello Mascalese, metodo classico', note: 'Bollicine di montagna.', price: 22 },
 ];
 
 export function seasonOf(month: number): Season {

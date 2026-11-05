@@ -1,0 +1,42 @@
+---
+import { site } from '../config/site';
+---
+
+<header class="top gutter" data-top>
+  <a class="logo" href="#discesa" aria-label={`${site.name}, torna all'inizio`}>
+    <span class="logo__num">{site.shortName}</span>
+    <span class="logo__name">{site.name}</span>
+  </a>
+  <nav aria-label="Sezioni">
+    <a href="#menu">Menu</a>
+    <a href="#terra">Ingredienti</a>
+    <a href="#ritiro">Ritiro</a>
+  </nav>
+</header>
+
+<style>
+  .top {
+    position: fixed; inset: 0 0 auto 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    padding-bottom: 14px;
+    transition: background 0.3s var(--ease), transform 0.4s var(--ease);
+  }
+  :global(.top.is-solid) { background: rgba(8, 8, 11, 0.82); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .logo { display: inline-flex; align-items: baseline; gap: 0.6rem; text-decoration: none; }
+  .logo__num {
+    font-weight: 900; font-stretch: 62%; font-size: 1.9rem; line-height: 1; color: var(--lava);
+  }
+  .logo__name {
+    font-weight: 700; font-stretch: 80%; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.95rem;
+  }
+  nav { display: flex; gap: 1.25rem; }
+  nav a {
+    font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+    text-decoration: none; opacity: 0.8; padding: 0.5rem 0;
+  }
+  nav a:hover { opacity: 1; color: var(--brace); }
+  @media (max-width: 560px) {
+    nav a:not([href='#menu']) { display: none; }
+  }
+</style>

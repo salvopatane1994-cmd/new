@@ -1,0 +1,117 @@
+---
+// Barra fissa in basso (a portata di pollice) e pannello per comporre l'ordine da asporto.
+import { site } from '../config/site';
+---
+
+<div class="bar gutter" data-bar>
+  <p class="bar__status"><span class="dot" data-open-dot aria-hidden="true"></span><span data-open-short>Forno a legna</span></p>
+  <button class="btn bar__btn" type="button" data-open-order>
+    <span data-bar-label>Ordina</span>
+  </button>
+</div>
+
+<dialog class="sheet" data-sheet aria-labelledby="sheet-title">
+  <form method="dialog" class="sheet__inner" data-order-form>
+    <header class="sheet__head">
+      <h2 id="sheet-title" class="big">Il tuo ordine</h2>
+      <button class="close" type="submit" value="close" aria-label="Chiudi">✕</button>
+    </header>
+
+    <ul class="lines" data-lines role="list"></ul>
+    <p class="empty" data-empty>
+      Non hai ancora scelto niente. Tocca <strong>Aggiungi</strong> sulle pizze del menu.
+    </p>
+
+    <div class="fields">
+      <label for="order-time">Orario di ritiro</label>
+      <select id="order-time" data-time></select>
+      <label for="order-name">Nome per il ritiro</label>
+      <input id="order-name" data-name type="text" autocomplete="given-name" placeholder="Es. Giulia" />
+      <label for="order-note">Note (facoltative)</label>
+      <input id="order-note" data-note type="text" placeholder="Es. senza basilico, tagliata a spicchi" />
+    </div>
+
+    <div class="sheet__foot">
+      <p class="total"><span>Totale</span><strong data-total>€ 0</strong></p>
+      <a class="btn send" data-send href="#" target="_blank" rel="noopener">Invia l'ordine su WhatsApp</a>
+      <p class="phone">Preferisci telefonare? <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></p>
+      <p class="fine">Paghi al ritiro. Ti rispondiamo su WhatsApp per confermare l'orario.</p>
+    </div>
+  </form>
+</dialog>
+
+<style>
+  .bar {
+    position: fixed; z-index: 45; left: 0; right: 0; bottom: 0;
+    min-height: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
+    padding-top: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    background: rgba(8, 8, 11, 0.86);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(241, 235, 226, 0.08);
+  }
+  .bar__status {
+    margin: 0; display: flex; align-items: center; gap: 0.55rem; min-width: 0;
+    font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3;
+  }
+  .bar__btn { flex: none; min-width: 9.5rem; }
+  :global(.bar__btn.has-items) { background: var(--brace); }
+  :global(.bar__btn.bump) { animation: bump 0.4s var(--ease); }
+  @keyframes bump { 40% { transform: scale(1.08); } }
+
+  .sheet {
+    width: 100%; max-width: 34rem; max-height: 92svh;
+    margin: auto auto 0; padding: 0; border: 0;
+    border-radius: 22px 22px 0 0;
+    background: var(--basalto); color: var(--osso);
+  }
+  @media (min-width: 700px) { .sheet { margin: auto; border-radius: 22px; } }
+  .sheet::backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px); }
+  .sheet[open] { animation: up 0.35s var(--ease); }
+  @keyframes up { from { transform: translateY(40px); opacity: 0; } }
+  .sheet__inner {
+    display: grid; gap: 1.25rem;
+    padding: 1.5rem max(18px, env(safe-area-inset-right, 0px)) calc(1.5rem + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));
+  }
+  .sheet__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .sheet__head .big { font-size: 2.2rem; }
+  .close {
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(241, 235, 226, 0.08); font-size: 1.1rem;
+  }
+
+  .lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
+  .lines :global(li) {
+    display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0; border-bottom: 1px solid rgba(241, 235, 226, 0.08);
+  }
+  .lines :global(.ln-name) { font-weight: 800; font-stretch: 80%; text-transform: uppercase; font-size: 1.15rem; }
+  .lines :global(.ln-price) { font-family: var(--mono); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .lines :global(.stepper) { display: inline-flex; align-items: center; gap: 0.25rem; }
+  .lines :global(.stepper button) {
+    width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(241, 235, 226, 0.1); font-size: 1.2rem; font-weight: 700;
+  }
+  .lines :global(.stepper span) { min-width: 1.6rem; text-align: center; font-family: var(--mono); }
+  .empty { margin: 0; color: rgba(241, 235, 226, 0.7); }
+
+  .fields { display: grid; gap: 0.4rem; }
+  .fields label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--cenere); margin-top: 0.5rem; }
+  .fields select, .fields input {
+    width: 100%; min-height: 50px; padding: 0 0.9rem;
+    border-radius: 12px; border: 1px solid rgba(241, 235, 226, 0.18);
+    background: var(--notte); color: var(--osso);
+    font: inherit; font-size: 16px; /* evita lo zoom automatico su iPhone */
+  }
+
+  .sheet__foot { display: grid; gap: 0.75rem; }
+  .total { display: flex; justify-content: space-between; align-items: baseline; margin: 0; }
+  .total span { font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; color: var(--cenere); }
+  .total strong { font-weight: 900; font-stretch: 62%; font-size: 2.6rem; line-height: 1; }
+  .send { width: 100%; }
+  :global(.send.is-disabled) { opacity: 0.4; pointer-events: none; }
+  .phone, .fine { margin: 0; font-size: 0.9rem; color: rgba(241, 235, 226, 0.75); }
+  .phone a { color: var(--brace); user-select: all; }
+  .fine { font-size: 0.8rem; }
+</style>

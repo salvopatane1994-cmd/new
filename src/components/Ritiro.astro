@@ -1,0 +1,70 @@
+---
+import { site } from '../config/site';
+const days = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+const order = [1, 2, 3, 4, 5, 6, 0];
+---
+
+<section id="ritiro" class="ritiro gutter" aria-labelledby="ritiro-title">
+  <div class="inner">
+    <p class="label">Ritiro</p>
+    <h2 id="ritiro-title" class="mega">Passa<br />a <span class="lava">prenderla</span>.</h2>
+
+    <div class="grid">
+      <div class="block">
+        <p class="status"><span class="dot" data-open-dot aria-hidden="true"></span><span data-open-status>Forno a legna</span></p>
+        <p class="addr">{site.address.street}<br />{site.address.postalCode} {site.address.city} ({site.address.province})</p>
+        <a class="btn btn--line" href={site.mapsUrl} target="_blank" rel="noopener">Apri in Maps</a>
+      </div>
+
+      <div class="block">
+        <h3 class="label">Orari del forno</h3>
+        <table>
+          <caption class="sr-only">Orari di ritiro</caption>
+          <tbody>
+            {order.map((d) => (
+              <tr data-day={d}>
+                <th scope="row">{days[d]}</th>
+                <td>{site.hours[d].length ? site.hours[d].map(([a, b]) => `${a}–${b}`).join(' · ') : 'Chiuso'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="block">
+        <h3 class="label">Quanto ci metti</h3>
+        <ul role="list">
+          {site.travel.map((t) => (
+            <li><span>da {t.from}</span><span class="min">{t.minutes} min</span></li>
+          ))}
+        </ul>
+        <p class="phone">Telefono <span>{site.phone}</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ritiro { padding-block: clamp(5rem, 14vw, 9rem); background: var(--basalto); }
+  .inner { display: grid; gap: 1.25rem; }
+  .mega { font-size: clamp(3.2rem, 16.5vw, 12rem); }
+  .grid { display: grid; gap: 2.5rem; margin-top: 1.5rem; }
+  @media (min-width: 820px) { .grid { grid-template-columns: 1.1fr 1fr 1fr; gap: 3rem; } }
+  .block { display: grid; gap: 1rem; align-content: start; min-width: 0; }
+  .status {
+    margin: 0; display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .addr { margin: 0; font-weight: 800; font-stretch: 75%; text-transform: uppercase; font-size: 1.9rem; line-height: 1; }
+  .btn--line { justify-self: start; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  tr { border-top: 1px solid rgba(241, 235, 226, 0.1); }
+  th { text-align: left; font-weight: 600; padding: 0.6rem 0; }
+  td { text-align: right; font-family: var(--mono); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  :global(tr.is-today) { color: var(--brace); }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; justify-content: space-between; padding: 0.6rem 0; border-top: 1px solid rgba(241, 235, 226, 0.1); }
+  .min { font-family: var(--mono); font-size: 0.85rem; }
+  .phone { margin: 0; font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; color: var(--cenere); }
+  .phone span { color: var(--osso); user-select: all; text-transform: none; font-size: 1rem; display: block; margin-top: 0.25rem; }
+</style>

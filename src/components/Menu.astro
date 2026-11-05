@@ -1,0 +1,95 @@
+---
+import { pizzas, ingredients, places } from '../data/terra';
+
+const placeName = (id: string) => places.find((p) => p.id === id)?.name ?? id;
+const originsOf = (ids: string[]) =>
+  [...new Set(ids.map((id) => ingredients.find((i) => i.id === id)?.origin).filter(Boolean) as string[])].map(placeName);
+---
+
+<section id="menu" class="menu gutter" aria-labelledby="menu-title">
+  <div class="inner">
+    <header class="menu__head">
+      <p class="label">Menu da asporto · esempio</p>
+      <h2 id="menu-title" class="mega">Il menu</h2>
+      <p class="body-copy">
+        Scorri: ogni pizza si compone davanti a te, strato dopo strato. Tocca <strong>Aggiungi</strong>, scegli l'orario
+        e l'ordine parte già scritto su WhatsApp.
+      </p>
+    </header>
+
+    <ol class="list" role="list">
+      {pizzas.map((p, i) => (
+        <li class="item" data-item={p.id} data-seasons={p.seasons.join(' ')}>
+          <div class="item__pic">
+            <canvas
+              data-pizza-canvas
+              data-spec={JSON.stringify({ base: p.base, draw: p.draw, seed: 31 + i * 7 })}
+              role="img"
+              aria-label={`Pizza ${p.name}: ${p.ingredients.join(', ')}`}
+            ></canvas>
+          </div>
+          <div class="item__text">
+            <p class="label item__from">
+              {originsOf(p.origins).length ? originsOf(p.origins).join(' · ') : 'La classica'}
+              <span class="season" data-season-tag>Di stagione</span>
+            </p>
+            <h3 class="item__name">{p.name}</h3>
+            <p class="item__meaning">{p.meaning}</p>
+            <p class="item__ing">{p.ingredients.join(', ')}</p>
+            <div class="item__buy">
+              <span class="price">€ {p.price}</span>
+              <button class="qty-minus" type="button" data-remove={p.id} aria-label={`Togli una ${p.name}`} hidden>−</button>
+              <button class="btn add" type="button" data-add={p.id}>
+                <span data-add-label>Aggiungi</span>
+              </button>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .menu { padding-block: clamp(5rem, 14vw, 9rem) clamp(4rem, 10vw, 7rem); background: var(--notte); }
+  .menu__head { display: grid; gap: 1rem; margin-bottom: clamp(2.5rem, 8vw, 5rem); }
+  .menu__head .mega { font-size: clamp(4.5rem, 28vw, 16rem); }
+  .menu__head strong { color: var(--osso); }
+
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .item {
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1rem; align-items: center;
+    padding: 1.75rem 0;
+    border-top: 1px solid rgba(241, 235, 226, 0.1);
+  }
+  .item:last-child { border-bottom: 1px solid rgba(241, 235, 226, 0.1); }
+  .item__pic { aspect-ratio: 1; max-width: 100%; }
+  .item__pic canvas { width: 100%; height: 100%; will-change: transform; }
+  .item__text { min-width: 0; display: grid; gap: 0.35rem; }
+  .item__from { display: flex; flex-wrap: wrap; gap: 0.25rem 0.6rem; }
+  .season { display: none; color: var(--brace); }
+  :global(.item.is-season .season) { display: inline; }
+  .item__name {
+    margin: 0;
+    font-weight: 900; font-stretch: 62%; text-transform: uppercase;
+    font-size: clamp(2.2rem, 11vw, 5rem); line-height: 0.88;
+    overflow-wrap: anywhere;
+  }
+  .item__meaning { margin: 0; font-size: 0.92rem; color: var(--brace); font-weight: 600; font-stretch: 90%; }
+  .item__ing { margin: 0; font-size: 0.92rem; color: rgba(241, 235, 226, 0.75); }
+  .item__buy { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .price { font-family: var(--mono); font-size: 1rem; margin-right: auto; font-variant-numeric: tabular-nums; }
+  .add { min-height: 44px; padding: 0 1rem; font-size: 0.85rem; }
+  :global(.add.in-cart) { background: var(--brace); }
+  .qty-minus {
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(241, 235, 226, 0.1); font-size: 1.3rem; font-weight: 700;
+  }
+
+  @media (min-width: 820px) {
+    .list { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+    .item { grid-template-columns: 1fr; gap: 1.25rem; padding: 2.5rem 0; }
+    .item:nth-last-child(2) { border-bottom: 1px solid rgba(241, 235, 226, 0.1); }
+    .item__pic { max-width: 26rem; }
+  }
+</style>

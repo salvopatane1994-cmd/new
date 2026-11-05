@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title = `${site.name} · ${site.tagline} a Milo, Etna`, description = site.description } = Astro.props;
+const { title = `${site.name} · ${site.tagline} · Milo, Etna`, description = site.description } = Astro.props;
 
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const openingHours = Object.entries(site.hours).flatMap(([day, slots]) =>
@@ -25,10 +25,10 @@ const jsonLd = {
   name: site.name,
   description: site.description,
   servesCuisine: ['Pizza', 'Siciliana'],
-  priceRange: '€€',
+  priceRange: '€',
   url: site.url,
   telephone: site.phone,
-  acceptsReservations: true,
+  acceptsReservations: false,
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.street,
@@ -39,7 +39,7 @@ const jsonLd = {
   },
   geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lon },
   openingHoursSpecification: openingHours,
-  hasMenu: `${site.url}/#terra`,
+  hasMenu: `${site.url}/#menu`,
 };
 ---
 
@@ -47,22 +47,19 @@ const jsonLd = {
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f0d0c" />
+    <meta name="theme-color" content="#08080b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="restaurant" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content={site.locale} />
     <script is:inline>
-      // Prima del rendering: stagione corrente e preferenza sul movimento.
+      // Prima del rendering: le animazioni guidate dallo scroll partono solo se il movimento è consentito.
       (function () {
-        var m = new Date().getMonth() + 1;
-        var s = m === 12 || m <= 2 ? 'inverno' : m <= 5 ? 'primavera' : m <= 8 ? 'estate' : 'autunno';
         var root = document.documentElement;
-        root.dataset.season = s;
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) root.classList.add('motion');
       })();
     </script>
