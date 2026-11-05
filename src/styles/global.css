@@ -26,8 +26,8 @@
   /* Accento stagionale: viene cambiato da data-season su <html> */
   --stagione: var(--terra-chiara);
 
-  --font-display: 'Fraunces Variable', Georgia, serif;
-  --font-body: 'Manrope Variable', system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-body: 'Manrope Variable', 'Manrope', system-ui, sans-serif;
 
   --gutter: clamp(1rem, 4vw, 3rem);
   --max: 76rem;
@@ -244,10 +244,8 @@ em.fire {
 }
 
 /* ------------------------------------------------------------------
-   Animazioni: stato iniziale solo se JS e movimento sono attivi
+   Movimento ridotto
    ------------------------------------------------------------------ */
-html.motion [data-reveal] { opacity: 0; transform: translateY(28px); }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

@@ -73,11 +73,12 @@ function initMotion() {
     scrollTrigger: { trigger: '#cenere', start: 'top top', end: 'bottom top', scrub: true },
   });
 
-  // Elementi che entrano dal basso.
+  // Elementi che entrano dal basso. Il contenuto resta visibile anche se lo script non parte.
   ScrollTrigger.batch('[data-reveal]', {
-    start: 'top 88%',
+    start: 'top 92%',
     once: true,
-    onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 }),
+    onEnter: (els) =>
+      gsap.fromTo(els, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 }),
   });
 
   // Numeri del forno che salgono.
