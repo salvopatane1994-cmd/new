@@ -21,9 +21,11 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Mungibeddu Pizzeria","slogan":"La nostra terra, i nostri sapori.","servesCuisine":["Pizza","Italiana","Siciliana"],"priceRange":"€","image":"assets/og.jpg","logo":"assets/icon-512.png","hasMenu":"#menu","acceptsReservations":false,"address":{"@type":"PostalAddress","addressLocality":"Milo","addressRegion":"CT","postalCode":"95010","addressCountry":"IT"},"areaServed":["Milo","Zafferana Etnea","Giarre","Sant'Alfio","Riposto"],"potentialAction":{"@type":"OrderAction","deliveryMethod":["http://purl.org/goodrelations/v1#DeliveryModePickUp","http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"]}}
 </script>
+<link rel="preload" as="image" href="assets/pizza-top.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/etna-800.webp" imagesrcset="assets/etna-800.webp 800w, assets/etna-1400.webp 1400w" imagesizes="(max-width:860px) 33vw, 100vw">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Jost:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: notte lavica con trama di curve di livello (le colate del soffitto del locale), sezioni chiare color intonaco, bordeaux e oro dei LED come accenti. */
 :root{
@@ -68,9 +70,6 @@ section{padding-block:110px}
 /* trama: curve di livello come le colate sulla volta del locale */
 .topo{background-color:var(--lava);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%23D2A866' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M-20 60c60-30 110 20 170-5s100-60 160-20 60 50 70 40'/%3E%3Cpath d='M-20 95c55-25 120 25 175 0s95-55 150-15 70 45 75 35'/%3E%3Cpath d='M-20 130c50-20 125 30 180 5s90-50 145-10 75 40 75 30'/%3E%3Cpath d='M-20 230c70 20 100-40 165-20s90 70 150 40 55-30 85-20'/%3E%3Cpath d='M-20 265c65 25 105-35 170-15s85 65 145 35 60-25 85-15'/%3E%3Cpath d='M-20 300c60 30 110-30 175-10s80 60 140 30 65-20 85-10'/%3E%3Cellipse cx='290' cy='180' rx='26' ry='14'/%3E%3Cellipse cx='290' cy='180' rx='46' ry='26'/%3E%3C/g%3E%3C/svg%3E")}
 
-/* pietra lavica del bancone (texture ripetibile) */
-.stone{background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.62),rgba(23,18,17,.62)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px}
-.stone-soft{background-image:linear-gradient(rgba(23,18,17,.78),rgba(23,18,17,.78)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px}
 /* titolo in siciliano + traduzione italiana sotto */
 .tr{display:block;margin-top:12px;font:500 12px/1.3 var(--f-body);letter-spacing:.28em;text-transform:uppercase;font-style:normal;opacity:.75}
 .light .tr{color:var(--muted-l);opacity:1}
@@ -186,7 +185,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 @media (max-width:760px){.strip{padding-block:26px}.strip .icons{grid-template-columns:repeat(3,1fr);gap:10px}.strip .icon{flex-direction:column;text-align:center;gap:8px}.strip .icon svg{width:38px;height:38px}.strip .icon h3{font-size:17px}.strip .icon p{display:none}.strip .icon:last-child{grid-column:auto}}
 
 /* ---------- Tramonto in evidenza in cima al menù ---------- */
-.feature{display:grid;grid-template-columns:.95fr 1.05fr;align-items:stretch;background-color:#211b19;background-image:linear-gradient(rgba(35,24,20,.7),rgba(35,24,20,.7)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;color:var(--crema);border-radius:26px;overflow:hidden;margin-bottom:60px;scroll-margin-top:150px}
+.feature{display:grid;grid-template-columns:.95fr 1.05fr;align-items:stretch;background:var(--inchiostro);color:var(--crema);border-radius:26px;overflow:hidden;margin-bottom:60px;scroll-margin-top:150px}
 .feature > *{min-width:0}
 .feature .im{position:relative;min-height:280px}
 .feature .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -239,7 +238,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:70px}
 #ordina .notify{margin-top:70px}
 .home > *{min-width:0}
-.home-card{position:relative;border-radius:26px;overflow:hidden;background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.55),rgba(23,18,17,.55)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;min-height:340px;display:flex;align-items:center;padding:40px}
+.home-card{position:relative;border-radius:26px;overflow:hidden;background:var(--lava-3);min-height:340px;display:flex;align-items:center;padding:40px}
 .home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;box-shadow:0 20px 50px rgba(0,0,0,.6)}
 .home-card .t{position:relative;z-index:1;max-width:60%}
 .home-card .t b{display:block;font:700 clamp(30px,4.2vw,52px)/1 var(--f-body);text-transform:uppercase;letter-spacing:.01em}
@@ -331,7 +330,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .steps-h{text-align:center;margin-bottom:60px}
 .steps-h p{color:var(--muted-d);margin:10px 0 0}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
-.step{position:relative;padding:34px 28px 30px;border-radius:24px;background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.72),rgba(23,18,17,.72)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;border:1px solid rgba(210,168,102,.14);transition:transform .5s var(--ease),border-color .5s}
+.step{position:relative;padding:34px 28px 30px;border-radius:24px;background:var(--lava-2);border:1px solid rgba(210,168,102,.14);transition:transform .5s var(--ease),border-color .5s}
 .step:hover{transform:translateY(-8px);border-color:rgba(210,168,102,.45)}
 .step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid var(--oro);color:var(--oro);font:italic 500 26px var(--f-title);margin-bottom:22px}
 .step h3{font:italic 500 28px var(--f-title);margin-bottom:8px}
@@ -495,7 +494,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 <!-- PRELOADER: durata in secondi qui sotto (PRE_SEC). Tocca per saltare. -->
 <div class="pre" id="preloader" role="status" aria-label="Caricamento di Mungibeddu Pizzeria">
   <div class="pre-in">
-    <div class="pre-logo"><img src="assets/logo-dark.png" alt="Mungibeddu Pizzeria" width="1092" height="799"><span class="puff p1"></span><span class="puff p2"></span><span class="puff p3"></span></div>
+    <div class="pre-logo"><img src="assets/logo-dark-sm.png" alt="Mungibeddu Pizzeria" width="480" height="351"><span class="puff p1"></span><span class="puff p2"></span><span class="puff p3"></span></div>
     <div class="pre-bar"><i></i></div>
     <p class="pre-txt" id="preTxt">Accendiamo il forno…</p>
   </div>
@@ -503,6 +502,10 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 <script>
 (function(){
   var PRE_SEC=5, pre=document.getElementById("preloader"), root=document.documentElement, t=document.getElementById("preTxt");
+  // Preloader solo alla prima visita della giornata: chi torna a riordinare entra subito.
+  var oggi=new Date().toDateString(),visto=null;try{visto=localStorage.getItem("mb-pre")}catch(e){}
+  if(visto===oggi&&location.hash!=="#intro"&&!/[?&]intro\b/.test(location.search)){pre.remove();return}
+  try{localStorage.setItem("mb-pre",oggi)}catch(e){}
   root.classList.add("loading","intro");pre.style.setProperty("--pre-dur",PRE_SEC+"s");
   setTimeout(function(){t.textContent="La pizza è pronta"},PRE_SEC*700);
   var still=matchMedia("(prefers-reduced-motion:reduce)").matches;
@@ -566,7 +569,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 
 <header class="top" id="top-bar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Mungibeddu, torna su"><img src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799"></a>
+    <a class="brand" href="#top" aria-label="Mungibeddu, torna su"><img src="assets/logo-light-sm.png" alt="Mungibeddu Pizzeria" width="480" height="351"></a>
     <nav class="nav" aria-label="Sezioni">
       <a href="#menu">Menù</a>
       <a href="#impasto">L'impasto</a>
@@ -586,12 +589,12 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 
 <!-- HERO SLIDER -->
 <section class="hero" aria-roledescription="carosello" aria-label="In evidenza" style="padding:0">
-  <div class="hero-bg" aria-hidden="true"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
+  <div class="hero-bg" aria-hidden="true"><img src="assets/etna-800.webp" srcset="assets/etna-800.webp 800w, assets/etna-1400.webp 1400w" sizes="(max-width:860px) 33vw, 100vw" alt="" width="1400" height="933" fetchpriority="high" decoding="async"></div>
   <div class="hero-vp" id="heroVp">
     <div class="hero-track" id="heroTrack">
       <div class="slide" data-slide>
         <div class="inner">
-          <div class="media hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
+          <div class="media hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="760" height="760"></div>
           <h1>La nostra terra, i nostri sapori.</h1>
           <p>Pizza d'asporto e a domicilio alle pendici dell'Etna, con grano antico siciliano Perciasacchi.</p>
           <div class="launch" data-launch hidden>
@@ -604,7 +607,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
       </div>
       <div class="slide" data-slide>
         <div class="inner">
-          <div class="media plate"><img src="assets/slide-spicchi.webp" alt="Spicchi di pizza margherita dal cornicione alveolato" width="800" height="800"></div>
+          <div class="media plate"><img src="assets/slide-spicchi.webp" fetchpriority="low" decoding="async" alt="Spicchi di pizza margherita dal cornicione alveolato" width="760" height="760"></div>
           <h2>Grano antico Perciasacchi</h2>
           <p>Farine tipo 0 e tipo 1 con una percentuale di Perciasacchi, antico grano duro siciliano da agricoltura biologica. Cornicione soffice, croccante fuori.</p>
           <a class="btn btn-oro" href="#impasto">Scopri l'impasto</a>
@@ -613,7 +616,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
       </div>
       <div class="slide" data-slide>
         <div class="inner">
-          <div class="media plate"><img src="assets/slide-zucca.webp" alt="Zucche di stagione" width="800" height="800"></div>
+          <div class="media plate"><img src="assets/slide-zucca.webp" fetchpriority="low" decoding="async" alt="Zucche di stagione" width="760" height="760"></div>
           <h2>Tramonto, la pizza di stagione</h2>
           <p>Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia e granella di nocciole.</p>
           <button class="btn btn-oro" type="button" data-add="tramonto">Aggiungi all'ordine · 11€</button>
@@ -622,7 +625,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
       </div>
       <div class="slide" data-slide>
         <div class="inner">
-          <div class="media plate"><img src="assets/slide-asporto.webp" alt="Pizza nel cartone da asporto" width="800" height="800"></div>
+          <div class="media plate"><img src="assets/slide-asporto.webp" fetchpriority="low" decoding="async" alt="Pizza nel cartone da asporto" width="760" height="760"></div>
           <h2>Mungibeddu a casa tua</h2>
           <p>Scegli dal menù e invia l'ordine su WhatsApp. Passi a ritirarla calda o te la portiamo noi.</p>
           <a class="btn btn-oro" href="#ordina">Ordina ora</a>
@@ -637,7 +640,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 </section>
 
 <!-- PUNTI DI FORZA (striscia compatta) -->
-<section class="stone strip" aria-label="Perché Mungibeddu">
+<section class="topo strip" aria-label="Perché Mungibeddu">
   <div class="wrap"><div class="icons" id="icons"></div></div>
 </section>
 
@@ -657,21 +660,21 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 
 <!-- L'IMPASTO -->
 <section class="light welcome" id="impasto" aria-labelledby="impasto-t">
-  <img class="mark" src="assets/logo-dark.png" alt="" width="1092" height="799" aria-hidden="true" data-par="-.12">
+  <img class="mark" src="assets/logo-dark-sm.png" alt="" width="480" height="351" aria-hidden="true" data-par="-.12">
   <div class="wrap">
     <span class="caps kicker" data-a="up">La nostra terra, i nostri sapori</span>
     <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Comu nasci a nostra pizza<span class="tr">Come nasce la nostra pizza</span></h2>
     <p class="lead" data-a="up" style="--d:.2s">La nostra pizza nasce dall'incontro tra tradizione, territorio e innovazione. Crediamo che una grande pizza cominci dalla scelta delle materie prime.</p>
 
     <div class="impasto">
-      <div class="ph" data-a="up"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
+      <div class="ph" data-a="up"><img src="assets/farina-800.webp" srcset="assets/farina-800.webp 800w, assets/farina-1200.webp 1200w" sizes="(min-width:900px) 50vw, 100vw" decoding="async" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
       <div class="story">
         <p data-a="up">Abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica. Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
         <p data-a="up" style="--d:.1s">Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto: un cornicione soffice e alveolato, con una piacevole croccantezza esterna.</p>
         <div class="grani">
           <div class="grano" data-a="up" style="--d:.1s"><div class="ico" data-ico="0"></div><div><h4>Farina tipo 0</h4><p>Leggerezza ed elasticità alla lievitazione.</p></div></div>
           <div class="grano" data-a="up" style="--d:.22s"><div class="ico" data-ico="1"></div><div><h4>Farina tipo 1</h4><p>Conserva parte del germe e della crusca: più profumo.</p></div></div>
-          <div class="grano star" data-a="up" style="--d:.34s"><div class="ico"><img src="assets/grano.jpg" alt="Spighe di grano dorate" width="600" height="900" loading="lazy"></div><div><h4>Perciasacchi <span class="pill">Bio</span></h4><p>Antico grano duro siciliano non OGM: carattere, fibre e un glutine più delicato.</p></div></div>
+          <div class="grano star" data-a="up" style="--d:.34s"><div class="ico"><img src="assets/grano.webp" alt="Spighe di grano dorate" width="180" height="270" decoding="async" loading="lazy"></div><div><h4>Perciasacchi <span class="pill">Bio</span></h4><p>Antico grano duro siciliano non OGM: carattere, fibre e un glutine più delicato.</p></div></div>
         </div>
       </div>
     </div>
@@ -680,7 +683,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 
 <!-- IL LOCALE -->
 <div class="para" aria-label="Il locale" style="min-height:560px">
-  <div class="pbg" data-par=".22"><img src="assets/locale.jpg" alt="Interno della pizzeria con volte, banconi in pietra lavica e sgabelli bordeaux" width="1272" height="1388" loading="lazy"></div>
+  <div class="pbg" data-par=".22"><img src="assets/locale-800.webp" srcset="assets/locale-800.webp 800w, assets/locale-1272.webp 1272w" sizes="100vw" decoding="async" alt="Interno della pizzeria con volte, banconi in pietra lavica e sgabelli bordeaux" width="1272" height="1388" loading="lazy"></div>
   <div class="inner">
     <span class="caps" data-a="up" style="color:var(--oro)">Rendering del locale</span>
     <h2 data-a="up" style="--d:.1s">U nostru locali<span class="tr">Il nostro locale</span></h2>
@@ -733,9 +736,9 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 </section>
 </main>
 
-<footer class="stone-soft">
+<footer class="topo">
   <div class="wrap">
-    <img class="logo" src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799" loading="lazy" data-a="up">
+    <img class="logo" src="assets/logo-light-sm.png" alt="Mungibeddu Pizzeria" width="480" height="351" loading="lazy" data-a="up">
     <p class="phil" data-a="up">Alle pendici dell'Etna trasformiamo la passione per la pizza in un'esperienza che valorizza le nostre radici siciliane, senza rinunciare all'innovazione.</p>
     <div class="fcols" data-a="up">
       <div><h4>Link rapidi</h4><ul><li><a href="#impasto">L'impasto</a></li><li><a href="#menu">Menù</a></li><li><a href="#ordina">Come ordinare</a></li><li><a href="#contatti">Contatti</a></li></ul></div>
@@ -757,7 +760,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <div class="grab" aria-hidden="true"></div>
   <button class="sh-x" type="button" id="shX" aria-label="Chiudi">×</button>
   <div class="sh-scroll">
-    <div class="sh-im"><img id="shImg" src="assets/cat-stissi.jpg" alt=""><small>Foto indicativa</small></div>
+    <div class="sh-im"><img id="shImg" src="assets/cat-stissi.webp" alt=""><small>Foto indicativa</small></div>
     <div class="sh-body">
       <span class="sh-cat" id="shCat"></span>
       <h3 id="shT"></h3>
@@ -865,11 +868,11 @@ aggiornaStato();setInterval(aggiornaStato,60000);
 
 /* ===== Menù (dal menù cartaceo) ===== */
 const MENU = [
- {id:"periudu", t:"Di stu periudu", g:"Di stagione", img:"zucca.jpg", kind:"pizza", items:[
+ {id:"periudu", t:"Di stu periudu", g:"Di stagione", img:"zucca.webp", kind:"pizza", items:[
   ["tramonto","Tramonto",11,"Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia, granella di nocciole, olio evo","Etna"]]},
- {id:"spizzicari", t:"Pi spizzicari", g:"Da sgranocchiare", img:"cat-spizzicari.jpg", kind:"fritto", items:[
+ {id:"spizzicari", t:"Pi spizzicari", g:"Da sgranocchiare", img:"cat-spizzicari.webp", kind:"fritto", items:[
   ["patatine","Patatine fritte",3],["patazest","Patazest",4,"Lime e pepe"],["twister","Patatine twister",4],["anelli","Anelli di cipolla",4],["crocchette","Crocchette di patate",4]]},
- {id:"stissi", t:"Sempri i stissi", g:"Le classiche", img:"cat-stissi.jpg", kind:"pizza", items:[
+ {id:"stissi", t:"Sempri i stissi", g:"Le classiche", img:"cat-stissi.webp", kind:"pizza", items:[
   ["biancaneve","Biancaneve",5,"Doppia mozzarella fiordilatte, olio evo, basilico"],
   ["tedesca","Tedesca",7,"Salsa di pomodoro, mozzarella fiordilatte, würstel, patatine fritte, olio evo"],
   ["vulcanica","Vulcanica",7,"Salsa di pomodoro, mozzarella fiordilatte, salame piccante, olio evo, basilico","Etna"],
@@ -883,18 +886,18 @@ const MENU = [
   ["carrettiera","Carrettiera",9,"Mozzarella fiordilatte, provola affumicata, friarielli, patate al forno, salsiccia, olio evo"],
   ["pistacchiosa","Pistacchiosa",10,"Mozzarella fiordilatte, prosciutto cotto, scagliette di grana padano DOP, farina di pistacchio, pesto di pistacchio, olio evo"],
   ["versante","Versante ovest",12,"Crema di pistacchio artigianale, mozzarella fiordilatte, guanciale croccante, gocce di bufala DOP, pesto di pistacchio, farina di pistacchio, olio evo"]]},
- {id:"margheriti", t:"I Margheriti", g:"Le margherite", img:"cat-margheriti.jpg", kind:"pizza", items:[
+ {id:"margheriti", t:"I Margheriti", g:"Le margherite", img:"cat-margheriti.webp", kind:"pizza", items:[
   ["margherita","Margherita",6,"Salsa di pomodoro, mozzarella fiordilatte, olio evo, basilico"],
   ["giallognola","Giallognola",7,"Salsa di datterino giallo, mozzarella di bufala DOP, olio evo, basilico"],
   ["inversa","Inversa",6.5,"Mozzarella di bufala DOP, pomodoro ciliegino, olio evo, basilico"],
   ["provolata","Classica provolata",7,"Salsa di pomodoro, mozzarella fiordilatte, provola affumicata, olio evo, basilico"]]},
- {id:"cunsigghiati", t:"Sapuri cunsigghiati", g:"I consigliati", img:"cat-cunsigghiati.jpg", kind:"pizza", items:[
+ {id:"cunsigghiati", t:"Sapuri cunsigghiati", g:"I consigliati", img:"cat-cunsigghiati.webp", kind:"pizza", items:[
   ["sfiziusa","Sfiziusa",13,"Mozzarella fiordilatte, provola affumicata, patate al forno, guanciale croccante, cipolletta fresca","cereali"],
   ["sbampanti","Sbampanti",13,"Salsa di pomodoro, mozzarella fiordilatte, salame piccante, cipolla rossa, olive nere, peperoncini sott'olio, olio evo, basilico","Etna"],
   ["curiusa","Curiusa",13,"Crema di pistacchio artigianale, provola affumicata, mozzarella fiordilatte, salsiccia, funghi porcini, olio evo"],
   ["salatazza","Salatazza",12,"Salsa di pomodoro, capuliato di pomodorini secchi, filetti di acciughe, olive nere, olio evo"],
   ["mungibeddu","Mungibeddu",14,"Salsa di pomodoro, mozzarella di bufala, funghi porcini, salsiccia, cipolletta fresca, scagliette di grana padano DOP, olio evo, basilico"]]},
- {id:"biviri", t:"Pi bìviri", g:"Da bere", img:"cat-biviri.jpg", kind:"drink", items:[
+ {id:"biviri", t:"Pi bìviri", g:"Da bere", img:"cat-biviri.webp", kind:"drink", items:[
   ["nat50","Acqua naturale 50 cl",1],["nat15","Acqua naturale 1,5 l",2],["friz50","Acqua frizzante 50 cl",1],["friz15","Acqua frizzante 1,5 l",2],
   ["lanna","Nda lanna",2,"In lattina: Coca-Cola, Fanta, Sprite, Chinotto"],["buttigghia","Nda buttigghia",3.5,"Coca-Cola in bottiglia"],
   ["canusciuti","Birri canusciuti",3,"Moretti, Heineken"],["putenti","Birri putenti",4,"Tennent's, Ceres"],["cca","Birri di cca",5,"Birrificio dell'Etna"]]}
