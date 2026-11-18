@@ -38,7 +38,7 @@
   --oro:#D2A866;
   --brace:#E8662A;
   --crema:#F6EEE0;
-  --muted-d:#B7A898;
+  --muted-d:#CFC2B2;
   --muted-l:#6E5A4C;
   --f-title:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --f-body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -50,7 +50,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{margin:0;background:var(--lava);color:var(--crema);font:300 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--lava);color:var(--crema);font:400 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 html,body{overflow-x:clip}
 main,footer,section{overflow-x:clip}
 img{max-width:100%;display:block}
@@ -68,12 +68,19 @@ section{padding-block:110px}
 /* trama: curve di livello come le colate sulla volta del locale */
 .topo{background-color:var(--lava);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%23D2A866' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M-20 60c60-30 110 20 170-5s100-60 160-20 60 50 70 40'/%3E%3Cpath d='M-20 95c55-25 120 25 175 0s95-55 150-15 70 45 75 35'/%3E%3Cpath d='M-20 130c50-20 125 30 180 5s90-50 145-10 75 40 75 30'/%3E%3Cpath d='M-20 230c70 20 100-40 165-20s90 70 150 40 55-30 85-20'/%3E%3Cpath d='M-20 265c65 25 105-35 170-15s85 65 145 35 60-25 85-15'/%3E%3Cpath d='M-20 300c60 30 110-30 175-10s80 60 140 30 65-20 85-10'/%3E%3Cellipse cx='290' cy='180' rx='26' ry='14'/%3E%3Cellipse cx='290' cy='180' rx='46' ry='26'/%3E%3C/g%3E%3C/svg%3E")}
 
+/* pietra lavica del bancone (texture ripetibile) */
+.stone{background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.62),rgba(23,18,17,.62)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px}
+.stone-soft{background-image:linear-gradient(rgba(23,18,17,.78),rgba(23,18,17,.78)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px}
+/* titolo in siciliano + traduzione italiana sotto */
+.tr{display:block;margin-top:12px;font:500 12px/1.3 var(--f-body);letter-spacing:.28em;text-transform:uppercase;font-style:normal;opacity:.75}
+.light .tr{color:var(--muted-l);opacity:1}
+
 /* ---------- animazioni d'ingresso ---------- */
 html.anim [data-a]{opacity:0;transition:opacity 1.2s var(--ease) var(--d,0s),transform 1.2s var(--ease) var(--d,0s);will-change:opacity,transform}
 html.anim [data-a="up"]{transform:translateY(46px)}
-html.anim [data-a="left"]{transform:translateX(-70px)}
-html.anim [data-a="right"]{transform:translateX(70px)}
-html.anim [data-a="zoom"]{transform:scale(.9)}
+html.anim [data-a="up"]{transform:translateX(-70px)}
+html.anim [data-a="up"]{transform:translateX(70px)}
+html.anim [data-a="up"]{transform:scale(.9)}
 html.anim [data-a].in{opacity:1;transform:none}
 
 /* ---------- header ---------- */
@@ -165,12 +172,12 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .icon svg{width:78px;height:78px;transition:transform .6s var(--ease)}
 .icon:hover svg{transform:translateY(-6px) rotate(-4deg)}
 .icon h3{font:italic 500 23px/1.15 var(--f-title);color:var(--crema)}
-.icon p{margin:0;font-size:14px;color:var(--muted-d);max-width:15em}
+.icon p{margin:0;font-size:14.5px;color:var(--muted-d);max-width:15em}
 @media (max-width:860px){.icons{grid-template-columns:1fr 1fr}.icon:last-child{grid-column:1/-1}}
 @media (max-width:480px){.icons{grid-template-columns:1fr;gap:44px}}
 
 /* ---------- striscia punti di forza ---------- */
-.strip{padding-block:40px;border-bottom:1px solid rgba(210,168,102,.14)}
+.strip{padding-block:40px;border-block:1px solid rgba(210,168,102,.18)}
 .strip .icons{grid-template-columns:repeat(3,1fr);gap:18px}
 .strip .icon{flex-direction:row;gap:14px;text-align:left;justify-content:center}
 .strip .icon svg{width:46px;height:46px;flex:none}
@@ -179,7 +186,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 @media (max-width:760px){.strip{padding-block:26px}.strip .icons{grid-template-columns:repeat(3,1fr);gap:10px}.strip .icon{flex-direction:column;text-align:center;gap:8px}.strip .icon svg{width:38px;height:38px}.strip .icon h3{font-size:17px}.strip .icon p{display:none}.strip .icon:last-child{grid-column:auto}}
 
 /* ---------- Tramonto in evidenza in cima al menù ---------- */
-.feature{display:grid;grid-template-columns:.95fr 1.05fr;align-items:stretch;background:var(--inchiostro);color:var(--crema);border-radius:26px;overflow:hidden;margin-bottom:60px;scroll-margin-top:150px}
+.feature{display:grid;grid-template-columns:.95fr 1.05fr;align-items:stretch;background-color:#211b19;background-image:linear-gradient(rgba(35,24,20,.7),rgba(35,24,20,.7)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;color:var(--crema);border-radius:26px;overflow:hidden;margin-bottom:60px;scroll-margin-top:150px}
 .feature > *{min-width:0}
 .feature .im{position:relative;min-height:280px}
 .feature .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -213,7 +220,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .impasto > *{min-width:0}
 .impasto .ph{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5}
 .impasto .ph img{position:absolute;left:0;right:0;top:-10%;width:100%;height:120%;object-fit:cover;will-change:transform}
-.impasto .ph .badge{position:absolute;right:18px;bottom:18px;width:120px;height:120px;border-radius:50%;background:var(--bordeaux);color:var(--crema);display:grid;place-items:center;text-align:center;font:italic 500 19px/1.1 var(--f-title);padding:14px;animation:spin 30s linear infinite}
+.impasto .ph .badge{position:absolute;right:18px;bottom:18px;width:120px;height:120px;border-radius:50%;background:var(--bordeaux);color:var(--crema);display:grid;place-items:center;text-align:center;font:italic 500 19px/1.1 var(--f-title);padding:14px}
 .impasto .story p{margin:0 0 16px;color:var(--muted-l)}
 .impasto .story h3{font:italic 500 clamp(30px,3.6vw,42px)/1.1 var(--f-title);color:var(--inchiostro);margin-bottom:18px}
 .grani{display:grid;gap:12px;margin-top:26px}
@@ -232,8 +239,8 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:70px}
 #ordina .notify{margin-top:70px}
 .home > *{min-width:0}
-.home-card{position:relative;border-radius:26px;overflow:hidden;background:var(--lava-3);min-height:340px;display:flex;align-items:center;padding:40px}
-.home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;animation:spin 60s linear infinite;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.home-card{position:relative;border-radius:26px;overflow:hidden;background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.55),rgba(23,18,17,.55)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;min-height:340px;display:flex;align-items:center;padding:40px}
+.home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;box-shadow:0 20px 50px rgba(0,0,0,.6)}
 .home-card .t{position:relative;z-index:1;max-width:60%}
 .home-card .t b{display:block;font:700 clamp(30px,4.2vw,52px)/1 var(--f-body);text-transform:uppercase;letter-spacing:.01em}
 .home-card .t span{display:block;margin-top:10px;font:600 clamp(16px,2vw,22px) var(--f-body);letter-spacing:.16em;color:var(--oro);text-transform:uppercase}
@@ -258,7 +265,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 @keyframes panelIn{from{opacity:0;transform:translateY(16px)}}
 .banner{position:relative;height:150px;border-radius:22px;overflow:hidden;margin-bottom:8px;display:flex;align-items:flex-end;padding:18px 22px}
 @media (max-width:700px){.banner{height:118px;padding:14px 18px}}
-.banner img{position:absolute;left:0;right:0;top:-15%;width:100%;height:130%;object-fit:cover;will-change:transform}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .banner::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(23,18,17,.85),rgba(23,18,17,.05) 75%)}
 .banner h3{position:relative;z-index:1;font:italic 500 clamp(32px,4.4vw,46px)/1 var(--f-title);color:var(--crema);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .banner h3 small{font:500 12px var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--oro)}
@@ -287,9 +294,9 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 /* ---------- scheda pizza ---------- */
 .sh-scrim{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .35s}
 .sh-scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;z-index:91;left:0;right:0;bottom:0;max-height:90svh;display:flex;flex-direction:column;background:var(--pietra);color:var(--inchiostro);border-radius:26px 26px 0 0;transform:translateY(105%);transition:transform .5s var(--ease);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -20px 50px rgba(0,0,0,.35)}
-.sheet.open{transform:none}
-@media (min-width:761px){.sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(540px,92vw);max-height:88vh;border-radius:26px;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:transform .45s var(--ease),opacity .3s}.sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}}
+.sheet{position:fixed;z-index:91;left:0;right:0;bottom:0;max-height:90svh;display:flex;flex-direction:column;background:var(--pietra);color:var(--inchiostro);border-radius:26px 26px 0 0;transform:translateY(105%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -20px 50px rgba(0,0,0,.35)}
+.sheet.open{transform:none;visibility:visible;transition:transform .5s var(--ease)}
+@media (min-width:761px){.sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(540px,92vw);max-height:88vh;border-radius:26px;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:transform .45s var(--ease),opacity .3s}.sheet.open{transform:translate(-50%,-50%);opacity:1;pointer-events:auto;visibility:visible}}
 .sheet .grab{width:44px;height:4px;border-radius:4px;background:rgba(59,35,24,.25);margin:10px auto 0;flex:none}
 @media (min-width:761px){.sheet .grab{display:none}}
 .sh-x{position:absolute;top:12px;right:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(23,18,17,.55);color:#fff;font-size:24px;line-height:1;display:grid;place-items:center}
@@ -324,7 +331,7 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .steps-h{text-align:center;margin-bottom:60px}
 .steps-h p{color:var(--muted-d);margin:10px 0 0}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
-.step{position:relative;padding:34px 28px 30px;border-radius:24px;background:var(--lava-2);border:1px solid rgba(210,168,102,.14);transition:transform .5s var(--ease),border-color .5s}
+.step{position:relative;padding:34px 28px 30px;border-radius:24px;background-color:#211b19;background-image:linear-gradient(rgba(23,18,17,.72),rgba(23,18,17,.72)),url("assets/pietra-lavica.jpg");background-size:auto,300px 300px;border:1px solid rgba(210,168,102,.14);transition:transform .5s var(--ease),border-color .5s}
 .step:hover{transform:translateY(-8px);border-color:rgba(210,168,102,.45)}
 .step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid var(--oro);color:var(--oro);font:italic 500 26px var(--f-title);margin-bottom:22px}
 .step h3{font:italic 500 28px var(--f-title);margin-bottom:8px}
@@ -362,7 +369,7 @@ footer .phil{max-width:34em;margin:0 auto 46px}
 .social a{width:44px;height:44px;border-radius:50%;border:1px solid rgba(210,168,102,.35);display:grid;place-items:center;color:var(--oro);transition:background .3s,color .3s}
 .social a:hover{background:var(--oro);color:var(--lava)}
 .social svg{width:18px;height:18px}
-footer small{display:block;font-size:13px;opacity:.75}
+footer small{display:block;font-size:13.5px;opacity:.85}
 
 /* ---------- barra ordine mobile ---------- */
 .orderbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:22px var(--gutter-r) calc(10px + env(safe-area-inset-bottom,0px)) var(--gutter);background:linear-gradient(transparent,rgba(23,18,17,.97) 32%);transform:translateY(110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
@@ -630,14 +637,14 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 </section>
 
 <!-- PUNTI DI FORZA (striscia compatta) -->
-<section class="topo strip" aria-label="Perché Mungibeddu">
+<section class="stone strip" aria-label="Perché Mungibeddu">
   <div class="wrap"><div class="icons" id="icons"></div></div>
 </section>
 
 <!-- MENU (subito dopo la prima schermata) -->
 <section class="light menu-sec" id="menu" aria-labelledby="menu-t">
   <div class="wrap">
-    <div class="head"><span class="caps" style="color:var(--bordeaux)" data-a="up">Pizze, fritti e birre dell'Etna</span><h2 class="t-title" id="menu-t" data-a="up" style="--d:.1s">U Menù</h2></div>
+    <div class="head"><span class="caps" style="color:var(--bordeaux)" data-a="up">Pizze, fritti e birre dell'Etna</span><h2 class="t-title" id="menu-t" data-a="up" style="--d:.1s">U Menù<span class="tr">Il menù</span></h2></div>
     <div id="menuFeature"></div>
     <div class="legend" aria-label="Legenda simboli"><span><i class="tag hot" data-ic="hot"></i>Piccante</span><span><i class="tag veg" data-ic="veg"></i>Senza carne né pesce</span><span>Tocca il nome per i dettagli, + per aggiungere</span></div>
     <div class="cats" id="cats" role="tablist" aria-label="Categorie del menù"></div>
@@ -653,18 +660,18 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <img class="mark" src="assets/logo-dark.png" alt="" width="1092" height="799" aria-hidden="true" data-par="-.12">
   <div class="wrap">
     <span class="caps kicker" data-a="up">La nostra terra, i nostri sapori</span>
-    <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Comu nasci a nostra pizza</h2>
+    <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Comu nasci a nostra pizza<span class="tr">Come nasce la nostra pizza</span></h2>
     <p class="lead" data-a="up" style="--d:.2s">La nostra pizza nasce dall'incontro tra tradizione, territorio e innovazione. Crediamo che una grande pizza cominci dalla scelta delle materie prime.</p>
 
     <div class="impasto">
-      <div class="ph" data-a="left"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
+      <div class="ph" data-a="up"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
       <div class="story">
         <p data-a="up">Abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica. Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
         <p data-a="up" style="--d:.1s">Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto: un cornicione soffice e alveolato, con una piacevole croccantezza esterna.</p>
         <div class="grani">
-          <div class="grano" data-a="right" style="--d:.1s"><div class="ico" data-ico="0"></div><div><h4>Farina tipo 0</h4><p>Leggerezza ed elasticità alla lievitazione.</p></div></div>
-          <div class="grano" data-a="right" style="--d:.22s"><div class="ico" data-ico="1"></div><div><h4>Farina tipo 1</h4><p>Conserva parte del germe e della crusca: più profumo.</p></div></div>
-          <div class="grano star" data-a="right" style="--d:.34s"><div class="ico"><img src="assets/grano.jpg" alt="Spighe di grano dorate" width="600" height="900" loading="lazy"></div><div><h4>Perciasacchi <span class="pill">Bio</span></h4><p>Antico grano duro siciliano non OGM: carattere, fibre e un glutine più delicato.</p></div></div>
+          <div class="grano" data-a="up" style="--d:.1s"><div class="ico" data-ico="0"></div><div><h4>Farina tipo 0</h4><p>Leggerezza ed elasticità alla lievitazione.</p></div></div>
+          <div class="grano" data-a="up" style="--d:.22s"><div class="ico" data-ico="1"></div><div><h4>Farina tipo 1</h4><p>Conserva parte del germe e della crusca: più profumo.</p></div></div>
+          <div class="grano star" data-a="up" style="--d:.34s"><div class="ico"><img src="assets/grano.jpg" alt="Spighe di grano dorate" width="600" height="900" loading="lazy"></div><div><h4>Perciasacchi <span class="pill">Bio</span></h4><p>Antico grano duro siciliano non OGM: carattere, fibre e un glutine più delicato.</p></div></div>
         </div>
       </div>
     </div>
@@ -676,26 +683,26 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <div class="pbg" data-par=".22"><img src="assets/locale.jpg" alt="Interno della pizzeria con volte, banconi in pietra lavica e sgabelli bordeaux" width="1272" height="1388" loading="lazy"></div>
   <div class="inner">
     <span class="caps" data-a="up" style="color:var(--oro)">Rendering del locale</span>
-    <h2 data-a="up" style="--d:.1s">Pietra lavica, volte e il calore del forno</h2>
-    <p data-a="up" style="--d:.2s">Banconi in pietra dell'Etna, sgabelli in velluto per chi aspetta la sua pizza e, sul soffitto, la mappa delle colate del vulcano.</p>
+    <h2 data-a="up" style="--d:.1s">U nostru locali<span class="tr">Il nostro locale</span></h2>
+    <p data-a="up" style="--d:.2s">Pietra lavica, volte e il calore del forno. Banconi in pietra dell'Etna, sgabelli in velluto per chi aspetta la sua pizza e, sul soffitto, la mappa delle colate del vulcano.</p>
   </div>
 </div>
 
 <!-- ORDINA E DOMICILIO (passi + a casa tua + avvisami) -->
 <section class="topo" id="ordina" aria-labelledby="ordina-t">
   <div class="wrap">
-    <div class="steps-h"><h2 class="t-title" id="ordina-t" data-a="up">Comu s'ordina</h2><p data-a="up" style="--d:.1s">Senza app e senza commissioni, in tre passi.</p></div>
+    <div class="steps-h"><h2 class="t-title" id="ordina-t" data-a="up">Comu s'ordina<span class="tr">Come ordinare</span></h2><p data-a="up" style="--d:.1s">Senza app e senza commissioni, in tre passi.</p></div>
     <div class="steps">
       <div class="step" data-a="up"><h3>Scegli</h3><p>Aggiungi pizze, fritti e bibite dal menù. Per ogni pizza puoi scegliere l'impasto.</p></div>
       <div class="step" data-a="up" style="--d:.15s"><h3>Invia su WhatsApp</h3><p>Indica asporto o domicilio e l'orario. L'ordine arriva a noi già scritto, tu premi solo invia.</p></div>
       <div class="step" data-a="up" style="--d:.3s"><h3>Ritira o ricevi</h3><p>Ti confermiamo l'orario in chat. Passi a prenderla calda, oppure te la portiamo noi.</p></div>
     </div>
     <div class="home">
-      <div class="home-card" data-a="left">
+      <div class="home-card" data-a="up">
         <img src="assets/pizza-top.webp" alt="" width="900" height="900" loading="lazy">
         <div class="t"><b>Mungibeddu a casa tua</b><span>Ordina ora!</span></div>
       </div>
-      <div class="home-txt" data-a="right" style="--d:.15s">
+      <div class="home-txt" data-a="up" style="--d:.15s">
         <span class="lab">Domicilio</span>
         <h3>I sapori dell'Etna, comodamente a casa tua</h3>
         <p>Consegniamo a Milo e nei paesi vicini: Zafferana Etnea, Sant'Alfio, Giarre e Riposto <span class="todo">zone e costo</span></p>
@@ -703,7 +710,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
       </div>
     </div>
     <div class="notify" data-launch hidden>
-      <div class="box" data-a="zoom">
+      <div class="box" data-a="up">
         <span class="caps" style="color:var(--oro)">Stamu arrivannu</span>
         <h2 id="notify-t" data-when-long>Stiamo per aprire</h2>
         <p>Iscriviti al nostro canale WhatsApp: ti avvisiamo il giorno dell'apertura e ti mandiamo le offerte della settimana d'inaugurazione.</p>
@@ -716,7 +723,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 <!-- CONTATTI -->
 <section class="light" id="contatti" aria-labelledby="dove-t">
   <div class="wrap">
-    <div class="contact-h"><span class="caps" style="color:var(--bordeaux)" data-a="up">Sutta a Muntagna</span><h2 class="t-title" id="dove-t" data-a="up" style="--d:.1s">Unni semu</h2></div>
+    <div class="contact-h"><span class="caps" style="color:var(--bordeaux)" data-a="up">Sutta a Muntagna</span><h2 class="t-title" id="dove-t" data-a="up" style="--d:.1s">Unni semu<span class="tr">Dove siamo</span></h2></div>
     <div class="info">
       <div data-a="up"><h3>Indirizzo</h3><p>Milo (CT), alle pendici dell'Etna <span class="todo">via e civico</span></p><p><a href="https://www.google.com/maps/search/?api=1&query=Milo+CT" target="_blank" rel="noopener">Apri in Google Maps</a></p></div>
       <div data-a="up" style="--d:.12s"><h3>Orari</h3><span class="st" data-status hidden></span><ul class="orari-list" id="orariList" hidden></ul><p id="orariTodo">Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Nel weekend conviene ordinare con un po' di anticipo.</p></div>
@@ -726,9 +733,9 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 </section>
 </main>
 
-<footer class="topo">
+<footer class="stone-soft">
   <div class="wrap">
-    <img class="logo" src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799" loading="lazy" data-a="zoom">
+    <img class="logo" src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799" loading="lazy" data-a="up">
     <p class="phil" data-a="up">Alle pendici dell'Etna trasformiamo la passione per la pizza in un'esperienza che valorizza le nostre radici siciliane, senza rinunciare all'innovazione.</p>
     <div class="fcols" data-a="up">
       <div><h4>Link rapidi</h4><ul><li><a href="#impasto">L'impasto</a></li><li><a href="#menu">Menù</a></li><li><a href="#ordina">Come ordinare</a></li><li><a href="#contatti">Contatti</a></li></ul></div>
@@ -768,7 +775,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Il tuo ordine" aria-hidden="true">
-  <header><h2>U to ordini</h2><button class="x" type="button" id="closeCart" aria-label="Chiudi">×</button></header>
+  <header><h2>U to ordini<span class="tr" style="font-size:11px;margin-top:6px">Il tuo ordine</span></h2><button class="x" type="button" id="closeCart" aria-label="Chiudi">×</button></header>
   <div class="dbody">
     <div id="lines"></div>
     <div id="checkout">
@@ -926,7 +933,7 @@ const cats=document.getElementById("cats"),list=document.getElementById("menuLis
 const per=MENU.find(c=>c.id==="periudu"),tabs=TAB_ORDER.map(id=>MENU.find(c=>c.id===id));
 {const it=ITEMS[per.items[0][0]];document.getElementById("menuFeature").innerHTML=`<article class="mgroup feature" id="cat-periudu" data-a="up"><div class="im"><img src="assets/${per.img}" alt="Zucche di stagione" loading="lazy"></div><div class="tx"><span class="lab">${per.t} · la pizza di stagione</span><h3>${it.name}</h3><p>${it.desc}</p>${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}<div class="row"><b>${euro(it.price)}</b><button class="btn btn-oro" type="button" data-open="${it.id}">Scegli e aggiungi</button></div></div></article>`}
 cats.innerHTML=tabs.map((c,i)=>`<button type="button" role="tab" id="tab-${c.id}" data-cat="${c.id}" aria-controls="cat-${c.id}" aria-selected="${i===0}" tabindex="${i?-1:0}">${c.t}<small>${c.items.length}</small></button>`).join("");
-list.innerHTML=tabs.map((c,i)=>`<div class="mgroup panel" id="cat-${c.id}" role="tabpanel" aria-labelledby="tab-${c.id}"${i?" hidden":""}><div class="banner"><img src="assets/${c.img}" alt="" loading="lazy" data-par=".1"><h3>${c.t}<small>${c.g}</small></h3></div><div class="mlist">${c.items.map(a=>{const it=ITEMS[a[0]];
+list.innerHTML=tabs.map((c,i)=>`<div class="mgroup panel" id="cat-${c.id}" role="tabpanel" aria-labelledby="tab-${c.id}"${i?" hidden":""}><div class="banner"><img src="assets/${c.img}" alt="" loading="lazy"><h3>${c.t}<small>${c.g}</small></h3></div><div class="mlist">${c.items.map(a=>{const it=ITEMS[a[0]];
   return `<div class="mi"><button class="mi-open" type="button" data-open="${it.id}"><h4>${it.name}</h4><span class="tags">${tagsOf(it.id)}</span>${it.desc?`<p>${it.desc}</p>`:""}${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}</button><div class="side"><b>${euro(it.price)}</b><button class="plus" type="button" data-add="${it.id}" aria-label="Aggiungi ${it.name}">+</button></div></div>`}).join("")}</div></div>`).join("");
 function showTab(id,focus){
   cats.querySelectorAll("[role=tab]").forEach(b=>{const on=b.dataset.cat===id;b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1;if(on){cats.scrollTo({left:b.offsetLeft-20,behavior:"smooth"});if(focus)b.focus()}});

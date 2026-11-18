@@ -23,3 +23,5 @@ Da sostituire con le foto reali di Mungibeddu appena disponibili.
 | slide-spicchi.webp | https://www.pexels.com/photo/17848752/ |
 | slide-zucca.webp | https://www.pexels.com/photo/28882033/ |
 | slide-asporto.webp | https://www.pexels.com/photo/5056830/ |
+
+`pietra-lavica.jpg` è una texture generata (non una foto), ispirata al bancone in pietra lavica del rendering.
