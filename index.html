@@ -51,6 +51,8 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;background:var(--lava);color:var(--crema);font:300 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{overflow-x:clip}
+main,footer,section{overflow-x:clip}
 img{max-width:100%;display:block}
 h1,h2,h3,h4{text-wrap:balance;margin:0;font-weight:500}
 a{color:inherit}
@@ -102,36 +104,37 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 body.ov .burger span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}body.ov .burger span:nth-child(2){opacity:0}body.ov .burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
 body.ov .top{background:transparent;box-shadow:none;backdrop-filter:none;z-index:56}
 
-/* ---------- hero slider ---------- */
-.hero{position:relative;height:100svh;min-height:620px;max-height:960px;overflow:hidden;background:var(--lava)}
-.slide{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s 1.2s}
-.slide.on{opacity:1;visibility:visible;transition:opacity 1.2s ease}
-.slide .bg{position:absolute;inset:0;overflow:hidden}
-.slide .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.02)}
-.slide.on .bg img{animation:kenburns 9s ease-out forwards}
-@keyframes kenburns{to{transform:scale(1.14)}}
-.slide .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(23,18,17,.35),rgba(23,18,17,.82) 75%),linear-gradient(180deg,rgba(23,18,17,.55),transparent 30%,transparent 60%,rgba(23,18,17,.95))}
+/* ---------- hero slider (scorre col dito, infinito) ---------- */
+.hero{--top:92px;--img:min(42vh,370px,72vw);position:relative;overflow:hidden;background:var(--lava)}
+.hero-vp{overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.hero-vp.drag{cursor:grabbing}
+.hero-track{display:flex;will-change:transform}
+.hero-track.anim{transition:transform .7s var(--ease)}
+.slide{position:relative;flex:0 0 100%;min-width:0;min-height:max(100svh,640px);display:flex;justify-content:center;text-align:center}
+.slide .bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.slide .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 9s ease-out;-webkit-user-drag:none}
+.slide.on .bg img{transform:scale(1.14)}
+.slide .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,17,.55) 0%,rgba(23,18,17,.15) 25%,rgba(23,18,17,.35) 48%,rgba(23,18,17,.9) 66%,var(--lava) 100%)}
 .slide .blur img{filter:blur(4px) saturate(.8)}
-.slide .inner{position:relative;z-index:1;max-width:680px;padding:96px var(--gutter-r) 90px var(--gutter);display:flex;flex-direction:column;align-items:center}
-.slide .inner > *{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.slide.on .inner > *{opacity:1;transform:none}
-.slide.on .inner > *:nth-child(2){transition-delay:.15s}.slide.on .inner > *:nth-child(3){transition-delay:.3s}.slide.on .inner > *:nth-child(4){transition-delay:.45s}.slide.on .inner > *:nth-child(5){transition-delay:.6s}
-.hero-pizza{width:min(48vh,380px,74vw);aspect-ratio:1;margin-bottom:26px;position:relative}
-.hero-pizza img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:spin 70s linear infinite}
+.slide .inner{position:relative;z-index:1;width:100%;max-width:700px;padding:var(--top) var(--gutter-r) 44px var(--gutter);display:flex;flex-direction:column;align-items:center}
+.slide .media{width:var(--img);height:var(--img);flex:none;margin-bottom:30px;position:relative}
+.hero-pizza img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:spin 70s linear infinite;-webkit-user-drag:none;pointer-events:none}
 .hero-pizza::before{content:"";position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(232,102,42,.28),transparent 65%);z-index:-1;animation:glow 4s ease-in-out infinite alternate}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes glow{from{opacity:.5;transform:scale(.95)}to{opacity:1;transform:scale(1.05)}}
-.slide .kicker{color:var(--oro);margin-bottom:12px}
-.slide h1,.slide h2{font:italic 500 clamp(40px,6.5vw,72px)/1.02 var(--f-title);margin-bottom:16px}
-.slide p{color:#dccfbf;margin:0 0 28px;max-width:34em;font-size:clamp(16px,1.6vw,19px)}
-.hero-ctrl{pointer-events:none;position:absolute;z-index:3;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:10px}
-.dot{pointer-events:auto;width:9px;height:9px;border-radius:999px;border:0;padding:0;background:rgba(246,238,224,.35);transition:width .5s var(--ease),background .5s}
-.dot.on{width:34px;background:var(--oro)}
-.arrow{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:1px solid rgba(246,238,224,.35);background:rgba(23,18,17,.25);color:var(--crema);display:grid;place-items:center;transition:background .3s,border-color .3s}
-.arrow:hover{background:var(--oro);border-color:var(--oro);color:var(--lava)}
-.arrow.prev{left:max(18px,env(safe-area-inset-left,0px))}.arrow.next{right:max(18px,env(safe-area-inset-right,0px))}
-@media (max-width:700px){.arrow{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:none;width:42px;height:42px}}
-.scroll-hint{position:absolute;z-index:3;right:max(28px,env(safe-area-inset-right,0px));bottom:30px;writing-mode:vertical-rl;font:500 11px var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:var(--muted-d);display:flex;align-items:center;gap:12px}
+.slide h1,.slide h2{font:italic 500 clamp(38px,6vw,64px)/1.06 var(--f-title);color:var(--oro);margin-bottom:16px}
+.slide p{color:var(--crema);margin:0 0 26px;max-width:32em;font-size:clamp(17px,1.7vw,20px);line-height:1.6}
+.slide .launch-row{margin-bottom:0}
+.sdots{display:flex;justify-content:center;gap:10px;margin-top:26px}
+.dot{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(246,238,224,.3);transition:background .4s,transform .4s}
+.dot.on{background:var(--crema);transform:scale(1.15)}
+.arrow{position:absolute;z-index:3;top:calc(var(--top) + var(--img) / 2);transform:translateY(-50%);width:48px;height:48px;border:0;background:transparent;color:var(--crema);display:grid;place-items:center;transition:color .3s,transform .3s}
+.arrow svg{width:30px;height:30px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.arrow:hover{color:var(--oro)}
+.arrow.prev{left:max(6px,env(safe-area-inset-left,0px))}.arrow.next{right:max(6px,env(safe-area-inset-right,0px))}
+.arrow.prev:active{transform:translateY(-50%) translateX(-4px)}.arrow.next:active{transform:translateY(-50%) translateX(4px)}
+@media (min-width:861px){.arrow.prev{left:max(28px,calc(50% - 440px))}.arrow.next{right:max(28px,calc(50% - 440px))}}
+.scroll-hint{position:absolute;z-index:3;right:max(28px,env(safe-area-inset-right,0px));bottom:30px;writing-mode:vertical-rl;font:500 11px var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:var(--muted-d);display:flex;align-items:center;gap:12px;pointer-events:none}
 .scroll-hint::after{content:"";width:1px;height:56px;background:linear-gradient(var(--oro),transparent);animation:drip 2s ease-in-out infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 @media (max-width:860px){.scroll-hint{display:none}}
@@ -396,49 +399,56 @@ footer small{display:block;font-size:13px;opacity:.75}
 
 <!-- HERO SLIDER -->
 <section class="hero" aria-roledescription="carosello" aria-label="In evidenza" style="padding:0">
-  <div class="slide on" data-slide>
-    <div class="bg blur"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
-    <div class="inner">
-      <div class="hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
-      <span class="caps kicker">Asporto e domicilio · Milo</span>
-      <h1>La nostra terra, i nostri sapori.</h1>
-      <div class="launch" data-launch hidden>
-        <span class="when" data-when></span>
-        <div class="cd" data-cd hidden><div><b data-u="d">0</b><small>Giorni</small></div><div><b data-u="h">0</b><small>Ore</small></div><div><b data-u="m">0</b><small>Min</small></div><div><b data-u="s">0</b><small>Sec</small></div></div>
+  <div class="hero-vp" id="heroVp">
+    <div class="hero-track" id="heroTrack">
+      <div class="slide" data-slide>
+        <div class="bg blur"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
+        <div class="inner">
+          <div class="media hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
+          <h1>La nostra terra, i nostri sapori.</h1>
+          <p>Pizza d'asporto e a domicilio alle pendici dell'Etna, con grano antico siciliano Perciasacchi.</p>
+          <div class="launch" data-launch hidden>
+            <span class="when" data-when></span>
+            <div class="cd" data-cd hidden><div><b data-u="d">0</b><small>Giorni</small></div><div><b data-u="h">0</b><small>Ore</small></div><div><b data-u="m">0</b><small>Min</small></div><div><b data-u="s">0</b><small>Sec</small></div></div>
+          </div>
+          <div class="launch-row"><a class="btn btn-oro" href="#menu">Scopri il menù</a><a class="btn btn-line" href="#" data-notify data-launch hidden>Avvisami all'apertura</a></div>
+          <div class="sdots"></div>
+        </div>
       </div>
-      <div class="launch-row"><a class="btn btn-oro" href="#menu">Scopri il menù</a><a class="btn btn-line" href="#" data-notify data-launch hidden>Avvisami all'apertura</a></div>
+      <div class="slide" data-slide>
+        <div class="bg"><img src="assets/farina.jpg" alt="" width="1400" height="934"></div>
+        <div class="inner">
+          <div class="media" aria-hidden="true"></div>
+          <h2>Grano antico Perciasacchi</h2>
+          <p>Farine tipo 0 e tipo 1 con una percentuale di Perciasacchi, antico grano duro siciliano da agricoltura biologica. Cornicione soffice, croccante fuori.</p>
+          <a class="btn btn-oro" href="#impasto">Scopri l'impasto</a>
+          <div class="sdots"></div>
+        </div>
+      </div>
+      <div class="slide" data-slide>
+        <div class="bg"><img src="assets/zucca.jpg" alt="" width="1200" height="852"></div>
+        <div class="inner">
+          <div class="media" aria-hidden="true"></div>
+          <h2>Tramonto, la pizza di stagione</h2>
+          <p>Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia e granella di nocciole.</p>
+          <button class="btn btn-oro" type="button" data-add="tramonto">Aggiungi all'ordine · 11€</button>
+          <div class="sdots"></div>
+        </div>
+      </div>
+      <div class="slide" data-slide>
+        <div class="bg"><img src="assets/asporto.jpg" alt="" width="1400" height="933"></div>
+        <div class="inner">
+          <div class="media" aria-hidden="true"></div>
+          <h2>Mungibeddu a casa tua</h2>
+          <p>Scegli dal menù e invia l'ordine su WhatsApp. Passi a ritirarla calda o te la portiamo noi.</p>
+          <a class="btn btn-oro" href="#ordina">Ordina ora</a>
+          <div class="sdots"></div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="slide" data-slide aria-hidden="true">
-    <div class="bg"><img src="assets/farina.jpg" alt="" width="1400" height="934"></div>
-    <div class="inner">
-      <span class="caps kicker">Il nostro impasto</span>
-      <h2>Grano antico Perciasacchi</h2>
-      <p>Farine tipo 0 e tipo 1 con una percentuale di Perciasacchi, antico grano duro siciliano da agricoltura biologica. Cornicione soffice, croccante fuori.</p>
-      <a class="btn btn-line" href="#impasto" tabindex="-1">Scopri l'impasto</a>
-    </div>
-  </div>
-  <div class="slide" data-slide aria-hidden="true">
-    <div class="bg"><img src="assets/zucca.jpg" alt="" width="1200" height="852"></div>
-    <div class="inner">
-      <span class="caps kicker">Di stu periudu</span>
-      <h2>Tramonto</h2>
-      <p>Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia e granella di nocciole. La pizza di stagione.</p>
-      <button class="btn btn-oro" type="button" data-add="tramonto" tabindex="-1">Aggiungi all'ordine · 11€</button>
-    </div>
-  </div>
-  <div class="slide" data-slide aria-hidden="true">
-    <div class="bg"><img src="assets/asporto.jpg" alt="" width="1400" height="933"></div>
-    <div class="inner">
-      <span class="caps kicker">Asporto e domicilio</span>
-      <h2>Mungibeddu a casa tua</h2>
-      <p>Scegli dal menù e invia l'ordine su WhatsApp. Passi a ritirarla calda o te la portiamo noi.</p>
-      <a class="btn btn-oro" href="#ordina" tabindex="-1">Ordina ora</a>
-    </div>
-  </div>
-  <button class="arrow prev" type="button" id="prev" aria-label="Slide precedente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
-  <button class="arrow next" type="button" id="next" aria-label="Slide successiva"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
-  <div class="hero-ctrl" id="dots"></div>
+  <button class="arrow prev" type="button" id="prev" aria-label="Slide precedente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg></button>
+  <button class="arrow next" type="button" id="next" aria-label="Slide successiva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4l8 8-8 8"/></svg></button>
   <span class="scroll-hint">Scorri</span>
 </section>
 
@@ -674,8 +684,8 @@ const CONFIG = {
     document.querySelectorAll("[data-when-long]").forEach(el=>el.textContent=(open?"Apriamo ":"Apriamo a ")+fmt);
     const notify=CONFIG.canaleWhatsapp||(CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Ciao Mungibeddu! Avvisatemi quando aprite 🍕")}`:"");
     document.querySelectorAll("[data-notify]").forEach(a=>{if(notify){a.href=notify;a.target="_blank";a.rel="noopener"}else{a.href="#contatti"}});
-    if(open){const cd=document.querySelector("[data-cd]");cd.hidden=false;
-      const u=k=>cd.querySelector(`[data-u="${k}"]`);
+    if(open){document.querySelectorAll("[data-cd]").forEach(c=>c.hidden=false);
+      const u=k=>({set textContent(v){document.querySelectorAll(`[data-u="${k}"]`).forEach(el=>el.textContent=v)}});
       const tick=()=>{let t=Math.max(0,open-new Date());if(!t){location.reload();return}
         const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);
         u("d").textContent=d;u("h").textContent=String(h).padStart(2,"0");u("m").textContent=String(m).padStart(2,"0");u("s").textContent=String(s).padStart(2,"0")};
@@ -748,17 +758,47 @@ list.innerHTML=MENU.map(c=>`<div class="mgroup" id="cat-${c.id}"><div class="ban
 cats.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(b)document.getElementById("cat-"+b.dataset.cat).scrollIntoView({behavior:"smooth"})});
 const groups=[...document.querySelectorAll(".mgroup")];
 
-/* ===== Hero slider ===== */
-const slides=[...document.querySelectorAll("[data-slide]")],dots=document.getElementById("dots");let cur=0,timer;
-dots.innerHTML=slides.map((_,i)=>`<button class="dot${i?"":" on"}" type="button" aria-label="Vai alla slide ${i+1}"></button>`).join("");
-function go(n){cur=(n+slides.length)%slides.length;slides.forEach((s,i)=>{const on=i===cur;s.classList.toggle("on",on);s.setAttribute("aria-hidden",!on);s.querySelectorAll("a,button").forEach(el=>el.tabIndex=on?0:-1)});
-  [...dots.children].forEach((d,i)=>d.classList.toggle("on",i===cur));restart()}
-function restart(){clearInterval(timer);if(!matchMedia("(prefers-reduced-motion:reduce)").matches)timer=setInterval(()=>go(cur+1),7000)}
-document.getElementById("prev").onclick=()=>go(cur-1);document.getElementById("next").onclick=()=>go(cur+1);
-dots.addEventListener("click",e=>{const i=[...dots.children].indexOf(e.target);if(i>=0)go(i)});
-let sx=null;const hero=document.querySelector(".hero");hero.addEventListener("touchstart",e=>sx=e.touches[0].clientX,{passive:true});
-hero.addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)go(cur+(dx<0?1:-1));sx=null});
-restart();
+/* ===== Hero slider: trascinamento col dito/mouse, giro infinito ===== */
+(function(){
+  const vp=document.getElementById("heroVp"),track=document.getElementById("heroTrack");
+  const real=[...track.querySelectorAll("[data-slide]")],N=real.length;
+  // pallini sotto il pulsante di ogni slide
+  real.forEach((sl,i)=>{sl.dataset.i=i;sl.querySelector(".sdots").innerHTML=real.map((_,k)=>`<button class="dot${k===i?" on":""}" type="button" data-go="${k}" aria-label="Vai alla slide ${k+1}"${k===i?' aria-current="true"':""}></button>`).join("")});
+  // cloni ai bordi per il giro infinito
+  const first=real[0].cloneNode(true),last=real[N-1].cloneNode(true);
+  [first,last].forEach(c=>{c.setAttribute("aria-hidden","true");c.inert=true;c.querySelectorAll("[id]").forEach(e=>e.removeAttribute("id"))});
+  track.append(first);track.prepend(last);
+  const all=[...track.children];
+  let pos=1,timer,startX=0,startY=0,dx=0,dragging=false,moved=false,lock=null,t0=0;
+  const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const W=()=>vp.clientWidth;
+  function place(anim){track.classList.toggle("anim",!!anim&&!still);track.style.transform=`translate3d(${-pos*W()+dx}px,0,0)`}
+  function mark(){const idx=(pos-1+N)%N;all.forEach((s,k)=>s.classList.toggle("on",k===pos));
+    real.forEach((s,k)=>{s.setAttribute("aria-hidden",k!==idx);s.inert=k!==idx})}
+  function go(p){pos=p;dx=0;place(true);mark();restart()}
+  track.addEventListener("transitionend",e=>{if(e.target!==track)return;
+    if(pos===0){pos=N;place(false);mark()}else if(pos===N+1){pos=1;place(false);mark()}});
+  function restart(){clearInterval(timer);if(!still)timer=setInterval(()=>go(pos+1),6500)}
+  document.getElementById("prev").onclick=()=>go(pos-1);
+  document.getElementById("next").onclick=()=>go(pos+1);
+  track.addEventListener("click",e=>{const d=e.target.closest("[data-go]");if(d){go(+d.dataset.go+1);return}
+    if(moved){e.preventDefault();e.stopPropagation()}},true);
+  vp.addEventListener("pointerdown",e=>{if(e.button!==0)return;dragging=true;moved=false;lock=null;startX=e.clientX;startY=e.clientY;dx=0;t0=performance.now();clearInterval(timer);
+    if(pos===0||pos===N+1){pos=pos===0?N:1}place(false)});
+  addEventListener("pointermove",e=>{if(!dragging)return;const mx=e.clientX-startX,my=e.clientY-startY;
+    if(lock===null&&(Math.abs(mx)>6||Math.abs(my)>6))lock=Math.abs(mx)>Math.abs(my)?"x":"y";
+    if(lock!=="x")return;moved=true;vp.classList.add("drag");dx=mx;place(false)});
+  function end(){if(!dragging)return;dragging=false;vp.classList.remove("drag");
+    const v=dx/Math.max(1,performance.now()-t0);
+    if(dx<-W()*.18||v<-.45)go(pos+1);else if(dx>W()*.18||v>.45)go(pos-1);else{dx=0;place(true);restart()}
+    setTimeout(()=>moved=false,50)}
+  addEventListener("pointerup",end);addEventListener("pointercancel",end);
+  vp.addEventListener("dragstart",e=>e.preventDefault());
+  vp.addEventListener("keydown",e=>{if(e.key==="ArrowRight")go(pos+1);if(e.key==="ArrowLeft")go(pos-1)});
+  addEventListener("resize",()=>place(false));
+  document.addEventListener("visibilitychange",()=>document.hidden?clearInterval(timer):restart());
+  place(false);requestAnimationFrame(mark);restart();
+})();
 
 /* ===== Carosello ===== */
 const ct=document.getElementById("carTrack");const step=()=>ct.querySelector("figure").offsetWidth+18;
