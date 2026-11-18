@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy · Mungibeddu Pizzeria</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+@font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:500 600;font-display:swap;src:url("assets/fonts/cormorant-garamond-italic.woff2") format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:400 700;font-display:swap;src:url("assets/fonts/jost.woff2") format("woff2")}
+:root{--lava:#171211;--pietra:#F1EADF;--crema:#F6EEE0;--inchiostro:#3B2318;--bordeaux:#7A1E2B;--oro:#D2A866;--muted:#6E5A4C;
+  --f-title:"Cormorant Garamond",Georgia,serif;--f-body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pietra);color:var(--inchiostro);font:400 16.5px/1.7 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:var(--bordeaux)}
+.bar{background:var(--lava);padding:12px max(18px,env(safe-area-inset-right,0px)) 12px max(18px,env(safe-area-inset-left,0px))}
+.bar .in{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.bar img{height:44px;width:auto;display:block}
+.bar a.back{color:var(--crema);text-decoration:none;font:500 12.5px var(--f-body);letter-spacing:.2em;text-transform:uppercase}
+.bar a.back:hover{color:var(--oro)}
+main{max-width:820px;margin:0 auto;padding:56px max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+h1{font:italic 500 clamp(40px,7vw,58px)/1.05 var(--f-title);margin:0}
+.tr{display:block;margin:10px 0 28px;font:500 12px var(--f-body);letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:18px;margin:0 0 30px}
+h2{font:italic 600 28px/1.2 var(--f-title);margin:40px 0 10px;color:var(--bordeaux)}
+p,li{max-width:68ch}
+ul{padding-left:20px}
+li{margin:4px 0}
+.box{background:var(--crema);border-radius:18px;padding:18px 22px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid rgba(59,35,24,.15)}
+th{font:600 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tw{overflow-x:auto}
+@media (max-width:640px){
+  .stack thead{display:none}
+  .stack tr{display:block;background:var(--crema);border-radius:16px;padding:6px 16px;margin:0 0 12px}
+  .stack td{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:9px 0}
+  .stack td:last-child{border-bottom:0}
+  .stack td::before{content:attr(data-label);font:600 10.5px/1.5 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+}
+.todo{display:inline-block;font:500 10.5px var(--f-body);letter-spacing:.14em;text-transform:uppercase;border:1px dashed var(--bordeaux);color:var(--bordeaux);border-radius:6px;padding:1px 6px;vertical-align:2px}
+.upd{margin-top:46px;font-size:14px;color:var(--muted)}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+</style>
+</head>
+<body>
+<header class="bar"><div class="in"><a href="index.html" aria-label="Torna al sito"><img src="assets/logo-light-sm.png" alt="Mungibeddu Pizzeria" width="480" height="351"></a><a class="back" href="index.html">← Torna al sito</a></div></header>
+<main>
+  <h1>Privacy</h1><span class="tr">Informativa sul trattamento dei dati personali</span>
+  <p class="lead">Questa pagina spiega quali dati raccogliamo quando visiti il sito e ordini da Mungibeddu, perché li usiamo e quali sono i tuoi diritti, secondo il Regolamento UE 2016/679 (GDPR).</p>
+
+  <h2>Chi tratta i tuoi dati</h2>
+  <div class="box">
+    <p style="margin:0"><strong>Titolare del trattamento</strong>: <span class="todo">ragione sociale</span>, P.IVA <span class="todo">numero</span>, con sede in <span class="todo">via e civico</span>, 95010 Milo (CT).<br>
+    Email: <span class="todo">email</span> · Telefono e WhatsApp: <span class="todo">numero</span></p>
+  </div>
+
+  <h2>In breve</h2>
+  <ul>
+    <li>Il sito <strong>non usa strumenti di analisi, profilazione o pubblicità</strong>.</li>
+    <li>Il sito <strong>non riceve e non conserva</strong> i dati del modulo d'ordine: li prepara in un messaggio che <strong>sei tu a inviare</strong> dal tuo WhatsApp.</li>
+    <li>Ti scriviamo per offerte e novità <strong>solo se ce lo chiedi</strong>, e puoi smettere quando vuoi.</li>
+  </ul>
+
+  <h2>Quali dati, perché e per quanto</h2>
+  <div class="tw"><table class="stack">
+    <thead><tr><th>Dati</th><th>Perché li usiamo</th><th>Base giuridica</th><th>Per quanto tempo</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Dati"><span>Nome, numero WhatsApp, indirizzo e paese di consegna, orario, prodotti ordinati, note</span></td><td data-label="Perché li usiamo"><span>Preparare l'ordine, consegnarlo o fartelo ritirare, contattarti per confermare</span></td><td data-label="Base giuridica"><span>Esecuzione del contratto (art. 6.1.b GDPR)</span></td><td data-label="Per quanto tempo"><span>Il tempo necessario a gestire l'ordine ed eventuali contestazioni, al massimo <span class="todo">12 mesi</span></span></td></tr>
+      <tr><td data-label="Dati"><span>Allergie o intolleranze che scrivi nelle note</span></td><td data-label="Perché li usiamo"><span>Preparare l'ordine in sicurezza</span></td><td data-label="Base giuridica"><span>Tuo consenso esplicito, dato scrivendole e inviando il messaggio (art. 9.2.a GDPR)</span></td><td data-label="Per quanto tempo"><span>Solo il tempo dell'ordine</span></td></tr>
+      <tr><td data-label="Dati"><span>Numero WhatsApp, se scegli di ricevere novità e offerte</span></td><td data-label="Perché li usiamo"><span>Avvisarti dell'apertura, della pizza del mese e delle offerte</span></td><td data-label="Base giuridica"><span>Tuo consenso (art. 6.1.a GDPR), facoltativo</span></td><td data-label="Per quanto tempo"><span>Finché non revochi il consenso</span></td></tr>
+      <tr><td data-label="Dati"><span>Dati tecnici di navigazione (indirizzo IP, data e ora, pagina richiesta)</span></td><td data-label="Perché li usiamo"><span>Far funzionare il sito e proteggerlo da abusi</span></td><td data-label="Base giuridica"><span>Legittimo interesse (art. 6.1.f GDPR)</span></td><td data-label="Per quanto tempo"><span>Registri del servizio di hosting, al massimo <span class="todo">30 giorni</span></span></td></tr>
+    </tbody>
+  </table></div>
+  <p>Comunicare i dati dell'ordine è necessario per ricevere la pizza. Comunicare allergie e accettare le novità è facoltativo.</p>
+
+  <h2>Ordini e messaggi su WhatsApp</h2>
+  <p>Quando premi "Invia ordine su WhatsApp", si apre WhatsApp con il messaggio già scritto: lo invii tu, e solo da quel momento lo riceviamo. WhatsApp è un servizio di WhatsApp Ireland Limited, che tratta i dati sulla propria piattaforma come titolare autonomo, secondo la sua <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">informativa privacy</a>.</p>
+  <p>Per smettere di ricevere novità e offerte basta scriverci <strong>"STOP"</strong> su WhatsApp, oppure inviare un'email all'indirizzo indicato sopra. Se ti iscrivi al nostro canale WhatsApp, puoi uscirne in qualsiasi momento dall'app.</p>
+
+  <h2>Chi può vedere i tuoi dati</h2>
+  <ul>
+    <li>Il personale di Mungibeddu e chi effettua le consegne, solo per gestire il tuo ordine.</li>
+    <li>Il fornitore che ospita il sito <span class="todo">nome hosting</span>, che tratta i dati tecnici per nostro conto.</li>
+    <li>WhatsApp, per i messaggi che scegli di inviarci.</li>
+  </ul>
+  <p>Non vendiamo e non cediamo i tuoi dati a nessuno per fini commerciali. Alcuni di questi fornitori possono trattare dati fuori dall'Unione Europea; in quel caso il trasferimento avviene con le garanzie previste dal GDPR, come le decisioni di adeguatezza della Commissione europea o le clausole contrattuali standard.</p>
+
+  <h2>I tuoi diritti</h2>
+  <p>In ogni momento puoi chiederci di accedere ai tuoi dati, correggerli, cancellarli, limitarne l'uso, opporti al trattamento, riceverli in un formato leggibile e revocare il consenso dato, senza che questo tocchi quanto fatto prima della revoca (artt. 15–22 GDPR). Scrivici all'email o al numero indicati sopra.</p>
+  <p>Se pensi che i tuoi dati siano trattati in modo non corretto, puoi presentare reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la protezione dei dati personali</a>.</p>
+
+  <h2>Minori</h2>
+  <p>Per ordinare devi avere almeno 14 anni. Le bevande alcoliche sono vendute e consegnate solo a persone maggiorenni.</p>
+
+  <h2>Cookie</h2>
+  <p>Per sapere cosa il sito salva sul tuo dispositivo leggi la <a href="cookie.html">pagina sui cookie</a>.</p>
+
+  <p class="upd">Ultimo aggiornamento: 18 novembre 2026</p>
+</main>
+</body>
+</html>
