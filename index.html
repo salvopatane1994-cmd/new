@@ -6,6 +6,21 @@
 <title>Mungibeddu Pizzeria</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Mungibeddu, pizzeria d'asporto e a domicilio a Milo, alle pendici dell'Etna. Impasto con farine tipo 0, tipo 1 e grano antico siciliano Perciasacchi bio.">
+<meta name="theme-color" content="#171211">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- Anteprima quando il link viene condiviso (WhatsApp, Facebook, Instagram). Con il dominio definitivo, rendere assoluti gli URL. -->
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Mungibeddu Pizzeria">
+<meta property="og:title" content="Mungibeddu Pizzeria · Asporto e domicilio a Milo, Etna">
+<meta property="og:description" content="Pizza con grano antico siciliano Perciasacchi bio. Ordina su WhatsApp, ritira o ricevi a casa.">
+<meta property="og:image" content="assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Mungibeddu Pizzeria","slogan":"La nostra terra, i nostri sapori.","servesCuisine":["Pizza","Italiana","Siciliana"],"priceRange":"€","image":"assets/og.jpg","logo":"assets/icon-512.png","hasMenu":"#menu","acceptsReservations":false,"address":{"@type":"PostalAddress","addressLocality":"Milo","addressRegion":"CT","postalCode":"95010","addressCountry":"IT"},"areaServed":["Milo","Zafferana Etnea","Giarre","Sant'Alfio","Riposto"],"potentialAction":{"@type":"OrderAction","deliveryMethod":["http://purl.org/goodrelations/v1#DeliveryModePickUp","http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"]}}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap">
@@ -338,6 +353,22 @@ footer small{display:block;font-size:13px;opacity:.75}
 .note{font-size:13px;color:var(--muted-l);margin:10px 0 0;text-align:center}
 .err{color:var(--bordeaux);font-size:14px;margin:0 0 10px;min-height:1em}
 
+
+/* ---------- lancio: conto alla rovescia e avvisami ---------- */
+.launch{display:flex;flex-direction:column;align-items:center;gap:14px;margin:4px 0 26px}
+.launch .when{font:italic 500 clamp(20px,2.4vw,26px) var(--f-title);color:var(--crema)}
+.cd{display:flex;gap:10px}
+.cd div{min-width:64px;padding:10px 8px 8px;border:1px solid rgba(210,168,102,.4);border-radius:14px;background:rgba(23,18,17,.45);backdrop-filter:blur(6px)}
+.cd b{display:block;font:italic 600 30px/1 var(--f-title);color:var(--oro);font-variant-numeric:tabular-nums}
+.cd small{font:500 10px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d)}
+.launch-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.notify{text-align:center}
+.notify .box{max-width:760px;margin:0 auto;padding:50px 28px;border-radius:28px;background:var(--bordeaux);background-image:radial-gradient(80% 120% at 100% 0%,rgba(232,102,42,.35),transparent 60%);display:flex;flex-direction:column;align-items:center;gap:16px}
+.notify h2{font:italic 500 clamp(34px,4.6vw,52px)/1.05 var(--f-title)}
+.notify p{margin:0;max-width:32em;color:#f1dccb}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted-l);margin:4px 0 6px;line-height:1.4}
+.consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--bordeaux);flex:none}
+.review-link{display:inline-flex;align-items:center;gap:8px;margin-top:4px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -371,7 +402,11 @@ footer small{display:block;font-size:13px;opacity:.75}
       <div class="hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
       <span class="caps kicker">Asporto e domicilio · Milo</span>
       <h1>La nostra terra, i nostri sapori.</h1>
-      <a class="btn btn-oro" href="#menu">Scopri il menù</a>
+      <div class="launch" data-launch hidden>
+        <span class="when" data-when></span>
+        <div class="cd" data-cd hidden><div><b data-u="d">0</b><small>Giorni</small></div><div><b data-u="h">0</b><small>Ore</small></div><div><b data-u="m">0</b><small>Min</small></div><div><b data-u="s">0</b><small>Sec</small></div></div>
+      </div>
+      <div class="launch-row"><a class="btn btn-oro" href="#menu">Scopri il menù</a><a class="btn btn-line" href="#" data-notify data-launch hidden>Avvisami all'apertura</a></div>
     </div>
   </div>
   <div class="slide" data-slide aria-hidden="true">
@@ -547,6 +582,18 @@ footer small{display:block;font-size:13px;opacity:.75}
   </div>
 </div>
 
+<!-- AVVISAMI (solo prima dell'apertura) -->
+<section class="topo notify" data-launch hidden aria-labelledby="notify-t" style="padding-block:90px">
+  <div class="wrap">
+    <div class="box" data-a="zoom">
+      <span class="caps" style="color:var(--oro)">Stamu arrivannu</span>
+      <h2 id="notify-t" data-when-long>Stiamo per aprire</h2>
+      <p>Iscriviti al nostro canale WhatsApp: ti avvisiamo il giorno dell'apertura e ti mandiamo le offerte della settimana d'inaugurazione.</p>
+      <a class="btn btn-oro" href="#" data-notify>Avvisami su WhatsApp</a>
+    </div>
+  </div>
+</section>
+
 <!-- CONTATTI -->
 <section class="light" id="contatti" aria-labelledby="dove-t">
   <div class="wrap">
@@ -554,7 +601,7 @@ footer small{display:block;font-size:13px;opacity:.75}
     <div class="info">
       <div data-a="up"><h3>Indirizzo</h3><p>Milo (CT), alle pendici dell'Etna <span class="todo">via e civico</span></p><p><a href="https://www.google.com/maps/search/?api=1&query=Milo+CT" target="_blank" rel="noopener">Apri in Google Maps</a></p></div>
       <div data-a="up" style="--d:.12s"><h3>Orari</h3><p>Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Nel weekend conviene ordinare con un po' di anticipo.</p></div>
-      <div data-a="up" style="--d:.24s"><h3>Ordini e domicilio</h3><p>WhatsApp e telefono <span class="todo">numero</span></p><p class="muted">Consegna a Milo e nei paesi vicini <span class="todo">zone e costo</span></p></div>
+      <div data-a="up" style="--d:.24s"><h3>Ordini e domicilio</h3><p>WhatsApp e telefono <span class="todo">numero</span></p><p class="muted">Consegna a Milo e nei paesi vicini <span class="todo">zone e costo</span></p><p data-review hidden><a class="review-link" href="#" target="_blank" rel="noopener">★ Lascia una recensione su Google</a></p></div>
     </div>
   </div>
 </section>
@@ -593,6 +640,7 @@ footer small{display:block;font-size:13px;opacity:.75}
       <div class="fld" id="addrWrap" hidden><label for="f-indirizzo">Indirizzo di consegna</label><input id="f-indirizzo" autocomplete="street-address" placeholder="Via, civico, paese"></div>
       <div class="fld"><label for="f-ora">Orario desiderato</label><input id="f-ora" type="time" value="20:30"></div>
       <div class="fld"><label for="f-note">Note</label><textarea id="f-note" placeholder="Citofono, allergie, pizza tagliata…"></textarea></div>
+      <label class="consent" for="f-consenso"><input type="checkbox" id="f-consenso"> Voglio ricevere su WhatsApp le novità e le offerte di Mungibeddu. Posso annullare quando voglio.</label>
     </div>
   </div>
   <div class="dfoot">
@@ -607,8 +655,36 @@ footer small{display:block;font-size:13px;opacity:.75}
 /* ===== Configurazione: da completare con i dati reali ===== */
 const CONFIG = {
   whatsapp: "",            // es. "393331234567" (senza + e spazi)
+  apertura: "",            // es. "2026-12-12T18:00" — attiva conto alla rovescia e "Avvisami"; dopo questa data spariscono da soli
+  aperturaMese: "dicembre 2026", // testo mostrato finché la data esatta non è decisa
+  canaleWhatsapp: "",      // link del canale WhatsApp, es. "https://whatsapp.com/channel/..."
+  recensioniGoogle: "",    // link breve "Chiedi recensioni" dal Profilo dell'attività su Google
+  instagram: "", facebook: "",
   impasti: ["Classico", "Etna", "Ai cereali"]
 };
+
+/* ===== Lancio: conto alla rovescia, avvisami, link ===== */
+(function(){
+  const open=CONFIG.apertura?new Date(CONFIG.apertura):null;
+  const pre=!open||open>new Date();
+  document.querySelectorAll("[data-launch]").forEach(el=>el.hidden=!pre);
+  if(pre){
+    const fmt=open?open.toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"}):CONFIG.aperturaMese;
+    document.querySelectorAll("[data-when]").forEach(el=>el.textContent=(open?"Apriamo ":"Apriamo a ")+fmt);
+    document.querySelectorAll("[data-when-long]").forEach(el=>el.textContent=(open?"Apriamo ":"Apriamo a ")+fmt);
+    const notify=CONFIG.canaleWhatsapp||(CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Ciao Mungibeddu! Avvisatemi quando aprite 🍕")}`:"");
+    document.querySelectorAll("[data-notify]").forEach(a=>{if(notify){a.href=notify;a.target="_blank";a.rel="noopener"}else{a.href="#contatti"}});
+    if(open){const cd=document.querySelector("[data-cd]");cd.hidden=false;
+      const u=k=>cd.querySelector(`[data-u="${k}"]`);
+      const tick=()=>{let t=Math.max(0,open-new Date());if(!t){location.reload();return}
+        const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);
+        u("d").textContent=d;u("h").textContent=String(h).padStart(2,"0");u("m").textContent=String(m).padStart(2,"0");u("s").textContent=String(s).padStart(2,"0")};
+      tick();setInterval(tick,1000)}
+  }
+  if(CONFIG.recensioniGoogle){document.querySelectorAll("[data-review]").forEach(p=>{p.hidden=false;p.querySelector("a").href=CONFIG.recensioniGoogle})}
+  const soc={instagram:CONFIG.instagram,facebook:CONFIG.facebook,whatsapp:CONFIG.canaleWhatsapp||(CONFIG.whatsapp&&"https://wa.me/"+CONFIG.whatsapp)};
+  document.querySelectorAll(".social a").forEach(a=>{const k=a.getAttribute("aria-label").toLowerCase();if(soc[k]){a.href=soc[k];a.target="_blank";a.rel="noopener"}});
+})();
 
 /* ===== Menù (dal menù cartaceo) ===== */
 const MENU = [
@@ -736,13 +812,15 @@ document.getElementById("lines").addEventListener("change",e=>{const s=e.target.
 function setMode(m){mode=m;document.getElementById("m-asporto").setAttribute("aria-pressed",m==="asporto");document.getElementById("m-domicilio").setAttribute("aria-pressed",m==="domicilio");document.getElementById("addrWrap").hidden=m!=="domicilio";updateWa()}
 document.getElementById("m-asporto").onclick=()=>setMode("asporto");
 document.getElementById("m-domicilio").onclick=()=>setMode("domicilio");
-["f-nome","f-indirizzo","f-ora","f-note"].forEach(id=>document.getElementById(id).addEventListener("input",updateWa));
+["f-nome","f-indirizzo","f-ora","f-note","f-consenso"].forEach(id=>document.getElementById(id).addEventListener("input",updateWa));
+document.getElementById("f-consenso").addEventListener("change",updateWa);
 const val=id=>document.getElementById(id).value.trim();
 function message(){
   let m="Ciao Mungibeddu! Vorrei ordinare:\n\n";
   cart.forEach(l=>{const it=ITEMS[l.id];m+=`• ${l.q}× ${it.name}${l.imp?` (impasto ${l.imp})`:""} — ${euro(it.price*l.q)}\n`});
   m+=`\nTotale: ${euro(total())}\n${mode==="asporto"?"Ritiro in pizzeria":"Consegna a domicilio: "+val("f-indirizzo")}\nOrario: ${val("f-ora")}\nNome: ${val("f-nome")}`;
   if(val("f-note"))m+=`\nNote: ${val("f-note")}`;
+  if(document.getElementById("f-consenso").checked)m+=`\n\n✔ Acconsento a ricevere novità e offerte su WhatsApp.`;
   return m;
 }
 function updateWa(){
