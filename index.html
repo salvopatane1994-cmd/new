@@ -169,6 +169,29 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 @media (max-width:860px){.icons{grid-template-columns:1fr 1fr}.icon:last-child{grid-column:1/-1}}
 @media (max-width:480px){.icons{grid-template-columns:1fr;gap:44px}}
 
+/* ---------- striscia punti di forza ---------- */
+.strip{padding-block:40px;border-bottom:1px solid rgba(210,168,102,.14)}
+.strip .icons{grid-template-columns:repeat(3,1fr);gap:18px}
+.strip .icon{flex-direction:row;gap:14px;text-align:left;justify-content:center}
+.strip .icon svg{width:46px;height:46px;flex:none}
+.strip .icon h3{font-size:20px}
+.strip .icon p{font-size:13px;margin-top:2px}
+@media (max-width:760px){.strip{padding-block:26px}.strip .icons{grid-template-columns:repeat(3,1fr);gap:10px}.strip .icon{flex-direction:column;text-align:center;gap:8px}.strip .icon svg{width:38px;height:38px}.strip .icon h3{font-size:17px}.strip .icon p{display:none}.strip .icon:last-child{grid-column:auto}}
+
+/* ---------- Tramonto in evidenza in cima al menù ---------- */
+.feature{display:grid;grid-template-columns:.95fr 1.05fr;align-items:stretch;background:var(--inchiostro);color:var(--crema);border-radius:26px;overflow:hidden;margin-bottom:60px;scroll-margin-top:150px}
+.feature > *{min-width:0}
+.feature .im{position:relative;min-height:280px}
+.feature .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feature .tx{padding:34px 34px 30px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.feature .lab{font:italic 500 24px var(--f-title);color:var(--oro)}
+.feature h3{font:italic 500 clamp(40px,5vw,58px)/1 var(--f-title)}
+.feature p{margin:0;color:#e2d4c3}
+.feature .tip{font:500 11px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--brace)}
+.feature .row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+.feature .row b{font:italic 600 34px var(--f-title)}
+@media (max-width:760px){.feature{grid-template-columns:1fr}.feature .im{min-height:0;aspect-ratio:16/10}.feature .tx{padding:24px}}
+
 /* ---------- fasce parallasse ---------- */
 .para{position:relative;overflow:hidden;min-height:440px;display:grid;place-items:center;text-align:center;padding-block:90px}
 .para .pbg{position:absolute;left:0;right:0;top:-22%;height:144%;will-change:transform}
@@ -205,33 +228,9 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .pill{display:inline-block;margin-left:6px;font:600 10px var(--f-body);letter-spacing:.16em;background:var(--oro);color:var(--lava);border-radius:999px;padding:2px 8px;vertical-align:2px}
 @media (max-width:900px){.impasto{grid-template-columns:1fr;gap:40px;margin-top:64px}.impasto .ph{aspect-ratio:4/3}}
 
-/* ---------- carosello foto ---------- */
-.gallery{padding-block:0 110px}
-.car{position:relative}
-.car-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-inline:var(--gutter) var(--gutter-r);scroll-padding-inline:var(--gutter)}
-.car-track::-webkit-scrollbar{display:none}
-.car-track figure{flex:0 0 clamp(240px,30vw,380px);aspect-ratio:3/4;margin:0;border-radius:22px;overflow:hidden;scroll-snap-align:start;position:relative}
-.car-track figure img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
-.car-track figure:hover img{transform:scale(1.08)}
-.car-track figcaption{position:absolute;left:0;right:0;bottom:0;padding:50px 20px 18px;background:linear-gradient(transparent,rgba(23,18,17,.85));font:italic 500 24px var(--f-title)}
-.car-nav{display:flex;justify-content:center;gap:12px;margin-top:26px}
-.car-nav button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(246,238,224,.35);background:transparent;color:var(--crema);display:grid;place-items:center;transition:background .3s,color .3s}
-.car-nav button:hover{background:var(--oro);color:var(--lava);border-color:var(--oro)}
-
-/* ---------- novità ---------- */
-.news h2{text-align:center;margin-bottom:56px;color:var(--crema)}
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.ncard{text-decoration:none;display:flex;flex-direction:column;gap:14px}
-.ncard .im{border-radius:22px;overflow:hidden;aspect-ratio:1;position:relative}
-.ncard .im img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
-.ncard:hover .im img{transform:scale(1.08)}
-.ncard .im .price{position:absolute;top:16px;right:16px;background:var(--crema);color:var(--inchiostro);font:600 15px var(--f-body);border-radius:999px;padding:6px 14px}
-.ncard .lab{font:italic 500 22px var(--f-title);color:var(--brace)}
-.ncard h3{font:500 17px/1.35 var(--f-body);letter-spacing:.08em;text-transform:uppercase}
-@media (max-width:860px){.news-grid{grid-template-columns:1fr;gap:44px}}
-
 /* ---------- a casa tua ---------- */
-.home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:70px}
+#ordina .notify{margin-top:70px}
 .home > *{min-width:0}
 .home-card{position:relative;border-radius:26px;overflow:hidden;background:var(--lava-3);min-height:340px;display:flex;align-items:center;padding:40px}
 .home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;animation:spin 60s linear infinite;box-shadow:0 20px 50px rgba(0,0,0,.6)}
@@ -367,6 +366,7 @@ footer small{display:block;font-size:13px;opacity:.75}
 .cd small{font:500 10px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d)}
 .launch-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .notify{text-align:center}
+.home-txt .btn{margin-top:4px}
 .notify .box{max-width:760px;margin:0 auto;padding:50px 28px;border-radius:28px;background:var(--bordeaux);background-image:radial-gradient(80% 120% at 100% 0%,rgba(232,102,42,.35),transparent 60%);display:flex;flex-direction:column;align-items:center;gap:16px}
 .notify h2{font:italic 500 clamp(34px,4.6vw,52px)/1.05 var(--f-title)}
 .notify p{margin:0;max-width:32em;color:#f1dccb}
@@ -491,8 +491,8 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Mungibeddu, torna su"><img src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799"></a>
     <nav class="nav" aria-label="Sezioni">
-      <a href="#impasto">L'impasto</a>
       <a href="#menu">Menù</a>
+      <a href="#impasto">L'impasto</a>
       <a href="#ordina">Ordina</a>
       <a href="#contatti">Dove siamo</a>
     </nav>
@@ -501,7 +501,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   </div>
 </header>
 <nav class="menu-ov" id="menuOv" aria-label="Navigazione">
-  <a href="#impasto">L'impasto</a><a href="#novita">Novità</a><a href="#menu">Menù</a><a href="#ordina">Come ordinare</a><a href="#contatti">Dove siamo</a>
+  <a href="#menu">Menù</a><a href="#impasto">L'impasto</a><a href="#ordina">Come ordinare</a><a href="#contatti">Dove siamo</a>
 </nav>
 
 <main id="top">
@@ -558,40 +558,36 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <span class="scroll-hint">Scorri</span>
 </section>
 
-<!-- PUNTI DI FORZA -->
-<section class="topo forza" aria-labelledby="forza-t">
+<!-- PUNTI DI FORZA (striscia compatta) -->
+<section class="topo strip" aria-label="Perché Mungibeddu">
+  <div class="wrap"><div class="icons" id="icons"></div></div>
+</section>
+
+<!-- MENU (subito dopo la prima schermata) -->
+<section class="light menu-sec" id="menu" aria-labelledby="menu-t">
   <div class="wrap">
-    <h2 class="spaced" id="forza-t" data-a="up">Mungibeddu</h2>
-    <p class="intro" data-a="up" style="--d:.15s">Una pizzeria d'asporto alle pendici dell'Etna, dove l'impasto parla siciliano.</p>
-    <div class="icons" id="icons"></div>
+    <div class="head"><span class="caps" style="color:var(--bordeaux)" data-a="up">Tocca + per aggiungere all'ordine</span><h2 class="t-title" id="menu-t" data-a="up" style="--d:.1s">U Menù</h2></div>
+    <div class="cats" id="cats" role="toolbar" aria-label="Categorie del menù"></div>
+    <div id="menuList"></div>
+    <p class="allergeni">Per informazioni su allergeni e intolleranze chiedi al personale prima di ordinare. Gli impasti contengono glutine.</p>
   </div>
 </section>
 
-<!-- PARALLASSE MENU -->
-<div class="para" aria-label="Il menù">
-  <div class="pbg" data-par=".25"><img src="assets/bufala.jpg" alt="" width="1400" height="1867" loading="lazy"></div>
-  <div class="inner">
-    <span class="caps" data-a="up" style="color:var(--oro)">Pizze, fritti e birre dell'Etna</span>
-    <h2 data-a="up" style="--d:.1s">Sapori che vengono dalla Muntagna</h2>
-    <a class="btn btn-line" href="#menu" data-a="up" style="--d:.2s">Scopri il nostro menù</a>
-  </div>
-</div>
+<div class="ribbon" aria-hidden="true"><div class="track" id="track"></div></div>
 
-<!-- BENVENUTI / IMPASTO -->
+<!-- L'IMPASTO -->
 <section class="light welcome" id="impasto" aria-labelledby="impasto-t">
   <img class="mark" src="assets/logo-dark.png" alt="" width="1092" height="799" aria-hidden="true" data-par="-.12">
   <div class="wrap">
     <span class="caps kicker" data-a="up">La nostra terra, i nostri sapori</span>
-    <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Benvenuti da Mungibeddu</h2>
+    <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Comu nasci a nostra pizza</h2>
     <p class="lead" data-a="up" style="--d:.2s">La nostra pizza nasce dall'incontro tra tradizione, territorio e innovazione. Crediamo che una grande pizza cominci dalla scelta delle materie prime.</p>
-    <a class="btn btn-dark" href="#menu" data-a="up" style="--d:.3s">Scopri il menù</a>
 
     <div class="impasto">
       <div class="ph" data-a="left"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
       <div class="story">
-        <h3 data-a="up">Comu nasci a nostra pizza</h3>
-        <p data-a="up" style="--d:.1s">Abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica. Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
-        <p data-a="up" style="--d:.15s">Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto: un cornicione soffice e alveolato, con una piacevole croccantezza esterna.</p>
+        <p data-a="up">Abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica. Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
+        <p data-a="up" style="--d:.1s">Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto: un cornicione soffice e alveolato, con una piacevole croccantezza esterna.</p>
         <div class="grani">
           <div class="grano" data-a="right" style="--d:.1s"><div class="ico" data-ico="0"></div><div><h4>Farina tipo 0</h4><p>Leggerezza ed elasticità alla lievitazione.</p></div></div>
           <div class="grano" data-a="right" style="--d:.22s"><div class="ico" data-ico="1"></div><div><h4>Farina tipo 1</h4><p>Conserva parte del germe e della crusca: più profumo.</p></div></div>
@@ -602,93 +598,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   </div>
 </section>
 
-<div class="ribbon" aria-hidden="true"><div class="track" id="track"></div></div>
-
-<!-- CAROSELLO -->
-<section class="topo gallery" aria-label="Dalla nostra cucina" style="padding-top:90px">
-  <div class="wrap" style="text-align:center;margin-bottom:40px">
-    <h2 class="t-title" data-a="up">Dal forno alla tavola</h2>
-  </div>
-  <div class="car" data-a="up" style="--d:.15s">
-    <div class="car-track" id="carTrack">
-      <figure><img src="assets/hero.jpg" alt="Spicchi di margherita su fondo scuro" loading="lazy"><figcaption>I Margheriti</figcaption></figure>
-      <figure><img src="assets/cat-cunsigghiati.jpg" alt="Pizza margherita tagliata al tavolo" loading="lazy"><figcaption>Sapuri cunsigghiati</figcaption></figure>
-      <figure><img src="assets/cat-stissi.jpg" alt="Pizza rossa appena sfornata" loading="lazy"><figcaption>Sempri i stissi</figcaption></figure>
-      <figure><img src="assets/cat-spizzicari.jpg" alt="Patatine fritte nel cestino" loading="lazy"><figcaption>Pi spizzicari</figcaption></figure>
-      <figure><img src="assets/cat-biviri.jpg" alt="Birre al bancone" loading="lazy"><figcaption>Birri di cca</figcaption></figure>
-      <figure><img src="assets/cat-margheriti.jpg" alt="Margherita a spicchi" loading="lazy"><figcaption>Fatta a mano</figcaption></figure>
-    </div>
-    <div class="car-nav"><button type="button" id="carPrev" aria-label="Foto precedenti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" id="carNext" aria-label="Foto successive"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button></div>
-  </div>
-</section>
-
-<!-- NOVITÀ -->
-<section class="topo news" id="novita" aria-labelledby="news-t" style="padding-top:20px">
-  <div class="wrap">
-    <h2 class="t-title" id="news-t" data-a="up">Le novità di Mungibeddu</h2>
-    <div class="news-grid">
-      <a class="ncard" href="#cat-periudu" data-a="up">
-        <div class="im"><img src="assets/zucca.jpg" alt="Zucche di stagione" loading="lazy"><span class="price">11€</span></div>
-        <span class="lab">Di stu periudu</span>
-        <h3>Tramonto, la pizza di stagione</h3>
-        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a class="ncard" href="#cat-cunsigghiati" data-a="up" style="--d:.15s">
-        <div class="im"><img src="assets/cat-cunsigghiati.jpg" alt="Pizza servita al tavolo" loading="lazy"></div>
-        <span class="lab">Sapuri cunsigghiati</span>
-        <h3>Le pizze che vi consigliamo noi</h3>
-        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a class="ncard" href="#cat-biviri" data-a="up" style="--d:.3s">
-        <div class="im"><img src="assets/cat-biviri.jpg" alt="Birre artigianali al bancone" loading="lazy"><span class="price">5€</span></div>
-        <span class="lab">Birri di cca</span>
-        <h3>Le birre del Birrificio dell'Etna</h3>
-        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- A CASA TUA -->
-<section class="topo" aria-label="Domicilio" style="padding-top:40px">
-  <div class="wrap home">
-    <div class="home-card" data-a="left">
-      <img src="assets/pizza-top.webp" alt="" width="900" height="900" loading="lazy">
-      <div class="t"><b>Mungibeddu a casa tua</b><span>Ordina ora!</span></div>
-    </div>
-    <div class="home-txt" data-a="right" style="--d:.15s">
-      <span class="lab">Domicilio</span>
-      <h3>I sapori dell'Etna, comodamente a casa tua</h3>
-      <p>Consegniamo a Milo e nei paesi vicini. Scegli dal menù, invia l'ordine su WhatsApp e ti confermiamo l'orario in chat.</p>
-      <a class="row" href="#ordina"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>Come ordinare</a>
-    </div>
-  </div>
-</section>
-
-<!-- MENU -->
-<section class="light menu-sec" id="menu" aria-labelledby="menu-t">
-  <div class="wrap">
-    <div class="head"><span class="caps" style="color:var(--bordeaux)" data-a="up">Tocca + per aggiungere all'ordine</span><h2 class="t-title" id="menu-t" data-a="up" style="--d:.1s">U Menù</h2></div>
-    <div class="cats" id="cats" role="toolbar" aria-label="Categorie del menù"></div>
-    <div id="menuList"></div>
-    <p class="allergeni">Per informazioni su allergeni e intolleranze chiedi al personale prima di ordinare. Gli impasti contengono glutine.</p>
-  </div>
-</section>
-
-<!-- COME ORDINARE -->
-<section class="topo" id="ordina" aria-labelledby="ordina-t">
-  <div class="wrap">
-    <div class="steps-h"><h2 class="t-title" id="ordina-t" data-a="up">Comu s'ordina</h2><p data-a="up" style="--d:.1s">Senza app e senza commissioni, in tre passi.</p></div>
-    <div class="steps">
-      <div class="step" data-a="up"><h3>Scegli</h3><p>Aggiungi pizze, fritti e bibite dal menù. Per ogni pizza puoi scegliere l'impasto.</p></div>
-      <div class="step" data-a="up" style="--d:.15s"><h3>Invia su WhatsApp</h3><p>Indica asporto o domicilio e l'orario. L'ordine arriva a noi già scritto, tu premi solo invia.</p></div>
-      <div class="step" data-a="up" style="--d:.3s"><h3>Ritira o ricevi</h3><p>Ti confermiamo l'orario in chat. Passi a prenderla calda, oppure te la portiamo noi.</p></div>
-    </div>
-    <div style="text-align:center;margin-top:44px" data-a="up"><button class="btn btn-oro" type="button" data-open-cart>Apri il tuo ordine</button></div>
-  </div>
-</section>
-
-<!-- LOCALE PARALLASSE -->
+<!-- IL LOCALE -->
 <div class="para" aria-label="Il locale" style="min-height:560px">
   <div class="pbg" data-par=".22"><img src="assets/locale.jpg" alt="Interno della pizzeria con volte, banconi in pietra lavica e sgabelli bordeaux" width="1272" height="1388" loading="lazy"></div>
   <div class="inner">
@@ -698,14 +608,34 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   </div>
 </div>
 
-<!-- AVVISAMI (solo prima dell'apertura) -->
-<section class="topo notify" data-launch hidden aria-labelledby="notify-t" style="padding-block:90px">
+<!-- ORDINA E DOMICILIO (passi + a casa tua + avvisami) -->
+<section class="topo" id="ordina" aria-labelledby="ordina-t">
   <div class="wrap">
-    <div class="box" data-a="zoom">
-      <span class="caps" style="color:var(--oro)">Stamu arrivannu</span>
-      <h2 id="notify-t" data-when-long>Stiamo per aprire</h2>
-      <p>Iscriviti al nostro canale WhatsApp: ti avvisiamo il giorno dell'apertura e ti mandiamo le offerte della settimana d'inaugurazione.</p>
-      <a class="btn btn-oro" href="#" data-notify>Avvisami su WhatsApp</a>
+    <div class="steps-h"><h2 class="t-title" id="ordina-t" data-a="up">Comu s'ordina</h2><p data-a="up" style="--d:.1s">Senza app e senza commissioni, in tre passi.</p></div>
+    <div class="steps">
+      <div class="step" data-a="up"><h3>Scegli</h3><p>Aggiungi pizze, fritti e bibite dal menù. Per ogni pizza puoi scegliere l'impasto.</p></div>
+      <div class="step" data-a="up" style="--d:.15s"><h3>Invia su WhatsApp</h3><p>Indica asporto o domicilio e l'orario. L'ordine arriva a noi già scritto, tu premi solo invia.</p></div>
+      <div class="step" data-a="up" style="--d:.3s"><h3>Ritira o ricevi</h3><p>Ti confermiamo l'orario in chat. Passi a prenderla calda, oppure te la portiamo noi.</p></div>
+    </div>
+    <div class="home">
+      <div class="home-card" data-a="left">
+        <img src="assets/pizza-top.webp" alt="" width="900" height="900" loading="lazy">
+        <div class="t"><b>Mungibeddu a casa tua</b><span>Ordina ora!</span></div>
+      </div>
+      <div class="home-txt" data-a="right" style="--d:.15s">
+        <span class="lab">Domicilio</span>
+        <h3>I sapori dell'Etna, comodamente a casa tua</h3>
+        <p>Consegniamo a Milo e nei paesi vicini: Zafferana Etnea, Sant'Alfio, Giarre e Riposto <span class="todo">zone e costo</span></p>
+        <button class="btn btn-oro" type="button" data-open-cart>Apri il tuo ordine</button>
+      </div>
+    </div>
+    <div class="notify" data-launch hidden>
+      <div class="box" data-a="zoom">
+        <span class="caps" style="color:var(--oro)">Stamu arrivannu</span>
+        <h2 id="notify-t" data-when-long>Stiamo per aprire</h2>
+        <p>Iscriviti al nostro canale WhatsApp: ti avvisiamo il giorno dell'apertura e ti mandiamo le offerte della settimana d'inaugurazione.</p>
+        <a class="btn btn-oro" href="#" data-notify>Avvisami su WhatsApp</a>
+      </div>
     </div>
   </div>
 </section>
@@ -804,6 +734,8 @@ const CONFIG = {
 
 /* ===== Menù (dal menù cartaceo) ===== */
 const MENU = [
+ {id:"periudu", t:"Di stu periudu", g:"Di stagione", img:"zucca.jpg", kind:"pizza", items:[
+  ["tramonto","Tramonto",11,"Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia, granella di nocciole, olio evo","Etna"]]},
  {id:"spizzicari", t:"Pi spizzicari", g:"Da sgranocchiare", img:"cat-spizzicari.jpg", kind:"fritto", items:[
   ["patatine","Patatine fritte",3],["patazest","Patazest",4,"Lime e pepe"],["twister","Patatine twister",4],["anelli","Anelli di cipolla",4],["crocchette","Crocchette di patate",4]]},
  {id:"stissi", t:"Sempri i stissi", g:"Le classiche", img:"cat-stissi.jpg", kind:"pizza", items:[
@@ -831,8 +763,6 @@ const MENU = [
   ["curiusa","Curiusa",13,"Crema di pistacchio artigianale, provola affumicata, mozzarella fiordilatte, salsiccia, funghi porcini, olio evo"],
   ["salatazza","Salatazza",12,"Salsa di pomodoro, capuliato di pomodorini secchi, filetti di acciughe, olive nere, olio evo"],
   ["mungibeddu","Mungibeddu",14,"Salsa di pomodoro, mozzarella di bufala, funghi porcini, salsiccia, cipolletta fresca, scagliette di grana padano DOP, olio evo, basilico"]]},
- {id:"periudu", t:"Di stu periudu", g:"Di stagione", img:"zucca.jpg", kind:"pizza", items:[
-  ["tramonto","Tramonto",11,"Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia, granella di nocciole, olio evo","Etna"]]},
  {id:"biviri", t:"Pi bìviri", g:"Da bere", img:"cat-biviri.jpg", kind:"drink", items:[
   ["nat50","Acqua naturale 50 cl",1],["nat15","Acqua naturale 1,5 l",2],["friz50","Acqua frizzante 50 cl",1],["friz15","Acqua frizzante 1,5 l",2],
   ["lanna","Nda lanna",2,"In lattina: Coca-Cola, Fanta, Sprite, Chinotto"],["buttigghia","Nda buttigghia",3.5,"Coca-Cola in bottiglia"],
@@ -851,7 +781,7 @@ const ICONS=[
  ["Birra dell'Etna","Birrificio dell'Etna",`<svg viewBox="0 0 80 80" ${G}><path d="M20 22h32v46a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4z"/><path d="M52 32h7a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6h-7"/><path d="M20 22c-4-8 6-14 12-9 4-6 14-5 16 2 6-1 9 5 4 7"/><path d="M29 34v28M36 34v28M43 34v28"/></svg>`],
  ["Asporto e domicilio","Ordini su WhatsApp",`<svg viewBox="0 0 80 80" ${G}><path d="M10 30l30-14 30 14-30 14z"/><path d="M10 30v20l30 14 30-14V30"/><path d="M40 44v20"/><path d="M28 24l30 14v8"/></svg>`]
 ];
-document.getElementById("icons").innerHTML=ICONS.map((x,i)=>`<div class="icon" data-a="up" style="--d:${i*.14}s">${x[2]}<h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
+document.getElementById("icons").innerHTML=[ICONS[0],ICONS[2],ICONS[4]].map((x,i)=>`<div class="icon" data-a="up" style="--d:${i*.14}s">${x[2]}<h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
 function spiga(color,fill){return `<svg viewBox="0 0 40 40" width="34" height="34" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round"><path d="M20 37V10"/>${[0,1,2,3].map(i=>`<path d="M20 ${30-i*6}c-6 0-8-4-8-7 4 0 8 2 8 7zM20 ${30-i*6}c6 0 8-4 8-7-4 0-8 2-8 7z" fill="${fill}"/>`).join("")}</svg>`}
 document.querySelectorAll("[data-ico]").forEach((el,i)=>el.innerHTML=spiga("#3B2318",i?"rgba(122,30,43,.25)":"none"));
 document.getElementById("track").innerHTML=Array(2).fill(["Grano antico Perciasacchi","Farine tipo 0 e tipo 1","Maturazione studiata","Prodotti del territorio","Birra dell'Etna","Asporto e domicilio a Milo"].map(s=>`<span>${s}</span>`).join("")).join("");
@@ -859,7 +789,8 @@ document.getElementById("track").innerHTML=Array(2).fill(["Grano antico Perciasa
 /* ===== Menù ===== */
 const cats=document.getElementById("cats"),list=document.getElementById("menuList");
 cats.innerHTML=MENU.map((c,i)=>`<button type="button" data-cat="${c.id}" aria-pressed="${i===0}">${c.t}</button>`).join("");
-list.innerHTML=MENU.map(c=>`<div class="mgroup" id="cat-${c.id}"><div class="banner" data-a="up"><img src="assets/${c.img}" alt="" loading="lazy" data-par=".1"><h3>${c.t}<small>${c.g}</small></h3></div><div class="mlist">${c.items.map((a,i)=>{const it=ITEMS[a[0]];
+const feature=c=>{const it=ITEMS[c.items[0][0]];return `<article class="mgroup feature" id="cat-${c.id}" data-a="up"><div class="im"><img src="assets/${c.img}" alt="Zucche di stagione" loading="lazy"></div><div class="tx"><span class="lab">${c.t} · la pizza di stagione</span><h3>${it.name}</h3><p>${it.desc}</p>${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}<div class="row"><b>${euro(it.price)}</b><button class="btn btn-oro" type="button" data-add="${it.id}">Aggiungi all'ordine</button></div></div></article>`};
+list.innerHTML=MENU.map(c=>c.id==="periudu"?feature(c):`<div class="mgroup" id="cat-${c.id}"><div class="banner" data-a="up"><img src="assets/${c.img}" alt="" loading="lazy" data-par=".1"><h3>${c.t}<small>${c.g}</small></h3></div><div class="mlist">${c.items.map((a,i)=>{const it=ITEMS[a[0]];
   return `<div class="mi" data-a="up" style="--d:${(i%2)*.08}s"><div><h4>${it.name}</h4>${it.desc?`<p>${it.desc}</p>`:""}${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}</div><div class="side"><b>${euro(it.price)}</b><button class="plus" type="button" data-add="${it.id}" aria-label="Aggiungi ${it.name}">+</button></div></div>`}).join("")}</div></div>`).join("");
 cats.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(b)document.getElementById("cat-"+b.dataset.cat).scrollIntoView({behavior:"smooth"})});
 const groups=[...document.querySelectorAll(".mgroup")];
@@ -907,10 +838,6 @@ const groups=[...document.querySelectorAll(".mgroup")];
   if(document.documentElement.classList.contains("loading"))addEventListener("mb-ready",restart,{once:true});else restart();
 })();
 
-/* ===== Carosello ===== */
-const ct=document.getElementById("carTrack");const step=()=>ct.querySelector("figure").offsetWidth+18;
-document.getElementById("carPrev").onclick=()=>ct.scrollBy({left:-step(),behavior:"smooth"});
-document.getElementById("carNext").onclick=()=>ct.scrollBy({left:step(),behavior:"smooth"});
 
 /* ===== Ingressi allo scroll ===== */
 if(document.documentElement.classList.contains("anim")){
