@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prova transizioni Mungibeddu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Pagina di prova: preloader con termometro del forno + 4 transizioni verso la prima schermata del sito. */
+:root{
+  --lava:#171211;--crema:#F6EEE0;--oro:#D2A866;--bordeaux:#7A1E2B;--inchiostro:#3B2318;--muted:#6E5A4C;
+  --f-title:"Cormorant Garamond",Georgia,serif;--f-body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.2,.7,.15,1);color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--lava);color:var(--crema);font:300 17px/1.6 var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+
+/* --- prima schermata del sito (come nel sito vero) --- */
+.site{position:fixed;inset:0;overflow:hidden}
+.site .bg{position:absolute;inset:0}
+.site .bg img{width:100%;height:100%;object-fit:cover;filter:blur(4px) saturate(.8);transform:scale(1.08)}
+.site .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,17,.55) 0%,rgba(23,18,17,.2) 25%,rgba(23,18,17,.35) 48%,rgba(23,18,17,.88) 66%,var(--lava) 100%)}
+.bar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:14px max(18px,env(safe-area-inset-right,0px)) 0 max(18px,env(safe-area-inset-left,0px));z-index:2}
+.bar img{height:46px;width:auto;margin-right:auto}
+.pill{background:var(--bordeaux);border-radius:999px;padding:9px 16px;font:500 12px var(--f-body);letter-spacing:.2em;text-transform:uppercase}
+.burger{width:26px;display:grid;gap:6px}.burger i{height:1.5px;background:var(--crema)}
+.inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:92px max(18px,env(safe-area-inset-right,0px)) 120px max(18px,env(safe-area-inset-left,0px))}
+.media{width:min(40vh,360px,72vw);aspect-ratio:1;margin-bottom:26px;flex:none}
+.media img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6);animation:spin 70s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.inner h1{margin:0 0 14px;font:italic 500 clamp(36px,6vw,62px)/1.06 var(--f-title);color:var(--oro);text-wrap:balance}
+.inner p{margin:0 0 24px;max-width:30em;font-size:clamp(16px,1.6vw,19px)}
+.btn{display:inline-block;border-radius:999px;padding:13px 28px;background:var(--oro);color:var(--lava);font:500 12.5px var(--f-body);letter-spacing:.24em;text-transform:uppercase;text-decoration:none}
+.dots{display:flex;gap:10px;margin-top:22px}.dots i{width:10px;height:10px;border-radius:50%;background:rgba(246,238,224,.3)}.dots i:first-child{background:var(--crema)}
+/* ingresso del sito */
+.site.pre-enter .media{transform:scale(.55) rotate(-70deg);opacity:0}
+.site.pre-enter .inner > :not(.media),.site.pre-enter .bar{opacity:0;transform:translateY(30px)}
+.site.pre-enter .bar{transform:translateY(-100%)}
+.site.pre-enter .bg{transform:scale(1.15);opacity:.25}
+.site.entering .media{transition:transform 1.2s cubic-bezier(.2,.9,.25,1.15) .1s,opacity .7s ease .1s}
+.site.entering .inner > :not(.media){transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.site.entering .inner > :nth-child(2){transition-delay:.3s}.site.entering .inner > :nth-child(3){transition-delay:.42s}
+.site.entering .inner > :nth-child(4){transition-delay:.54s}.site.entering .inner > :nth-child(5){transition-delay:.66s}
+.site.entering .bar{transition:opacity .8s ease .55s,transform .8s var(--ease) .55s}
+.site.entering .bg{transition:transform 2s var(--ease),opacity 1s ease}
+
+/* --- preloader --- */
+.pre{position:fixed;inset:0;z-index:10;background:#FFFFFF;display:grid;place-items:center}
+.pre-in{display:flex;flex-direction:column;align-items:center;gap:18px;transition:opacity .45s ease,transform .6s var(--ease)}
+.pre-logo{width:min(290px,66vw);position:relative}
+.pre-logo img{width:100%;height:auto;clip-path:inset(100% 0 0 0);animation:rise 1.2s cubic-bezier(.65,0,.25,1) .1s forwards}
+@keyframes rise{to{clip-path:inset(0 0 0 0)}}
+.thermo{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--inchiostro)}
+.thermo b{font:italic 600 44px/1 var(--f-title);font-variant-numeric:tabular-nums;color:var(--bordeaux)}
+.thermo small{font:500 11px var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.ring{position:fixed;z-index:11;border:1.5px solid var(--oro);border-radius:50%;pointer-events:none;opacity:0}
+canvas.fx{position:fixed;inset:0;width:100%;height:100%;z-index:12;pointer-events:none}
+
+/* --- comandi della prova --- */
+.ctrl{position:fixed;z-index:50;left:0;right:0;bottom:0;padding:12px max(12px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,rgba(10,8,7,.92) 35%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.ctrl .cap{font:500 11px var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:#cbbba8;text-align:center;min-height:1.4em}
+.ctrl .row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(620px,100%)}
+.ctrl button{border:1px solid rgba(210,168,102,.45);background:rgba(23,18,17,.7);color:var(--crema);border-radius:14px;padding:9px 6px 8px;font:500 12px/1.2 var(--f-body);letter-spacing:.06em;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:background .25s,border-color .25s,color .25s}
+.ctrl button b{font:italic 600 20px/1 var(--f-title);color:var(--oro)}
+.ctrl button[aria-pressed="true"]{background:var(--oro);border-color:var(--oro);color:var(--lava)}
+.ctrl button[aria-pressed="true"] b{color:var(--bordeaux)}
+.ctrl button:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+.ctrl button:disabled{opacity:.55;cursor:wait}
+</style>
+</head>
+<body>
+
+<div class="site pre-enter" id="site">
+  <div class="bg"><img src="assets/etna.jpg" alt="" width="1800" height="1200"></div>
+  <div class="bar"><img src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799"><span class="pill">Ordine 0</span><span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></div>
+  <div class="inner">
+    <div class="media" id="media"><img src="assets/pizza-top.webp" alt="Pizza margherita vista dall'alto" width="900" height="900"></div>
+    <h1>La nostra terra, i nostri sapori.</h1>
+    <p>Pizza d'asporto e a domicilio alle pendici dell'Etna, con grano antico siciliano Perciasacchi.</p>
+    <a class="btn" href="#">Scopri il menù</a>
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<div class="pre" id="pre" hidden>
+  <div class="pre-in" id="preIn">
+    <div class="pre-logo"><img id="preLogo" src="assets/logo-dark.png" alt="Mungibeddu Pizzeria" width="1092" height="799"></div>
+    <div class="thermo"><b id="deg">0°</b><small id="degTxt">Accendiamo il forno…</small></div>
+  </div>
+</div>
+<div class="ring" id="ring"></div>
+
+<div class="ctrl">
+  <div class="cap" id="cap">Tocca una transizione per vederla</div>
+  <div class="row" role="group" aria-label="Scegli la transizione">
+    <button type="button" data-t="1" aria-pressed="false"><b>1</b>Cerchio</button>
+    <button type="button" data-t="2" aria-pressed="false"><b>2</b>Eruzione</button>
+    <button type="button" data-t="3" aria-pressed="false"><b>3</b>Fumo e lapilli</button>
+    <button type="button" data-t="4" aria-pressed="false"><b>4</b>Farina</button>
+  </div>
+</div>
+
+<script>
+const OVEN=430;            // temperatura del forno mostrata nel termometro
+const PRE_MS=2000;         // durata del caricamento nella prova
+const NAMES={1:"1 · Cerchio: il logo diventa la pizza",2:"2 · Eruzione: lava, pietra lavica che si crepa",3:"3 · Fumo e lapilli dal cratere",4:"4 · Farina soffiata via"};
+const site=document.getElementById("site"),pre=document.getElementById("pre"),preIn=document.getElementById("preIn"),ring=document.getElementById("ring");
+const btns=[...document.querySelectorAll("[data-t]")],cap=document.getElementById("cap");
+const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+let busy=false;
+
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const raf=()=>new Promise(r=>requestAnimationFrame(r));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const easeOut=t=>1-Math.pow(1-t,3);
+function anim(ms,fn){return new Promise(res=>{const t0=performance.now();(function f(now){const k=Math.min(1,(now-t0)/ms);fn(k);k<1?requestAnimationFrame(f):res()})(t0)})}
+function canvas(){const c=document.createElement("canvas");c.className="fx";document.body.appendChild(c);const d=Math.min(2,devicePixelRatio||1),W=innerWidth,H=innerHeight;c.width=W*d;c.height=H*d;const x=c.getContext("2d");x.scale(d,d);return{c,x,W,H}}
+function crater(){const r=document.getElementById("preLogo").getBoundingClientRect();return{x:r.left+r.width*.5,y:r.top+r.height*.19,r}}
+function enterSite(withMedia=true){site.classList.add("entering");if(!withMedia){site.querySelector(".media").style.transition="none"}
+  requestAnimationFrame(()=>site.classList.remove("pre-enter"))}
+function resetSite(){site.classList.remove("entering");site.classList.add("pre-enter");site.querySelector(".media").style.transition="";pre.style.webkitMaskImage=pre.style.maskImage="";pre.style.opacity=""}
+
+async function preload(){
+  pre.hidden=false;preIn.style.opacity="";preIn.style.transform="";
+  const img=document.getElementById("preLogo");img.style.animation="none";img.offsetWidth;img.style.animation="";
+  const deg=document.getElementById("deg"),txt=document.getElementById("degTxt");txt.textContent="Accendiamo il forno…";
+  await anim(PRE_MS*.85,k=>{deg.textContent=Math.round(easeOut(k)*OVEN)+"°"});
+  txt.textContent="Forno a "+OVEN+" °C";await wait(PRE_MS*.15);
+}
+
+/* 1 · CERCHIO: il logo si posa sul piatto della pizza e il cerchio si apre sul sito */
+async function tCerchio(){
+  site.querySelector(".media").style.transition="none";site.classList.add("entering");
+  const m=document.getElementById("media"),mr=()=>m.getBoundingClientRect();
+  // la pizza è già al suo posto: il cerchio si apre esattamente su di lei
+  site.querySelector(".media").style.transform="none";site.querySelector(".media").style.opacity="1";
+  const lg=document.getElementById("preLogo").getBoundingClientRect(),p=mr();
+  const lc={x:lg.left+lg.width*.49,y:lg.top+lg.height*.53},pc={x:p.left+p.width/2,y:p.top+p.height/2};
+  const s=p.width/(lg.height*.86);
+  await anim(650,k=>{const e=ease(k);preIn.style.transform=`translate(${(pc.x-lc.x)*e}px,${(pc.y-lc.y)*e}px) scale(${1+(s-1)*e})`});
+  const D=Math.hypot(innerWidth,innerHeight),r1=p.width/2;
+  ring.style.opacity="1";
+  await anim(1000,k=>{const e=ease(k),r=k<.35?r1*easeOut(k/.35):r1+(D-r1)*ease((k-.35)/.65);
+    preIn.style.opacity=String(Math.max(0,1-k*3));
+    const mask=`radial-gradient(circle at ${pc.x}px ${pc.y}px, transparent ${r}px, #000 ${r+1.5}px)`;pre.style.webkitMaskImage=pre.style.maskImage=mask;
+    ring.style.width=ring.style.height=r*2+"px";ring.style.left=pc.x-r+"px";ring.style.top=pc.y-r+"px";ring.style.opacity=String(k<.35?1:Math.max(0,1-(k-.35)/.5));
+    if(k>.3&&site.classList.contains("pre-enter"))site.classList.remove("pre-enter")});
+  ring.style.opacity="0";pre.hidden=true;
+  setTimeout(()=>{const md=site.querySelector(".media");md.style.transform="";md.style.opacity=""},50);
+}
+
+/* 2 · ERUZIONE: bagliore, colata di lava, raffreddamento in pietra lavica che si crepa */
+function stoneTexture(W,H){const c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  x.fillStyle="#2b2422";x.fillRect(0,0,W,H);
+  for(let i=0;i<W*H/90;i++){const v=30+Math.random()*40|0;x.fillStyle=`rgba(${v+10},${v},${v-4},${.25+Math.random()*.4})`;x.fillRect(Math.random()*W,Math.random()*H,1+Math.random()*2,1+Math.random()*2)}
+  for(let i=0;i<W*H/2600;i++){const r=1+Math.random()*4,px=Math.random()*W,py=Math.random()*H;x.fillStyle="rgba(10,8,7,.7)";x.beginPath();x.arc(px,py,r,0,7);x.fill();x.fillStyle="rgba(90,78,72,.25)";x.beginPath();x.arc(px-r*.3,py-r*.3,r*.6,0,7);x.fill()}
+  return c}
+async function tEruzione(){
+  const {c,x,W,H}=canvas(),cr=crater(),D=Math.hypot(W,H),stone=stoneTexture(W,H);
+  const p=document.getElementById("media").getBoundingClientRect(),cx=p.left+p.width/2,cy=p.top+p.height/2;
+  // schegge: griglia polare irregolare centrata sulla pizza
+  const A=10,R=[0,D*.16,D*.38,D*.7,D*1.2],V=R.map((rr,i)=>Array.from({length:A},(_,a)=>{const an=(a+(Math.random()-.5)*.5)/A*Math.PI*2,rj=i?rr*(1+(Math.random()-.5)*.25):0;return[cx+Math.cos(an)*rj,cy+Math.sin(an)*rj]}));
+  const shards=[];for(let i=0;i<R.length-1;i++)for(let a=0;a<A;a++){const b=(a+1)%A,pts=i?[V[i][a],V[i][b],V[i+1][b],V[i+1][a]]:[[cx,cy],V[1][a],V[1][b]];
+    const gx=pts.reduce((s,q)=>s+q[0],0)/pts.length,gy=pts.reduce((s,q)=>s+q[1],0)/pts.length,dx=gx-cx,dy=gy-cy,l=Math.hypot(dx,dy)||1;
+    shards.push({pts,gx,gy,ux:dx/l,uy:dy/l,rot:(Math.random()-.5)*1.2,sp:.7+Math.random()*.6,del:Math.random()*.12})}
+  const blobs=[];const t0=performance.now();let swapped=false;
+  await new Promise(res=>{(function f(now){const e=(now-t0)/1000;x.clearRect(0,0,W,H);
+    // bagliore nel cratere
+    if(e<1.1){const g=x.createRadialGradient(cr.x,cr.y,0,cr.x,cr.y,40+e*260);g.addColorStop(0,`rgba(255,200,110,${Math.min(1,e*3)*.9})`);g.addColorStop(.4,`rgba(255,110,30,${Math.min(1,e*3)*.45})`);g.addColorStop(1,"rgba(255,80,20,0)");x.fillStyle=g;x.fillRect(0,0,W,H)}
+    // colata
+    if(e>.25&&e<1.4){if(e<.95)for(let i=0;i<4;i++){const a=Math.PI*.5+(Math.random()-.5)*2.6,sp=(500+Math.random()*900)*(D/900);blobs.push({x:cr.x,y:cr.y,vx:Math.cos(a)*sp*.6,vy:Math.sin(a)*sp,r:20,gr:(220+Math.random()*380)*(D/900),b:now})}
+      for(const b of blobs){const dt=1/60;b.vx*=.96;b.vy=b.vy*.96+400*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;b.r+=b.gr*dt;
+        const g=x.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);g.addColorStop(0,"rgba(255,214,120,1)");g.addColorStop(.35,"rgba(255,120,30,1)");g.addColorStop(.75,"rgba(196,38,24,.95)");g.addColorStop(1,"rgba(120,20,12,0)");
+        x.fillStyle=g;x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fill()}
+      const cov=Math.max(0,Math.min(1,(e-.65)/.3));if(cov>0){const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,`rgba(255,120,30,${cov})`);g.addColorStop(1,`rgba(170,30,18,${cov})`);x.fillStyle=g;x.fillRect(0,0,W,H)}}
+    if(!swapped&&e>.95){swapped=true;pre.hidden=true;site.querySelector(".media").style.transition="none";site.classList.remove("pre-enter")}
+    // raffreddamento in pietra
+    if(e>=1.0&&e<1.45){x.globalAlpha=1;x.fillStyle="#a8261a";x.fillRect(0,0,W,H);x.globalAlpha=Math.min(1,(e-1)/.4);x.drawImage(stone,0,0,W,H);x.globalAlpha=1}
+    // crepe e schegge che si aprono sul sito
+    if(e>=1.45){const k=e-1.45;
+      const lavaA=Math.max(0,1-k/.35);if(lavaA>0){x.fillStyle=`rgba(255,110,30,${lavaA})`;x.fillRect(0,0,W,H)}
+      for(const s of shards){const kk=Math.max(0,k-s.del),d=Math.pow(kk,2)*1300*s.sp,al=Math.max(0,1-Math.max(0,kk-.25)/.45);if(al<=0)continue;
+        x.save();x.globalAlpha=al;x.translate(s.gx+s.ux*d,s.gy+s.uy*d+kk*kk*500);x.rotate(s.rot*kk);x.translate(-s.gx,-s.gy);
+        x.beginPath();s.pts.forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.closePath();x.save();x.clip();x.drawImage(stone,0,0,W,H);x.restore();
+        x.strokeStyle=`rgba(255,150,60,${Math.max(0,1-k*2.5)})`;x.lineWidth=2;x.shadowColor="#ff7a1a";x.shadowBlur=12;x.stroke();x.restore()}}
+    else if(e>=1.3){ // linee di frattura incandescenti prima dell'apertura
+      x.save();x.strokeStyle=`rgba(255,150,60,${(e-1.3)/.15})`;x.lineWidth=2;x.shadowColor="#ff7a1a";x.shadowBlur=14;
+      for(const s of shards){x.beginPath();s.pts.forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.closePath();x.stroke()}x.restore()}
+    if(e>=1.62&&!site.classList.contains("entering")){site.querySelector(".media").style.transition="";enterSite()}
+    e<2.35?requestAnimationFrame(f):(c.remove(),res())})(t0)});
+}
+
+/* 3 · FUMO E LAPILLI */
+function sprite(rgb,peak){const c=document.createElement("canvas");c.width=c.height=256;const x=c.getContext("2d");
+  for(let i=0;i<16;i++){const px=128+(Math.random()-.5)*100,py=128+(Math.random()-.5)*100,r=40+Math.random()*70,g=x.createRadialGradient(px,py,0,px,py,r);
+    g.addColorStop(0,`rgba(${rgb},${peak})`);g.addColorStop(.55,`rgba(${rgb},${peak*.35})`);g.addColorStop(1,`rgba(${rgb},0)`);x.fillStyle=g;x.beginPath();x.arc(px,py,r,0,7);x.fill()}return c}
+async function tFumo(){
+  const {c,x,W,H}=canvas(),cr=crater(),K=Math.hypot(W,H)/900;
+  const S=[sprite("250,244,236",.5),sprite("214,200,188",.5),sprite("170,150,138",.45)];
+  const P=[],E=[],t0=performance.now();let last=t0,shown=false;
+  await new Promise(res=>{(function f(now){const dt=Math.min(.05,(now-last)/1000);last=now;const e=(now-t0)/1000;x.clearRect(0,0,W,H);
+    // bagliore del cratere
+    if(e<1){const a=Math.min(1,e*4)*(1-Math.max(0,e-.5)/.5);const g=x.createRadialGradient(cr.x,cr.y,0,cr.x,cr.y,180*K);g.addColorStop(0,`rgba(255,170,80,${a*.9})`);g.addColorStop(1,"rgba(255,90,20,0)");x.fillStyle=g;x.fillRect(0,0,W,H)}
+    if(e>.15&&e<.65)for(let i=0;i<Math.round(420*dt);i++){const a=-Math.PI/2+(Math.random()-.5)*Math.min(6.3,1.2+e*12),sp=(360+Math.random()*1300)*K;
+      P.push({x:cr.x,y:cr.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:(22+Math.random()*30)*K,gr:(230+Math.random()*520)*K,rot:Math.random()*6.3,vr:(Math.random()-.5),s:S[Math.random()*3|0],b:now})}
+    if(e>.1&&e<.9)for(let i=0;i<Math.round(160*dt);i++){const a=-Math.PI/2+(Math.random()-.5)*2.2,sp=(500+Math.random()*900)*K;E.push({x:cr.x,y:cr.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:.9+Math.random()*.9,s:1.2+Math.random()*2.2,b:now})}
+    const veil=e<.75?Math.pow(e/.75,3)*.9:.9*Math.pow(Math.max(0,1-(e-.75)/.65),1.6);
+    if(veil>0){x.fillStyle=`rgba(236,226,214,${veil})`;x.fillRect(0,0,W,H)}
+    const out=e<.65?1:Math.pow(Math.max(0,1-(e-.65)/.85),1.5);
+    for(const p of P){const age=(now-p.b)/1000,dr=Math.exp(-1.9*dt);p.vx*=dr;p.vy=p.vy*dr-(e>.75?420:140)*K*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.r+=p.gr*dt;p.rot+=p.vr*dt;
+      const al=Math.min(1,age/.18)*out;if(al<.01)continue;x.globalAlpha=al;x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.drawImage(p.s,-p.r,-p.r,p.r*2,p.r*2);x.restore()}
+    // riflesso caldo dal basso sul fumo
+    if(e<1.2){x.globalAlpha=1;x.globalCompositeOperation="source-atop";const g=x.createLinearGradient(0,cr.y-200*K,0,H);g.addColorStop(0,"rgba(255,140,60,0)");g.addColorStop(1,`rgba(255,120,40,${.22*(1-e/1.2)})`);x.fillStyle=g;x.fillRect(0,0,W,H);x.globalCompositeOperation="source-over"}
+    // lapilli
+    x.globalCompositeOperation="lighter";
+    for(const p of E){const age=(now-p.b)/1000;if(age>p.l)continue;p.vy+=520*K*dt;p.vx*=.995;p.x+=p.vx*dt;p.y+=p.vy*dt;const k=1-age/p.l;
+      x.globalAlpha=k;x.fillStyle=k>.5?"#FFD27A":"#FF6A1A";x.beginPath();x.arc(p.x,p.y,p.s*(.5+k*.5),0,7);x.fill();
+      x.globalAlpha=k*.35;x.beginPath();x.arc(p.x,p.y,p.s*3,0,7);x.fill()}
+    x.globalCompositeOperation="source-over";x.globalAlpha=1;
+    if(!shown&&e>=.75){shown=true;pre.hidden=true;enterSite()}
+    e<1.6?requestAnimationFrame(f):(c.remove(),res())})(t0)});
+}
+
+/* 4 · FARINA: la schermata bianca diventa farina e un soffio la porta via */
+async function tFarina(){
+  const {c,x,W,H}=canvas(),cell=W<600?9:13,cols=Math.ceil(W/cell),rows=Math.ceil(H/cell),G=[];
+  const tones=["#FFFFFF","#FFFFFF","#FEFDFA","#FCF9F3"];
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){const px=i*cell,py=j*cell,front=(px/W)*.85+Math.sin(py/H*6+1)*.06+Math.random()*.1;
+    G.push({x:px,y:py,s:cell+.6,t:.25+front*.75,vx:0,vy:0,rot:0,c:Math.random()<.006?"#E3D3B3":tones[Math.random()*4|0],w:(Math.random()-.5)*2})}
+  const cloud=sprite("255,255,255",.6),shade=sprite("220,208,190",.35),C=[];
+  // il logo si dissolve: la schermata è già "farina"
+  preIn.style.opacity="0";preIn.style.transform="scale(1.04)";await wait(380);
+  x.fillStyle="#FFFFFF";x.fillRect(0,0,W,H);pre.hidden=true;site.querySelector(".media").style.transition="none";site.classList.remove("pre-enter");
+  const t0=performance.now();let last=t0,entered=false;
+  await new Promise(res=>{(function f(now){const dt=Math.min(.05,(now-last)/1000);last=now;const e=(now-t0)/1000;x.clearRect(0,0,W,H);
+    for(const g of G){if(e<g.t){x.fillStyle=g.c;x.fillRect(g.x,g.y,g.s,g.s);continue}
+      const a=e-g.t;if(a>1.1)continue;g.vx+=(1400+g.w*400)*dt;g.vy+=(Math.sin(e*9+g.y*.05)*500-260)*dt;g.x+=g.vx*dt;g.y+=g.vy*dt;g.rot+=g.w*6*dt;
+      const k=Math.max(0,1-a/1.1),sz=g.s*(.35+k*.65);x.globalAlpha=k;x.fillStyle=g.c;x.save();x.translate(g.x,g.y);x.rotate(g.rot);x.fillRect(-sz/2,-sz/2,sz,sz);x.restore();x.globalAlpha=1}
+    // nuvolette sul fronte del soffio
+    const fx=Math.min(1.1,(e-.25)/.75)*W;if(e>.25&&e<1.05&&Math.random()<.9)for(let i=0;i<3;i++)C.push({x:fx+(Math.random()-.5)*80,y:Math.random()*H,r:40+Math.random()*90,vx:500+Math.random()*500,b:now,s:Math.random()<.4?shade:cloud});
+    for(const q of C){const a=(now-q.b)/1000;if(a>1)continue;q.x+=q.vx*dt;q.r+=80*dt;x.globalAlpha=(1-a)*.8;x.drawImage(q.s,q.x-q.r,q.y-q.r,q.r*2,q.r*2)}x.globalAlpha=1;
+    if(!entered&&e>.45){entered=true;site.querySelector(".media").style.transition="";site.classList.add("pre-enter");requestAnimationFrame(()=>enterSite())}
+    e<2.2?requestAnimationFrame(f):(c.remove(),res())})(t0)});
+}
+
+async function play(n){
+  if(busy)return;busy=true;btns.forEach(b=>{b.disabled=true;b.setAttribute("aria-pressed",b.dataset.t==n)});cap.textContent=NAMES[n];
+  resetSite();pre.hidden=false;preIn.style.opacity="";preIn.style.transform="";await raf();
+  await preload();
+  if(still){pre.hidden=true;enterSite()}
+  else if(n==1)await tCerchio();else if(n==2)await tEruzione();else if(n==3)await tFumo();else await tFarina();
+  pre.hidden=true;busy=false;btns.forEach(b=>b.disabled=false);cap.textContent=NAMES[n]+" · tocca per rivedere";
+}
+btns.forEach(b=>b.addEventListener("click",()=>play(+b.dataset.t)));
+addEventListener("load",()=>play(1));
+</script>
+</body>
+</html>
