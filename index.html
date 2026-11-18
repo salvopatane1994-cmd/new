@@ -529,8 +529,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
     var light=smokeSprite("250,247,243",.5),shade=smokeSprite("176,166,157",.45),mid=smokeSprite("214,206,197",.5);
     var lg=pre.querySelector(".pre-logo img").getBoundingClientRect();
     var ox=lg.left+lg.width*.5,oy=lg.top+lg.height*.18,K=Math.hypot(W,H)/900;
-    var P=[],E=[],t0=performance.now(),last=t0,covered=false;
-    function spark(n){for(var i=0;i<n;i++){var a=-Math.PI/2+(Math.random()-.5)*2.2,sp=(500+Math.random()*900)*K;E.push({x:ox,y:oy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:.55+Math.random()*.6,s:1.2+Math.random()*2,b:performance.now()})}}
+    var P=[],t0=performance.now(),last=t0,covered=false;
     function spawn(n,e){for(var i=0;i<n;i++){
       var a=-Math.PI/2+(Math.random()-.5)*Math.min(Math.PI*2,1.2+e*12),sp=(360+Math.random()*1300)*K;
       P.push({x:ox+(Math.random()-.5)*16,y:oy+(Math.random()-.5)*10,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
@@ -538,10 +537,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
         s:Math.random()<.3?shade:(Math.random()<.5?mid:light),b:performance.now()})}}
     function frame(now){var dt=Math.min(.05,(now-last)/1000);last=now;var e=(now-t0)/1000;
       ctx.clearRect(0,0,W,H);
-      if(e<.7){var ga=Math.min(1,e*5)*(1-Math.max(0,e-.3)/.4),g=ctx.createRadialGradient(ox,oy,0,ox,oy,170*K);
-        g.addColorStop(0,"rgba(255,170,80,"+(ga*.9)+")");g.addColorStop(1,"rgba(255,90,20,0)");ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
       if(e<.5)spawn(Math.round(420*dt),e);
-      if(e>.05&&e<.5)spark(Math.round(150*dt));
       var veil=e<.6?Math.pow(e/.6,3)*.92:.92*Math.pow(Math.max(0,1-(e-.6)/.65),1.6);
       if(veil>0){ctx.fillStyle="rgba(238,232,224,"+veil+")";ctx.fillRect(0,0,W,H)}
       var out=e<.5?1:Math.pow(Math.max(0,1-(e-.5)/.85),1.5);
@@ -550,14 +546,6 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
         var al=Math.min(1,age/.18)*out;if(al<=0.01)continue;
         ctx.globalAlpha=al;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.drawImage(p.s,-p.r,-p.r,p.r*2,p.r*2);ctx.restore()}
       ctx.globalAlpha=1;
-      // riflesso caldo dal basso sul fumo
-      if(e<.8){ctx.globalCompositeOperation="source-atop";var rg=ctx.createLinearGradient(0,oy-200*K,0,H);rg.addColorStop(0,"rgba(255,140,60,0)");rg.addColorStop(1,"rgba(255,120,40,"+(.22*(1-e/.8))+")");ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation="source-over"}
-      // scintille
-      ctx.globalCompositeOperation="lighter";
-      for(var j=0;j<E.length;j++){var q=E[j],qa=(now-q.b)/1000;if(qa>q.l)continue;q.vy+=520*K*dt;q.vx*=.995;q.x+=q.vx*dt;q.y+=q.vy*dt;var k=1-qa/q.l;
-        ctx.globalAlpha=k;ctx.fillStyle=k>.5?"#FFD27A":"#FF6A1A";ctx.beginPath();ctx.arc(q.x,q.y,q.s*(.5+k*.5),0,7);ctx.fill();
-        ctx.globalAlpha=k*.35;ctx.beginPath();ctx.arc(q.x,q.y,q.s*3,0,7);ctx.fill()}
-      ctx.globalCompositeOperation="source-over";ctx.globalAlpha=1;
       if(!covered&&e>=.6){covered=true;onCovered()}
       if(e<1.45)requestAnimationFrame(frame);else{cv.remove();onEnd()}}
     requestAnimationFrame(frame)}
