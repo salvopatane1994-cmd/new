@@ -84,6 +84,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top.solid .wrap{height:64px}
 .brand img{height:50px;width:auto;transition:height .4s}
 .top.solid .brand img{height:42px}
+/* logo grande in cima alla pagina, come Impastè; si riduce quando si scorre */
+.top:not(.solid) .wrap{height:auto;align-items:flex-start;padding-top:16px}
+.top:not(.solid) .brand img{height:var(--logo-big)}
+.top:not(.solid) .nav{margin-top:14px}
+:root{--logo-big:clamp(128px,36vw,170px)}
 .nav{display:flex;gap:30px;margin-left:auto}
 .nav a{text-decoration:none;font:500 13px var(--f-body);letter-spacing:.24em;text-transform:uppercase;position:relative;padding-block:6px}
 .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--oro);transition:right .4s var(--ease)}
@@ -105,7 +110,7 @@ body.ov .burger span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}body
 body.ov .top{background:transparent;box-shadow:none;backdrop-filter:none;z-index:56}
 
 /* ---------- hero slider (scorre col dito, infinito) ---------- */
-.hero{--top:92px;--img:min(42vh,370px,72vw);position:relative;overflow:hidden;background:var(--lava)}
+.hero{--top:calc(var(--logo-big) + 44px);--img:min(42vh,370px,72vw);position:relative;overflow:hidden;background:var(--lava)}
 .hero-vp{overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .hero-vp.drag{cursor:grabbing}
 .hero-track{display:flex;will-change:transform}
