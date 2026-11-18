@@ -1,0 +1,15 @@
+# Netlify: nessuna compilazione, il sito è già pronto nella cartella principale.
+[build]
+  publish = "."
+
+# ANTEPRIMA: chiede ai motori di ricerca di non indicizzare questo indirizzo provvisorio.
+# Prima di andare online sul dominio definitivo, cancellare questo blocco.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
