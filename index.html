@@ -111,14 +111,15 @@ body.ov .top{background:transparent;box-shadow:none;backdrop-filter:none;z-index
 .hero-track{display:flex;will-change:transform}
 .hero-track.anim{transition:transform .7s var(--ease)}
 .slide{position:relative;flex:0 0 100%;min-width:0;min-height:max(100svh,640px);display:flex;justify-content:center;text-align:center}
-.slide .bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.slide .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 9s ease-out;-webkit-user-drag:none}
-.slide.on .bg img{transform:scale(1.14)}
-.slide .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,17,.55) 0%,rgba(23,18,17,.15) 25%,rgba(23,18,17,.35) 48%,rgba(23,18,17,.9) 66%,var(--lava) 100%)}
-.slide .blur img{filter:blur(4px) saturate(.8)}
+.hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:blur(4px) saturate(.8);transform:scale(1.06);animation:heroZoom 30s ease-in-out infinite alternate}
+@keyframes heroZoom{to{transform:scale(1.16)}}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,18,17,.55) 0%,rgba(23,18,17,.2) 25%,rgba(23,18,17,.35) 48%,rgba(23,18,17,.88) 66%,var(--lava) 100%)}
+.hero-vp{position:relative;z-index:1}
+.media.plate img{width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);-webkit-user-drag:none;pointer-events:none}
 .slide .inner{position:relative;z-index:1;width:100%;max-width:700px;padding:var(--top) var(--gutter-r) 44px var(--gutter);display:flex;flex-direction:column;align-items:center}
 .slide .media{width:var(--img);height:var(--img);flex:none;margin-bottom:30px;position:relative}
-.hero-pizza img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:spin 70s linear infinite;-webkit-user-drag:none;pointer-events:none}
+.media.hero-pizza img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:spin 70s linear infinite;-webkit-user-drag:none;pointer-events:none}
 .hero-pizza::before{content:"";position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(232,102,42,.28),transparent 65%);z-index:-1;animation:glow 4s ease-in-out infinite alternate}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes glow{from{opacity:.5;transform:scale(.95)}to{opacity:1;transform:scale(1.05)}}
@@ -399,10 +400,10 @@ footer small{display:block;font-size:13px;opacity:.75}
 
 <!-- HERO SLIDER -->
 <section class="hero" aria-roledescription="carosello" aria-label="In evidenza" style="padding:0">
+  <div class="hero-bg" aria-hidden="true"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
   <div class="hero-vp" id="heroVp">
     <div class="hero-track" id="heroTrack">
       <div class="slide" data-slide>
-        <div class="bg blur"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
         <div class="inner">
           <div class="media hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
           <h1>La nostra terra, i nostri sapori.</h1>
@@ -416,9 +417,8 @@ footer small{display:block;font-size:13px;opacity:.75}
         </div>
       </div>
       <div class="slide" data-slide>
-        <div class="bg"><img src="assets/farina.jpg" alt="" width="1400" height="934"></div>
         <div class="inner">
-          <div class="media" aria-hidden="true"></div>
+          <div class="media plate"><img src="assets/slide-spicchi.webp" alt="Spicchi di pizza margherita dal cornicione alveolato" width="800" height="800"></div>
           <h2>Grano antico Perciasacchi</h2>
           <p>Farine tipo 0 e tipo 1 con una percentuale di Perciasacchi, antico grano duro siciliano da agricoltura biologica. Cornicione soffice, croccante fuori.</p>
           <a class="btn btn-oro" href="#impasto">Scopri l'impasto</a>
@@ -426,9 +426,8 @@ footer small{display:block;font-size:13px;opacity:.75}
         </div>
       </div>
       <div class="slide" data-slide>
-        <div class="bg"><img src="assets/zucca.jpg" alt="" width="1200" height="852"></div>
         <div class="inner">
-          <div class="media" aria-hidden="true"></div>
+          <div class="media plate"><img src="assets/slide-zucca.webp" alt="Zucche di stagione" width="800" height="800"></div>
           <h2>Tramonto, la pizza di stagione</h2>
           <p>Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia e granella di nocciole.</p>
           <button class="btn btn-oro" type="button" data-add="tramonto">Aggiungi all'ordine · 11€</button>
@@ -436,9 +435,8 @@ footer small{display:block;font-size:13px;opacity:.75}
         </div>
       </div>
       <div class="slide" data-slide>
-        <div class="bg"><img src="assets/asporto.jpg" alt="" width="1400" height="933"></div>
         <div class="inner">
-          <div class="media" aria-hidden="true"></div>
+          <div class="media plate"><img src="assets/slide-asporto.webp" alt="Pizza nel cartone da asporto" width="800" height="800"></div>
           <h2>Mungibeddu a casa tua</h2>
           <p>Scegli dal menù e invia l'ordine su WhatsApp. Passi a ritirarla calda o te la portiamo noi.</p>
           <a class="btn btn-oro" href="#ordina">Ordina ora</a>

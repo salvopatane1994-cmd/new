@@ -20,3 +20,6 @@ Da sostituire con le foto reali di Mungibeddu appena disponibili.
 | cat-biviri.jpg | https://www.pexels.com/photo/5537951/ |
 
 `locale.jpg` è il rendering del locale fornito dal cliente; `logo-*.png` dal logo del cliente.
+| slide-spicchi.webp | https://www.pexels.com/photo/17848752/ |
+| slide-zucca.webp | https://www.pexels.com/photo/28882033/ |
+| slide-asporto.webp | https://www.pexels.com/photo/5056830/ |
