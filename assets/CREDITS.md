@@ -5,6 +5,7 @@ Da sostituire con le foto reali di Mungibeddu appena disponibili.
 
 | File | Pexels |
 |---|---|
+| pizza-top.webp (ritaglio circolare) | https://www.pexels.com/photo/19102880/ |
 | hero.jpg | https://www.pexels.com/photo/17848752/ |
 | farina.jpg | https://www.pexels.com/photo/5403020/ |
 | grano.jpg | https://www.pexels.com/photo/32555711/ |

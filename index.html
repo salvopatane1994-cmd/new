@@ -8,392 +8,571 @@
 <meta name="description" content="Mungibeddu, pizzeria d'asporto e a domicilio a Milo, alle pendici dell'Etna. Impasto con farine tipo 0, tipo 1 e grano antico siciliano Perciasacchi bio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Yellowtail&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&display=swap">
 <style>
-/* Layout: notte lavica (sezioni scure) alternata a pietra chiara, bordeaux come accento, oro come luce dei LED del locale. */
+/* Layout: notte lavica con trama di curve di livello (le colate del soffitto del locale), sezioni chiare color intonaco, bordeaux e oro dei LED come accenti. */
 :root{
-  --lava:#1E1816;        /* fondo notte / pietra lavica */
-  --lava-2:#2A221F;      /* superfici scure */
-  --pietra:#EEE5D6;      /* fondo chiaro, l'intonaco delle volte */
-  --pietra-2:#E3D6C2;
-  --inchiostro:#3B2318;  /* marrone del logo */
+  --lava:#171211;
+  --lava-2:#221b19;
+  --lava-3:#2d2421;
+  --pietra:#F1EADF;
+  --pietra-2:#E5DACA;
+  --inchiostro:#3B2318;
   --bordeaux:#7A1E2B;
   --bordeaux-2:#5E1520;
-  --oro:#D2A866;         /* luce calda dei LED */
-  --brace:#E8662A;       /* lava viva, usata poco */
+  --oro:#D2A866;
+  --brace:#E8662A;
   --crema:#F6EEE0;
-  --muted-d:#B9AA98;     /* testo secondario su scuro */
-  --muted-l:#6E5A4C;     /* testo secondario su chiaro */
-  --f-script:"Yellowtail","Brush Script MT",cursive;
-  --f-caps:"Barlow Condensed","Arial Narrow",sans-serif;
-  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --gutter:max(16px, env(safe-area-inset-left, 0px));
-  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  --muted-d:#B7A898;
+  --muted-l:#6E5A4C;
+  --f-title:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gutter:max(18px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(18px, env(safe-area-inset-right, 0px));
+  --ease:cubic-bezier(.2,.7,.15,1);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{margin:0;background:var(--lava);color:var(--crema);font:400 17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--lava);color:var(--crema);font:300 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
-h1,h2,h3{text-wrap:balance;margin:0}
+h1,h2,h3,h4{text-wrap:balance;margin:0;font-weight:500}
 a{color:inherit}
 button{font:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:4px}
-.wrap{max-width:1160px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
-.caps{font-family:var(--f-caps);text-transform:uppercase;letter-spacing:.14em;font-weight:600}
-.script{font-family:var(--f-script);font-weight:400;letter-spacing:0;line-height:1.05}
-.gloss{display:block;font:500 13px/1.2 var(--f-caps);letter-spacing:.2em;text-transform:uppercase;opacity:.75;margin-top:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.caps{font:500 13px/1.3 var(--f-body);letter-spacing:.28em;text-transform:uppercase}
+.t-title{font:italic 500 clamp(38px,5.4vw,64px)/1.05 var(--f-title)}
+.spaced{font:400 clamp(22px,3vw,30px)/1 var(--f-body);letter-spacing:.55em;text-transform:uppercase;padding-left:.55em}
+section{padding-block:110px}
+@media (max-width:700px){section{padding-block:76px}}
+
+/* trama: curve di livello come le colate sulla volta del locale */
+.topo{background-color:var(--lava);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%23D2A866' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M-20 60c60-30 110 20 170-5s100-60 160-20 60 50 70 40'/%3E%3Cpath d='M-20 95c55-25 120 25 175 0s95-55 150-15 70 45 75 35'/%3E%3Cpath d='M-20 130c50-20 125 30 180 5s90-50 145-10 75 40 75 30'/%3E%3Cpath d='M-20 230c70 20 100-40 165-20s90 70 150 40 55-30 85-20'/%3E%3Cpath d='M-20 265c65 25 105-35 170-15s85 65 145 35 60-25 85-15'/%3E%3Cpath d='M-20 300c60 30 110-30 175-10s80 60 140 30 65-20 85-10'/%3E%3Cellipse cx='290' cy='180' rx='26' ry='14'/%3E%3Cellipse cx='290' cy='180' rx='46' ry='26'/%3E%3C/g%3E%3C/svg%3E")}
+
+/* ---------- animazioni d'ingresso ---------- */
+html.anim [data-a]{opacity:0;transition:opacity 1.2s var(--ease) var(--d,0s),transform 1.2s var(--ease) var(--d,0s);will-change:opacity,transform}
+html.anim [data-a="up"]{transform:translateY(46px)}
+html.anim [data-a="left"]{transform:translateX(-70px)}
+html.anim [data-a="right"]{transform:translateX(70px)}
+html.anim [data-a="zoom"]{transform:scale(.9)}
+html.anim [data-a].in{opacity:1;transform:none}
 
 /* ---------- header ---------- */
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--lava)}
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--lava) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid rgba(210,168,102,.18)}
-.top .wrap{display:flex;align-items:center;gap:20px;height:68px}
-.top .brand img{height:48px;width:auto}
-.nav{display:flex;gap:26px;margin-left:auto}
-.nav a{text-decoration:none;font:600 15px var(--f-caps);letter-spacing:.16em;text-transform:uppercase;color:var(--crema);opacity:.85}
-.nav a:hover{opacity:1;color:var(--oro)}
-.cart-btn{display:inline-flex;align-items:center;gap:10px;background:var(--bordeaux);color:var(--crema);border:0;border-radius:999px;padding:10px 18px;font:600 15px var(--f-caps);letter-spacing:.12em;text-transform:uppercase}
+.top{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:50;transition:background .4s,box-shadow .4s}
+.top.solid{background:rgba(23,18,17,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(210,168,102,.15)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:76px;transition:height .4s}
+.top.solid .wrap{height:64px}
+.brand img{height:50px;width:auto;transition:height .4s}
+.top.solid .brand img{height:42px}
+.nav{display:flex;gap:30px;margin-left:auto}
+.nav a{text-decoration:none;font:500 13px var(--f-body);letter-spacing:.24em;text-transform:uppercase;position:relative;padding-block:6px}
+.nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--oro);transition:right .4s var(--ease)}
+.nav a:hover::after{right:0}
+.cart-btn{display:inline-flex;align-items:center;gap:10px;background:var(--bordeaux);color:var(--crema);border:0;border-radius:999px;padding:10px 18px;font:500 13px var(--f-body);letter-spacing:.2em;text-transform:uppercase;transition:background .3s,transform .3s}
 .cart-btn:hover{background:var(--bordeaux-2)}
-.cart-btn .n{background:var(--oro);color:var(--lava);border-radius:999px;min-width:24px;height:24px;display:inline-grid;place-items:center;font-size:14px;letter-spacing:0}
-@media (max-width:820px){.nav{display:none}.top .brand{margin-right:auto}}
+.cart-btn .n{background:var(--oro);color:var(--lava);border-radius:999px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px;letter-spacing:0;font-weight:600}
+.cart-btn.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.12)}}
+.burger{display:none;border:0;background:transparent;color:var(--crema);width:44px;height:44px;padding:10px}
+.burger span{display:block;height:1.5px;background:currentColor;margin:6px 0;transition:transform .35s,opacity .35s}
+@media (max-width:860px){.nav{display:none}.burger{display:block}.brand{margin-right:auto}}
+.menu-ov{position:fixed;inset:0;z-index:55;background:rgba(23,18,17,.97);display:grid;place-content:center;gap:26px;text-align:center;opacity:0;pointer-events:none;transition:opacity .45s}
+.menu-ov.open{opacity:1;pointer-events:auto}
+.menu-ov a{font:italic 500 40px/1 var(--f-title);text-decoration:none;opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.menu-ov.open a{opacity:1;transform:none}
+.menu-ov.open a:nth-child(2){transition-delay:.06s}.menu-ov.open a:nth-child(3){transition-delay:.12s}.menu-ov.open a:nth-child(4){transition-delay:.18s}.menu-ov.open a:nth-child(5){transition-delay:.24s}
+body.ov .burger span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}body.ov .burger span:nth-child(2){opacity:0}body.ov .burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+body.ov .top{background:transparent;box-shadow:none;backdrop-filter:none;z-index:56}
 
-/* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--lava)}
-.hero .bg{position:absolute;inset:0 0 0 38%;z-index:-2}
-.hero .bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--lava) 34%,rgba(30,24,22,.82) 52%,rgba(30,24,22,.15) 78%,rgba(30,24,22,0)),linear-gradient(0deg,rgba(30,24,22,.7),transparent 30%)}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,560px);align-items:center;padding-block:96px 120px;min-height:min(86vh,760px)}
-.hero-txt{min-width:0;text-shadow:0 2px 14px rgba(20,15,13,.7)}
-.hero-txt .logo{width:min(260px,60vw);height:auto;margin:0 0 22px -6px}
-.hero-txt .eyebrow{color:var(--oro)}
-.hero h1{font:400 clamp(44px,6.4vw,80px)/1 var(--f-script);margin:14px 0 18px;color:var(--crema)}
-.hero h1 em{font-style:normal;color:var(--oro)}
-.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:#d8cbbb;max-width:34em;margin:0 0 28px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:14px 26px;font:600 16px var(--f-caps);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1.5px solid transparent;transition:transform .2s,background .2s;text-shadow:none}
-.btn:hover{transform:translateY(-2px)}
+/* ---------- hero slider ---------- */
+.hero{position:relative;height:100svh;min-height:620px;max-height:960px;overflow:hidden;background:var(--lava)}
+.slide{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s 1.2s}
+.slide.on{opacity:1;visibility:visible;transition:opacity 1.2s ease}
+.slide .bg{position:absolute;inset:0;overflow:hidden}
+.slide .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.02)}
+.slide.on .bg img{animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{to{transform:scale(1.14)}}
+.slide .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(23,18,17,.35),rgba(23,18,17,.82) 75%),linear-gradient(180deg,rgba(23,18,17,.55),transparent 30%,transparent 60%,rgba(23,18,17,.95))}
+.slide .blur img{filter:blur(4px) saturate(.8)}
+.slide .inner{position:relative;z-index:1;max-width:680px;padding:96px var(--gutter-r) 90px var(--gutter);display:flex;flex-direction:column;align-items:center}
+.slide .inner > *{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.slide.on .inner > *{opacity:1;transform:none}
+.slide.on .inner > *:nth-child(2){transition-delay:.15s}.slide.on .inner > *:nth-child(3){transition-delay:.3s}.slide.on .inner > *:nth-child(4){transition-delay:.45s}.slide.on .inner > *:nth-child(5){transition-delay:.6s}
+.hero-pizza{width:min(48vh,380px,74vw);aspect-ratio:1;margin-bottom:26px;position:relative}
+.hero-pizza img{width:100%;height:100%;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06);animation:spin 70s linear infinite}
+.hero-pizza::before{content:"";position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(232,102,42,.28),transparent 65%);z-index:-1;animation:glow 4s ease-in-out infinite alternate}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{from{opacity:.5;transform:scale(.95)}to{opacity:1;transform:scale(1.05)}}
+.slide .kicker{color:var(--oro);margin-bottom:12px}
+.slide h1,.slide h2{font:italic 500 clamp(40px,6.5vw,72px)/1.02 var(--f-title);margin-bottom:16px}
+.slide p{color:#dccfbf;margin:0 0 28px;max-width:34em;font-size:clamp(16px,1.6vw,19px)}
+.hero-ctrl{pointer-events:none;position:absolute;z-index:3;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:10px}
+.dot{pointer-events:auto;width:9px;height:9px;border-radius:999px;border:0;padding:0;background:rgba(246,238,224,.35);transition:width .5s var(--ease),background .5s}
+.dot.on{width:34px;background:var(--oro)}
+.arrow{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:1px solid rgba(246,238,224,.35);background:rgba(23,18,17,.25);color:var(--crema);display:grid;place-items:center;transition:background .3s,border-color .3s}
+.arrow:hover{background:var(--oro);border-color:var(--oro);color:var(--lava)}
+.arrow.prev{left:max(18px,env(safe-area-inset-left,0px))}.arrow.next{right:max(18px,env(safe-area-inset-right,0px))}
+@media (max-width:700px){.arrow{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:none;width:42px;height:42px}}
+.scroll-hint{position:absolute;z-index:3;right:max(28px,env(safe-area-inset-right,0px));bottom:30px;writing-mode:vertical-rl;font:500 11px var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:var(--muted-d);display:flex;align-items:center;gap:12px}
+.scroll-hint::after{content:"";width:1px;height:56px;background:linear-gradient(var(--oro),transparent);animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:860px){.scroll-hint{display:none}}
+
+/* bottoni */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:14px 30px;font:500 13px var(--f-body);letter-spacing:.24em;text-transform:uppercase;text-decoration:none;border:1px solid transparent;transition:color .4s,border-color .4s}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.btn:hover::before{transform:scaleX(1);transform-origin:left}
 .btn-oro{background:var(--oro);color:var(--lava)}
-.btn-ghost{border-color:rgba(246,238,224,.55);color:var(--crema)}
-.btn-ghost:hover{border-color:var(--oro);color:var(--oro)}
-.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:30px;color:#d8cbbb;font:500 14px var(--f-caps);letter-spacing:.14em;text-transform:uppercase}
-.facts span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--brace);margin-right:9px;vertical-align:2px;box-shadow:0 0 8px var(--brace)}
-@media (max-width:860px){
-  .hero .bg{inset:0 0 auto 0;height:62%}
-  .hero::before{background:linear-gradient(180deg,rgba(30,24,22,.1) 0%,rgba(30,24,22,.55) 32%,var(--lava) 60%)}
-  .hero .wrap{min-height:0;padding-block:min(48vw,300px) 64px;text-align:center}
-  .hero-txt .logo{margin:0 auto 18px}
-  .hero p.lead{margin-inline:auto}.cta,.facts{justify-content:center}
-}
+.btn-oro::before{background:var(--crema)}
+.btn-line{border-color:rgba(246,238,224,.6);color:var(--crema)}
+.btn-line::before{background:var(--crema)}
+.btn-line:hover{color:var(--lava)}
+.btn-dark{border-color:rgba(59,35,24,.5);color:var(--inchiostro)}
+.btn-dark::before{background:var(--inchiostro)}
+.btn-dark:hover{color:var(--crema)}
+.go{width:40px;height:40px;border-radius:50%;background:var(--oro);color:var(--lava);display:inline-grid;place-items:center;border:0;transition:transform .4s var(--ease)}
+.go svg{width:16px;height:16px}
+a:hover > .go,.go:hover{transform:translateX(6px)}
 
-/* ---------- marquee ---------- */
-.ribbon{background:var(--bordeaux);color:var(--crema);overflow:hidden;white-space:nowrap;border-block:1px solid rgba(0,0,0,.2)}
-.ribbon .track{display:inline-flex;gap:40px;padding-block:14px;animation:slide 38s linear infinite;font:600 16px var(--f-caps);letter-spacing:.22em;text-transform:uppercase}
-.ribbon .track span::after{content:"✦";margin-left:40px;color:var(--oro)}
-@keyframes slide{to{transform:translateX(-50%)}}
+/* ---------- punti di forza ---------- */
+.forza{text-align:center}
+.forza .spaced{color:var(--crema);margin-bottom:14px}
+.forza .intro{max-width:30em;margin:0 auto 64px;color:var(--muted-d);font-size:18px}
+.icons{display:grid;grid-template-columns:repeat(5,1fr);gap:40px 20px}
+.icon{display:flex;flex-direction:column;align-items:center;gap:14px}
+.icon svg{width:78px;height:78px;transition:transform .6s var(--ease)}
+.icon:hover svg{transform:translateY(-6px) rotate(-4deg)}
+.icon h3{font:italic 500 23px/1.15 var(--f-title);color:var(--crema)}
+.icon p{margin:0;font-size:14px;color:var(--muted-d);max-width:15em}
+@media (max-width:860px){.icons{grid-template-columns:1fr 1fr}.icon:last-child{grid-column:1/-1}}
+@media (max-width:480px){.icons{grid-template-columns:1fr;gap:44px}}
 
-/* ---------- light sections ---------- */
+/* ---------- fasce parallasse ---------- */
+.para{position:relative;overflow:hidden;min-height:440px;display:grid;place-items:center;text-align:center;padding-block:90px}
+.para .pbg{position:absolute;left:0;right:0;top:-22%;height:144%;will-change:transform}
+.para .pbg img{width:100%;height:100%;object-fit:cover}
+.para::after{content:"";position:absolute;inset:0;background:rgba(23,18,17,.55)}
+.para .inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.para h2{font:italic 500 clamp(40px,6vw,70px)/1.05 var(--f-title);max-width:14em;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+.para p{margin:0;max-width:34em;color:#e6d9c8}
+
+/* ---------- benvenuti / impasto ---------- */
 .light{background:var(--pietra);color:var(--inchiostro)}
-.light .muted{color:var(--muted-l)}
-section{padding-block:96px}
-@media (max-width:700px){section{padding-block:64px}}
-.sec-head{margin-bottom:40px}
-.sec-head h2{font:400 clamp(40px,6vw,64px)/1 var(--f-script)}
-.light .sec-head h2{color:var(--bordeaux)}
-.dark .sec-head h2{color:var(--oro)}
-
-/* impasto */
-.impasto{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+.welcome{position:relative;overflow:hidden;text-align:center}
+.welcome .mark{position:absolute;width:min(900px,140vw);left:50%;top:40px;transform:translateX(-50%);opacity:.06;pointer-events:none}
+.welcome .wrap{position:relative}
+.welcome h2{color:var(--inchiostro);margin:12px 0 22px}
+.welcome .kicker{color:var(--bordeaux)}
+.welcome .lead{max-width:36em;margin:0 auto 34px;font-size:clamp(18px,1.8vw,21px);color:var(--muted-l)}
+.impasto{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:90px;text-align:left}
 .impasto > *{min-width:0}
-.impasto .story p{margin:0 0 18px;max-width:62ch}
-.impasto .story p.big{font-size:21px;line-height:1.5;color:var(--inchiostro)}
-.impasto .story p.sign{font:400 30px/1.2 var(--f-script);color:var(--bordeaux);margin-top:28px}
-.grani{display:grid;gap:14px}
-.grano{display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:center;background:var(--crema);border-radius:18px;padding:18px 20px}
-.grano.star{background:var(--inchiostro);color:var(--crema)}
-.grano .ico{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--pietra-2);overflow:hidden}
+.impasto .ph{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5}
+.impasto .ph img{position:absolute;left:0;right:0;top:-10%;width:100%;height:120%;object-fit:cover;will-change:transform}
+.impasto .ph .badge{position:absolute;right:18px;bottom:18px;width:120px;height:120px;border-radius:50%;background:var(--bordeaux);color:var(--crema);display:grid;place-items:center;text-align:center;font:italic 500 19px/1.1 var(--f-title);padding:14px;animation:spin 30s linear infinite}
+.impasto .story p{margin:0 0 16px;color:var(--muted-l)}
+.impasto .story h3{font:italic 500 clamp(30px,3.6vw,42px)/1.1 var(--f-title);color:var(--inchiostro);margin-bottom:18px}
+.grani{display:grid;gap:12px;margin-top:26px}
+.grano{display:grid;grid-template-columns:58px 1fr;gap:16px;align-items:center;padding:14px 18px;border-radius:16px;background:var(--crema);transition:transform .4s var(--ease),box-shadow .4s}
+.grano:hover{transform:translateX(6px);box-shadow:0 10px 30px rgba(59,35,24,.1)}
+.grano .ico{width:58px;height:58px;border-radius:50%;background:var(--pietra-2);display:grid;place-items:center;overflow:hidden}
 .grano .ico img{width:100%;height:100%;object-fit:cover}
-.foto-impasto{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/3;margin-bottom:6px}
-.foto-impasto img{width:100%;height:100%;object-fit:cover}
-.foto-impasto span{position:absolute;left:16px;bottom:14px;font:400 30px/1 var(--f-script);color:var(--crema);text-shadow:0 2px 10px rgba(0,0,0,.6)}
-.grano.star .ico{background:var(--bordeaux)}
-.grano h3{font:700 20px/1.1 var(--f-caps);letter-spacing:.08em;text-transform:uppercase}
-.grano p{margin:4px 0 0;font-size:15px;line-height:1.45;color:var(--muted-l)}
-.grano.star p{color:#d9c8b3}
-.grano .pill{display:inline-block;margin-left:6px;font:600 11px var(--f-caps);letter-spacing:.14em;background:var(--oro);color:var(--lava);border-radius:999px;padding:2px 8px;vertical-align:3px}
-.risultato{margin-top:10px;border:1.5px dashed rgba(59,35,24,.3);border-radius:18px;padding:18px 20px;display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;font:600 15px var(--f-caps);letter-spacing:.12em;text-transform:uppercase}
-.risultato span{display:flex;align-items:center;gap:8px}
-.risultato span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--bordeaux)}
-@media (max-width:900px){.impasto{grid-template-columns:1fr;gap:36px}}
+.grano h4{font:600 14px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--inchiostro)}
+.grano p{margin:2px 0 0!important;font-size:14.5px;line-height:1.45}
+.grano.star{background:var(--inchiostro)}
+.grano.star h4{color:var(--oro)}.grano.star p{color:#d9c8b3!important}
+.pill{display:inline-block;margin-left:6px;font:600 10px var(--f-body);letter-spacing:.16em;background:var(--oro);color:var(--lava);border-radius:999px;padding:2px 8px;vertical-align:2px}
+@media (max-width:900px){.impasto{grid-template-columns:1fr;gap:40px;margin-top:64px}.impasto .ph{aspect-ratio:4/3}}
 
-/* pizza del periodo */
-.periodo{background:var(--bordeaux);background-image:radial-gradient(70% 90% at 85% 50%,rgba(232,137,43,.35),transparent 70%);color:var(--crema);overflow:hidden}
-.periodo .wrap{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px}
-.periodo .wrap > *{min-width:0}
-.periodo h2{font:400 clamp(56px,9vw,104px)/.9 var(--f-script);margin:8px 0 14px}
-.periodo .ingr{font-size:19px;max-width:30em;color:#f1dccb}
-.periodo .row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:24px}
-.periodo .price{font:700 40px var(--f-caps)}
-.periodo .vis{justify-self:center;width:min(100%,480px);margin:0;position:relative}
-.periodo .vis img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;box-shadow:0 30px 60px rgba(0,0,0,.45),0 0 0 10px rgba(246,238,224,.08)}
-.periodo .vis figcaption{position:absolute;right:0;bottom:6%;background:var(--crema);color:var(--inchiostro);border-radius:12px;padding:8px 12px;font:600 12px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;transform:rotate(-3deg)}
-.chip-etna{display:inline-block;font:600 12px var(--f-caps);letter-spacing:.16em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:3px 10px;opacity:.9}
-@media (max-width:820px){.periodo .wrap{grid-template-columns:1fr;text-align:center}.periodo .row{justify-content:center}.periodo .ingr{margin-inline:auto}.periodo .vis{order:-1;width:min(76vw,340px)}}
+/* ---------- carosello foto ---------- */
+.gallery{padding-block:0 110px}
+.car{position:relative}
+.car-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-inline:var(--gutter) var(--gutter-r);scroll-padding-inline:var(--gutter)}
+.car-track::-webkit-scrollbar{display:none}
+.car-track figure{flex:0 0 clamp(240px,30vw,380px);aspect-ratio:3/4;margin:0;border-radius:22px;overflow:hidden;scroll-snap-align:start;position:relative}
+.car-track figure img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.car-track figure:hover img{transform:scale(1.08)}
+.car-track figcaption{position:absolute;left:0;right:0;bottom:0;padding:50px 20px 18px;background:linear-gradient(transparent,rgba(23,18,17,.85));font:italic 500 24px var(--f-title)}
+.car-nav{display:flex;justify-content:center;gap:12px;margin-top:26px}
+.car-nav button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(246,238,224,.35);background:transparent;color:var(--crema);display:grid;place-items:center;transition:background .3s,color .3s}
+.car-nav button:hover{background:var(--oro);color:var(--lava);border-color:var(--oro)}
 
-/* consigliate */
-.dark{background:var(--lava)}
-.sapuri{display:grid;grid-template-columns:.8fr 1.2fr;gap:28px;align-items:stretch}
-.sapuri > *{min-width:0}
-.sapuri .ph{border-radius:22px;overflow:hidden;min-height:320px;position:relative}
-.sapuri .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-@media (max-width:900px){.sapuri{grid-template-columns:1fr}.sapuri .ph{min-height:0;aspect-ratio:4/3}}
-.reel{display:grid;grid-auto-flow:row;grid-template-columns:1fr 1fr;grid-auto-columns:minmax(240px,1fr);gap:18px;scrollbar-color:var(--bordeaux) transparent}
-@media (max-width:560px){.reel{grid-template-columns:1fr}}
-.card{background:var(--lava-2);border:1px solid rgba(210,168,102,.16);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px}
-.card h3{font:400 32px/1 var(--f-script);color:var(--oro)}
-.card p{margin:0;color:var(--muted-d);font-size:15px;line-height:1.45;flex:1}
-.card .foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
-.card .foot b{font:700 24px var(--f-caps)}
-.add{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;background:var(--oro);color:var(--lava);padding:9px 16px;font:600 14px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;transition:transform .15s}
-.add:hover{transform:scale(1.05)}
-.add.done{background:#6f9b4a;color:#fff}
-.sugg{font:600 12px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;color:var(--brace)}
+/* ---------- novità ---------- */
+.news h2{text-align:center;margin-bottom:56px;color:var(--crema)}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.ncard{text-decoration:none;display:flex;flex-direction:column;gap:14px}
+.ncard .im{border-radius:22px;overflow:hidden;aspect-ratio:1;position:relative}
+.ncard .im img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.ncard:hover .im img{transform:scale(1.08)}
+.ncard .im .price{position:absolute;top:16px;right:16px;background:var(--crema);color:var(--inchiostro);font:600 15px var(--f-body);border-radius:999px;padding:6px 14px}
+.ncard .lab{font:italic 500 22px var(--f-title);color:var(--brace)}
+.ncard h3{font:500 17px/1.35 var(--f-body);letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:860px){.news-grid{grid-template-columns:1fr;gap:44px}}
 
-/* menu */
-.cats{position:sticky;top:calc(68px + env(safe-area-inset-top,0px));z-index:20;background:var(--pietra);display:flex;gap:8px;overflow-x:auto;padding:12px 0;margin-bottom:28px;border-bottom:1px solid rgba(59,35,24,.15);scrollbar-width:none}
-.cats button{flex:none;border:1.5px solid rgba(59,35,24,.25);background:transparent;color:var(--inchiostro);border-radius:999px;padding:8px 16px;font:600 14px var(--f-caps);letter-spacing:.12em;text-transform:uppercase}
+/* ---------- a casa tua ---------- */
+.home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.home > *{min-width:0}
+.home-card{position:relative;border-radius:26px;overflow:hidden;background:var(--lava-3);min-height:340px;display:flex;align-items:center;padding:40px}
+.home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;animation:spin 60s linear infinite;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.home-card .t{position:relative;z-index:1;max-width:60%}
+.home-card .t b{display:block;font:700 clamp(30px,4.2vw,52px)/1 var(--f-body);text-transform:uppercase;letter-spacing:.01em}
+.home-card .t span{display:block;margin-top:10px;font:600 clamp(16px,2vw,22px) var(--f-body);letter-spacing:.16em;color:var(--oro);text-transform:uppercase}
+.home-txt .lab{font:italic 500 24px var(--f-title);color:var(--brace)}
+.home-txt h3{font:500 18px/1.4 var(--f-body);letter-spacing:.08em;text-transform:uppercase;margin:6px 0 14px}
+.home-txt p{color:var(--muted-d);margin:0 0 24px}
+.home-txt .row{display:flex;align-items:center;gap:14px;text-decoration:none;font:500 13px var(--f-body);letter-spacing:.22em;text-transform:uppercase}
+@media (max-width:860px){.home{grid-template-columns:1fr}.home-card{min-height:280px;padding:28px}.home-card img{width:78%;right:-30%;margin-top:-39%}.home-card .t{max-width:68%}}
+
+/* ---------- menu ---------- */
+.menu-sec .head{text-align:center;margin-bottom:40px}
+.menu-sec .head h2{color:var(--inchiostro)}
+.cats{position:sticky;top:calc(64px + env(safe-area-inset-top,0px));z-index:20;background:var(--pietra);display:flex;gap:8px;overflow-x:auto;padding:12px 0;margin-bottom:34px;border-bottom:1px solid rgba(59,35,24,.12);scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:none;border:1px solid rgba(59,35,24,.25);background:transparent;color:var(--inchiostro);border-radius:999px;padding:9px 18px;font:500 12.5px var(--f-body);letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .cats button[aria-pressed="true"]{background:var(--inchiostro);border-color:var(--inchiostro);color:var(--crema)}
-.mgroup{margin-bottom:56px;scroll-margin-top:150px}
-.banner{position:relative;height:190px;border-radius:20px;overflow:hidden;margin-bottom:10px;display:flex;align-items:flex-end;padding:18px 22px}
-.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,15,13,.85),rgba(20,15,13,.05) 70%)}
-.banner h3{position:relative;z-index:1;font:400 clamp(36px,5vw,52px)/1 var(--f-script);color:var(--crema);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.banner h3 .gloss{color:var(--oro);opacity:1;margin:0}
-.mgroup > h3{font:400 clamp(36px,5vw,50px)/1 var(--f-script);color:var(--bordeaux);display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.mgroup > h3 .gloss{color:var(--muted-l);margin:0}
-.mlist{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+.mgroup{margin-bottom:64px;scroll-margin-top:150px}
+.banner{position:relative;height:210px;border-radius:22px;overflow:hidden;margin-bottom:12px;display:flex;align-items:flex-end;padding:20px 24px}
+.banner img{position:absolute;left:0;right:0;top:-15%;width:100%;height:130%;object-fit:cover;will-change:transform}
+.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(23,18,17,.85),rgba(23,18,17,.05) 70%)}
+.banner h3{position:relative;z-index:1;font:italic 500 clamp(36px,5vw,52px)/1 var(--f-title);color:var(--crema);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.banner h3 small{font:500 12px var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--oro)}
+.mlist{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
 @media (max-width:820px){.mlist{grid-template-columns:1fr}}
-.mi{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;padding:16px 0;border-bottom:1px dashed rgba(59,35,24,.22)}
+.mi{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;padding:18px 0;border-bottom:1px solid rgba(59,35,24,.13)}
 .mi > div{min-width:0}
-.mi h4{margin:0;font:700 19px/1.15 var(--f-caps);letter-spacing:.06em;text-transform:uppercase;color:var(--inchiostro)}
-.mi p{margin:3px 0 0;font-size:14.5px;line-height:1.45;color:var(--muted-l)}
-.mi .tip{display:inline-block;margin-top:6px;font:600 11.5px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux)}
+.mi h4{font:500 16px/1.25 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--inchiostro)}
+.mi p{margin:4px 0 0;font-size:14.5px;line-height:1.5;color:var(--muted-l)}
+.mi .tip{display:inline-block;margin-top:6px;font:500 11px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--bordeaux)}
 .mi .side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.mi .side b{font:700 19px var(--f-caps);color:var(--inchiostro);font-variant-numeric:tabular-nums;white-space:nowrap}
-.plus{width:36px;height:36px;border-radius:50%;border:0;background:var(--bordeaux);color:var(--crema);font-size:22px;line-height:1;display:grid;place-items:center;transition:transform .15s}
-.plus:hover{transform:scale(1.1)}
-.plus.done{background:#6f9b4a}
+.mi .side b{font:italic 600 22px var(--f-title);color:var(--inchiostro);white-space:nowrap}
+.plus{width:36px;height:36px;border-radius:50%;border:1px solid var(--bordeaux);background:transparent;color:var(--bordeaux);font-size:20px;line-height:1;display:grid;place-items:center;transition:background .3s,color .3s,transform .3s}
+.plus:hover{background:var(--bordeaux);color:var(--crema);transform:rotate(90deg)}
+.plus.done{background:#5d8a3e;border-color:#5d8a3e;color:#fff}
 .allergeni{font-size:14px;color:var(--muted-l);border-top:1px solid rgba(59,35,24,.15);padding-top:18px}
 
-/* come funziona */
-.ordina-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
-.ordina-grid > *{min-width:0}
-.ordina-grid .ph{border-radius:22px;overflow:hidden;min-height:300px;position:relative}
-.ordina-grid .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-@media (max-width:900px){.ordina-grid{grid-template-columns:1fr}.ordina-grid .ph{min-height:0;aspect-ratio:3/2}}
-.steps{display:grid;grid-template-columns:1fr;gap:16px;counter-reset:s}
-.step{position:relative;padding:28px 24px 24px;border-radius:22px;background:var(--lava-2);border:1px solid rgba(210,168,102,.16)}
-.step::before{counter-increment:s;content:counter(s);font:400 64px/1 var(--f-script);color:var(--bordeaux);position:absolute;right:20px;top:10px;opacity:.9}
-.step h3{font:700 22px var(--f-caps);letter-spacing:.1em;text-transform:uppercase;color:var(--oro);margin-bottom:6px}
+/* ---------- come ordinare ---------- */
+.steps-h{text-align:center;margin-bottom:60px}
+.steps-h p{color:var(--muted-d);margin:10px 0 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
+.step{position:relative;padding:34px 28px 30px;border-radius:24px;background:var(--lava-2);border:1px solid rgba(210,168,102,.14);transition:transform .5s var(--ease),border-color .5s}
+.step:hover{transform:translateY(-8px);border-color:rgba(210,168,102,.45)}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid var(--oro);color:var(--oro);font:italic 500 26px var(--f-title);margin-bottom:22px}
+.step h3{font:italic 500 28px var(--f-title);margin-bottom:8px}
 .step p{margin:0;color:var(--muted-d);font-size:15.5px}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
 
-/* locale */
-.locale{position:relative;padding:0;background:var(--lava)}
-.locale figure{margin:0;position:relative}
-.locale img{width:100%;max-height:720px;object-fit:cover;object-position:center 40%}
-.locale figcaption{position:absolute;inset:auto 0 0;padding-block:120px 40px;background:linear-gradient(transparent,rgba(20,15,13,.92))}
-.locale figcaption h2{font:400 clamp(36px,5.5vw,60px)/1 var(--f-script);color:var(--crema);max-width:16em}
-.locale figcaption p{color:var(--muted-d);max-width:44em;margin:10px 0 0}
-.locale figcaption small{display:inline-block;margin-top:12px;font:600 12px var(--f-caps);letter-spacing:.16em;text-transform:uppercase;color:var(--oro)}
-
-/* contatti */
-.etna-band{position:relative;height:300px;overflow:hidden}
-.etna-band img{width:100%;height:100%;object-fit:cover}
-.etna-band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--lava),transparent 25%,transparent 70%,var(--pietra))}
-.etna-band p{position:absolute;inset:auto 0 40px;z-index:1;text-align:center;font:400 clamp(32px,5vw,52px)/1 var(--f-script);color:var(--crema);text-shadow:0 2px 16px rgba(0,0,0,.6);margin:0}
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.info > div{background:var(--crema);border-radius:20px;padding:24px;min-width:0}
-.info h3{font:700 18px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);margin-bottom:8px}
+/* ---------- contatti ---------- */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.info > div{background:var(--crema);border-radius:22px;padding:28px;min-width:0}
+.info h3{font:600 13px var(--f-body);letter-spacing:.22em;text-transform:uppercase;color:var(--bordeaux);margin-bottom:10px}
 .info p{margin:0 0 6px}
-.todo{display:inline-block;font:600 11px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;border:1px dashed var(--bordeaux);color:var(--bordeaux);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
+.info .muted{color:var(--muted-l)}
+.todo{display:inline-block;font:500 10.5px var(--f-body);letter-spacing:.14em;text-transform:uppercase;border:1px dashed var(--bordeaux);color:var(--bordeaux);border-radius:6px;padding:1px 6px;margin-left:4px;vertical-align:2px}
 @media (max-width:820px){.info{grid-template-columns:1fr}}
+.contact-h{text-align:center;margin-bottom:50px}
+.contact-h h2{color:var(--inchiostro)}
 
-/* footer */
-footer{background:#141010;color:var(--muted-d);padding-block:56px 110px;text-align:center}
-footer img{height:110px;width:auto;margin:0 auto 18px}
-footer nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;margin:20px 0;font:600 14px var(--f-caps);letter-spacing:.14em;text-transform:uppercase}
-footer nav a{text-decoration:none}
-footer nav a:hover{color:var(--oro)}
-footer small{display:block;font-size:13px;opacity:.7}
+/* ---------- ribbon ---------- */
+.ribbon{background:var(--bordeaux);overflow:hidden;white-space:nowrap}
+.ribbon .track{display:inline-flex;gap:46px;padding-block:16px;animation:slide 40s linear infinite;font:italic 500 22px var(--f-title)}
+.ribbon .track span::after{content:"✦";margin-left:46px;color:var(--oro);font-style:normal;font-size:14px;vertical-align:3px}
+@keyframes slide{to{transform:translateX(-50%)}}
 
-/* mobile order bar */
-.orderbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom,0px)) var(--gutter);background:linear-gradient(transparent,rgba(20,15,13,.95) 30%);display:none}
-.orderbar button{width:100%;justify-content:center;padding:15px}
-.orderbar.show{display:block}
-@media (min-width:821px){.orderbar{display:none!important}}
+/* ---------- footer ---------- */
+footer{padding-block:80px 120px;text-align:center;color:var(--muted-d)}
+footer .logo{height:120px;width:auto;margin:0 auto 22px}
+footer .phil{max-width:34em;margin:0 auto 46px}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:520px;margin:0 auto 40px;text-align:left}
+.fcols h4{font:italic 500 24px var(--f-title);color:var(--crema);margin-bottom:12px}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fcols a{text-decoration:none;font-size:15px}
+.fcols a:hover{color:var(--oro)}
+.fcols li::before{content:"○";font-size:10px;margin-right:10px;color:var(--oro);vertical-align:2px}
+.social{display:flex;justify-content:center;gap:16px;margin-bottom:30px}
+.social a{width:44px;height:44px;border-radius:50%;border:1px solid rgba(210,168,102,.35);display:grid;place-items:center;color:var(--oro);transition:background .3s,color .3s}
+.social a:hover{background:var(--oro);color:var(--lava)}
+.social svg{width:18px;height:18px}
+footer small{display:block;font-size:13px;opacity:.75}
 
-/* cart drawer */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;opacity:0;pointer-events:none;transition:opacity .25s}
+/* ---------- barra ordine mobile ---------- */
+.orderbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom,0px)) var(--gutter);background:linear-gradient(transparent,rgba(23,18,17,.96) 35%);transform:translateY(110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
+.orderbar button{width:100%;justify-content:center;padding:16px}
+.orderbar.show{transform:none;visibility:visible;transition:transform .5s var(--ease)}
+@media (min-width:861px){.orderbar{display:none}}
+
+/* ---------- carrello ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;opacity:0;pointer-events:none;transition:opacity .35s}
 .scrim.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);z-index:80;background:var(--pietra);color:var(--inchiostro);transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);z-index:80;background:var(--pietra);color:var(--inchiostro);transform:translateX(100%);transition:transform .5s var(--ease);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
 .drawer.open{transform:none}
-.drawer header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(59,35,24,.15)}
-.drawer header h2{font:400 36px/1 var(--f-script);color:var(--bordeaux)}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid rgba(59,35,24,.12)}
+.drawer header h2{font:italic 500 34px/1 var(--f-title);color:var(--bordeaux)}
 .x{border:0;background:transparent;font-size:30px;line-height:1;color:var(--inchiostro);padding:4px 8px}
-.dbody{flex:1;overflow-y:auto;padding:8px 22px 22px}
+.dbody{flex:1;overflow-y:auto;padding:8px 24px 22px}
 .empty{text-align:center;padding:40px 10px;color:var(--muted-l)}
-.empty b{display:block;font:400 30px var(--f-script);color:var(--bordeaux);margin-bottom:6px}
-.line{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 0;border-bottom:1px dashed rgba(59,35,24,.22)}
-.line h4{margin:0;font:700 17px var(--f-caps);letter-spacing:.06em;text-transform:uppercase}
-.line .pr{font:700 17px var(--f-caps);font-variant-numeric:tabular-nums;text-align:right}
-.line select{font:500 13px var(--f-body);border:1px solid rgba(59,35,24,.3);border-radius:8px;padding:4px 6px;background:var(--crema);color:var(--inchiostro);max-width:100%}
+.empty b{display:block;font:italic 500 30px var(--f-title);color:var(--bordeaux);margin-bottom:6px}
+.line{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid rgba(59,35,24,.12);animation:pop .4s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateX(20px)}}
+.line h4{font:500 15px var(--f-body);letter-spacing:.1em;text-transform:uppercase}
+.line .pr{font:italic 600 20px var(--f-title);text-align:right}
+.line label{font-size:12px;color:var(--muted-l)}
+.line select{font:400 13px var(--f-body);border:1px solid rgba(59,35,24,.3);border-radius:8px;padding:4px 6px;background:var(--crema);color:var(--inchiostro);max-width:100%;margin-left:4px}
 .qty{display:inline-flex;align-items:center;gap:10px;justify-self:end}
-.qty button{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(59,35,24,.35);background:transparent;color:var(--inchiostro);font-size:16px;line-height:1}
-.qty span{font:700 16px var(--f-caps);min-width:14px;text-align:center}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid rgba(59,35,24,.35);background:transparent;color:var(--inchiostro);font-size:16px;line-height:1}
+.qty span{font-weight:600;min-width:14px;text-align:center}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--pietra-2);border-radius:999px;padding:4px;margin:18px 0 12px}
-.seg button{border:0;border-radius:999px;padding:10px;background:transparent;color:var(--inchiostro);font:600 14px var(--f-caps);letter-spacing:.14em;text-transform:uppercase}
+.seg button{border:0;border-radius:999px;padding:10px;background:transparent;color:var(--inchiostro);font:500 12.5px var(--f-body);letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .seg button[aria-pressed="true"]{background:var(--inchiostro);color:var(--crema)}
 .fld{display:grid;gap:4px;margin-bottom:10px}
-.fld label{font:600 12px var(--f-caps);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-l)}
+.fld label{font:500 11.5px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-l)}
 .fld input,.fld textarea{font:400 16px var(--f-body);border:1px solid rgba(59,35,24,.3);border-radius:10px;padding:10px 12px;background:var(--crema);color:var(--inchiostro);width:100%}
 .fld textarea{min-height:64px;resize:vertical}
-.dfoot{padding:16px 22px 20px;border-top:1px solid rgba(59,35,24,.15);background:var(--pietra)}
-.tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;font:700 22px var(--f-caps);letter-spacing:.06em;text-transform:uppercase}
-.wa{width:100%;justify-content:center;background:#1f8f4e;color:#fff;border:0}
-.wa:hover{background:#18763f}
+.dfoot{padding:16px 24px 20px;border-top:1px solid rgba(59,35,24,.12);background:var(--pietra)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font:500 14px var(--f-body);letter-spacing:.2em;text-transform:uppercase}
+.tot b{font:italic 600 28px var(--f-title);letter-spacing:0}
+.wa{width:100%;justify-content:center;background:#1f8f4e;color:#fff}
+.wa::before{background:#16733d}
 .wa[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .note{font-size:13px;color:var(--muted-l);margin:10px 0 0;text-align:center}
 .err{color:var(--bordeaux);font-size:14px;margin:0 0 10px;min-height:1em}
 
-.reveal{transition:opacity .8s ease,transform .8s ease}
-.reveal.pre{transform:translateY(18px)}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal.pre{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<script>if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.classList.add("anim")</script>
 
-<header class="top">
+<header class="top" id="top-bar">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Mungibeddu, torna su"><img src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799"></a>
     <nav class="nav" aria-label="Sezioni">
       <a href="#impasto">L'impasto</a>
       <a href="#menu">Menù</a>
-      <a href="#ordina">Come ordinare</a>
+      <a href="#ordina">Ordina</a>
       <a href="#contatti">Dove siamo</a>
     </nav>
     <button class="cart-btn" type="button" data-open-cart aria-label="Apri il tuo ordine">Ordine <span class="n" data-count>0</span></button>
+    <button class="burger" type="button" id="burger" aria-label="Apri il menù di navigazione" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
+<nav class="menu-ov" id="menuOv" aria-label="Navigazione">
+  <a href="#impasto">L'impasto</a><a href="#novita">Novità</a><a href="#menu">Menù</a><a href="#ordina">Come ordinare</a><a href="#contatti">Dove siamo</a>
+</nav>
 
 <main id="top">
-<section class="hero" aria-label="Mungibeddu">
-  <div class="bg"><img src="assets/hero.jpg" alt="Spicchi di pizza margherita con bufala e basilico su fondo scuro" width="1400" height="1750" fetchpriority="high"></div>
+
+<!-- HERO SLIDER -->
+<section class="hero" aria-roledescription="carosello" aria-label="In evidenza" style="padding:0">
+  <div class="slide on" data-slide>
+    <div class="bg blur"><img src="assets/etna.jpg" alt="" width="1800" height="1200" fetchpriority="high"></div>
+    <div class="inner">
+      <div class="hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="900" height="900"></div>
+      <span class="caps kicker">Asporto e domicilio · Milo</span>
+      <h1>La nostra terra, i nostri sapori.</h1>
+      <a class="btn btn-oro" href="#menu">Scopri il menù</a>
+    </div>
+  </div>
+  <div class="slide" data-slide aria-hidden="true">
+    <div class="bg"><img src="assets/farina.jpg" alt="" width="1400" height="934"></div>
+    <div class="inner">
+      <span class="caps kicker">Il nostro impasto</span>
+      <h2>Grano antico Perciasacchi</h2>
+      <p>Farine tipo 0 e tipo 1 con una percentuale di Perciasacchi, antico grano duro siciliano da agricoltura biologica. Cornicione soffice, croccante fuori.</p>
+      <a class="btn btn-line" href="#impasto" tabindex="-1">Scopri l'impasto</a>
+    </div>
+  </div>
+  <div class="slide" data-slide aria-hidden="true">
+    <div class="bg"><img src="assets/zucca.jpg" alt="" width="1200" height="852"></div>
+    <div class="inner">
+      <span class="caps kicker">Di stu periudu</span>
+      <h2>Tramonto</h2>
+      <p>Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia e granella di nocciole. La pizza di stagione.</p>
+      <button class="btn btn-oro" type="button" data-add="tramonto" tabindex="-1">Aggiungi all'ordine · 11€</button>
+    </div>
+  </div>
+  <div class="slide" data-slide aria-hidden="true">
+    <div class="bg"><img src="assets/asporto.jpg" alt="" width="1400" height="933"></div>
+    <div class="inner">
+      <span class="caps kicker">Asporto e domicilio</span>
+      <h2>Mungibeddu a casa tua</h2>
+      <p>Scegli dal menù e invia l'ordine su WhatsApp. Passi a ritirarla calda o te la portiamo noi.</p>
+      <a class="btn btn-oro" href="#ordina" tabindex="-1">Ordina ora</a>
+    </div>
+  </div>
+  <button class="arrow prev" type="button" id="prev" aria-label="Slide precedente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="arrow next" type="button" id="next" aria-label="Slide successiva"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="hero-ctrl" id="dots"></div>
+  <span class="scroll-hint">Scorri</span>
+</section>
+
+<!-- PUNTI DI FORZA -->
+<section class="topo forza" aria-labelledby="forza-t">
   <div class="wrap">
-    <div class="hero-txt">
-      <img class="logo" src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799">
-      <span class="caps eyebrow">Pizzeria d'asporto e a domicilio · Milo, Etna</span>
-      <h1>La nostra terra, <em>i nostri sapori.</em></h1>
-      <p class="lead">Pizza con farine tipo 0 e tipo 1 e grano antico siciliano Perciasacchi da agricoltura biologica. Cornicione soffice e alveolato, croccante fuori. La sforniamo alle pendici del Mungibeddu e te la portiamo a casa.</p>
-      <div class="cta">
-        <a class="btn btn-oro" href="#menu">Ordina ora</a>
-        <a class="btn btn-ghost" href="#impasto">Il nostro impasto</a>
+    <h2 class="spaced" id="forza-t" data-a="up">Mungibeddu</h2>
+    <p class="intro" data-a="up" style="--d:.15s">Una pizzeria d'asporto alle pendici dell'Etna, dove l'impasto parla siciliano.</p>
+    <div class="icons" id="icons"></div>
+  </div>
+</section>
+
+<!-- PARALLASSE MENU -->
+<div class="para" aria-label="Il menù">
+  <div class="pbg" data-par=".25"><img src="assets/bufala.jpg" alt="" width="1400" height="1867" loading="lazy"></div>
+  <div class="inner">
+    <span class="caps" data-a="up" style="color:var(--oro)">Pizze, fritti e birre dell'Etna</span>
+    <h2 data-a="up" style="--d:.1s">Sapori che vengono dalla Muntagna</h2>
+    <a class="btn btn-line" href="#menu" data-a="up" style="--d:.2s">Scopri il nostro menù</a>
+  </div>
+</div>
+
+<!-- BENVENUTI / IMPASTO -->
+<section class="light welcome" id="impasto" aria-labelledby="impasto-t">
+  <img class="mark" src="assets/logo-dark.png" alt="" width="1092" height="799" aria-hidden="true" data-par="-.12">
+  <div class="wrap">
+    <span class="caps kicker" data-a="up">La nostra terra, i nostri sapori</span>
+    <h2 class="t-title" id="impasto-t" data-a="up" style="--d:.1s">Benvenuti da Mungibeddu</h2>
+    <p class="lead" data-a="up" style="--d:.2s">La nostra pizza nasce dall'incontro tra tradizione, territorio e innovazione. Crediamo che una grande pizza cominci dalla scelta delle materie prime.</p>
+    <a class="btn btn-dark" href="#menu" data-a="up" style="--d:.3s">Scopri il menù</a>
+
+    <div class="impasto">
+      <div class="ph" data-a="left"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy" data-par=".08"><div class="badge">Perciasacchi bio</div></div>
+      <div class="story">
+        <h3 data-a="up">Comu nasci a nostra pizza</h3>
+        <p data-a="up" style="--d:.1s">Abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica. Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
+        <p data-a="up" style="--d:.15s">Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto: un cornicione soffice e alveolato, con una piacevole croccantezza esterna.</p>
+        <div class="grani">
+          <div class="grano" data-a="right" style="--d:.1s"><div class="ico" data-ico="0"></div><div><h4>Farina tipo 0</h4><p>Leggerezza ed elasticità alla lievitazione.</p></div></div>
+          <div class="grano" data-a="right" style="--d:.22s"><div class="ico" data-ico="1"></div><div><h4>Farina tipo 1</h4><p>Conserva parte del germe e della crusca: più profumo.</p></div></div>
+          <div class="grano star" data-a="right" style="--d:.34s"><div class="ico"><img src="assets/grano.jpg" alt="Spighe di grano dorate" width="600" height="900" loading="lazy"></div><div><h4>Perciasacchi <span class="pill">Bio</span></h4><p>Antico grano duro siciliano non OGM: carattere, fibre e un glutine più delicato.</p></div></div>
+        </div>
       </div>
-      <div class="facts"><span>Asporto</span><span>Domicilio</span><span>Ordini su WhatsApp</span></div>
     </div>
   </div>
 </section>
 
 <div class="ribbon" aria-hidden="true"><div class="track" id="track"></div></div>
 
-<section class="light" id="impasto">
-  <div class="wrap impasto">
-    <div class="story reveal">
-      <div class="sec-head"><h2>Comu nasci a nostra pizza</h2><span class="gloss">Come nasce la nostra pizza</span></div>
-      <p class="big">La nostra pizza nasce dall'incontro tra tradizione, territorio e innovazione.</p>
-      <p>Crediamo che una grande pizza cominci dalla scelta delle materie prime. Per questo abbiamo creato un impasto che unisce farine di tipo 0 e tipo 1 a una percentuale di farina Perciasacchi, ottenuta da un'antica varietà di grano duro siciliano, coltivata secondo i principi dell'agricoltura biologica.</p>
-      <p>Un grano che racconta la storia della nostra terra, naturalmente ricco di fibre e proteine vegetali, che dona al nostro impasto carattere, profumo e un sapore autentico.</p>
-      <p>Attraverso un'attenta lavorazione e una maturazione studiata, ricerchiamo il perfetto equilibrio tra leggerezza, fragranza e gusto.</p>
-      <p>Alle pendici dell'Etna trasformiamo la passione per la pizza in un'esperienza che valorizza le nostre radici siciliane, senza rinunciare all'innovazione. Perché per noi la pizza non è soltanto un prodotto da gustare, ma un modo di raccontare chi siamo, da dove veniamo e ciò in cui crediamo.</p>
-      <p class="sign">Mungibeddu</p>
+<!-- CAROSELLO -->
+<section class="topo gallery" aria-label="Dalla nostra cucina" style="padding-top:90px">
+  <div class="wrap" style="text-align:center;margin-bottom:40px">
+    <h2 class="t-title" data-a="up">Dal forno alla tavola</h2>
+  </div>
+  <div class="car" data-a="up" style="--d:.15s">
+    <div class="car-track" id="carTrack">
+      <figure><img src="assets/hero.jpg" alt="Spicchi di margherita su fondo scuro" loading="lazy"><figcaption>I Margheriti</figcaption></figure>
+      <figure><img src="assets/cat-cunsigghiati.jpg" alt="Pizza margherita tagliata al tavolo" loading="lazy"><figcaption>Sapuri cunsigghiati</figcaption></figure>
+      <figure><img src="assets/cat-stissi.jpg" alt="Pizza rossa appena sfornata" loading="lazy"><figcaption>Sempri i stissi</figcaption></figure>
+      <figure><img src="assets/cat-spizzicari.jpg" alt="Patatine fritte nel cestino" loading="lazy"><figcaption>Pi spizzicari</figcaption></figure>
+      <figure><img src="assets/cat-biviri.jpg" alt="Birre al bancone" loading="lazy"><figcaption>Birri di cca</figcaption></figure>
+      <figure><img src="assets/cat-margheriti.jpg" alt="Margherita a spicchi" loading="lazy"><figcaption>Fatta a mano</figcaption></figure>
     </div>
-    <div class="grani reveal">
-      <figure class="foto-impasto"><img src="assets/farina.jpg" alt="Mani che lavorano l'impasto su un piano infarinato" width="1400" height="934" loading="lazy"><span>Mani, farina e tempo</span></figure>
-      <div class="grano"><div class="ico" data-ico="spiga"></div><div><h3>Farina tipo 0</h3><p>La base dell'impasto. Dà leggerezza ed elasticità alla lievitazione.</p></div></div>
-      <div class="grano"><div class="ico" data-ico="spiga2"></div><div><h3>Farina tipo 1</h3><p>Meno raffinata, conserva parte del germe e della crusca: più profumo e più sapore.</p></div></div>
-      <div class="grano star"><div class="ico"><img src="assets/grano.jpg" alt="Spighe di grano dorate" width="600" height="900" loading="lazy"></div><div><h3>Perciasacchi <span class="pill">Bio</span></h3><p>Antico grano duro siciliano, non geneticamente modificato. Ricco di fibre e proteine vegetali, dona carattere e un glutine più delicato.</p></div></div>
-      <div class="risultato"><span>Cornicione alveolato</span><span>Croccante fuori</span><span>Maturazione studiata</span></div>
+    <div class="car-nav"><button type="button" id="carPrev" aria-label="Foto precedenti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" id="carNext" aria-label="Foto successive"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></button></div>
+  </div>
+</section>
+
+<!-- NOVITÀ -->
+<section class="topo news" id="novita" aria-labelledby="news-t" style="padding-top:20px">
+  <div class="wrap">
+    <h2 class="t-title" id="news-t" data-a="up">Le novità di Mungibeddu</h2>
+    <div class="news-grid">
+      <a class="ncard" href="#cat-periudu" data-a="up">
+        <div class="im"><img src="assets/zucca.jpg" alt="Zucche di stagione" loading="lazy"><span class="price">11€</span></div>
+        <span class="lab">Di stu periudu</span>
+        <h3>Tramonto, la pizza di stagione</h3>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="ncard" href="#cat-cunsigghiati" data-a="up" style="--d:.15s">
+        <div class="im"><img src="assets/cat-cunsigghiati.jpg" alt="Pizza servita al tavolo" loading="lazy"></div>
+        <span class="lab">Sapuri cunsigghiati</span>
+        <h3>Le pizze che vi consigliamo noi</h3>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="ncard" href="#cat-biviri" data-a="up" style="--d:.3s">
+        <div class="im"><img src="assets/cat-biviri.jpg" alt="Birre artigianali al bancone" loading="lazy"><span class="price">5€</span></div>
+        <span class="lab">Birri di cca</span>
+        <h3>Le birre del Birrificio dell'Etna</h3>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="periodo" aria-labelledby="periodo-t">
-  <div class="wrap">
-    <div class="reveal">
-      <span class="caps" style="color:var(--oro)">Di stu periudu · la pizza di stagione</span>
-      <h2 id="periodo-t">Tramonto</h2>
-      <p class="ingr">Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia, granella di nocciole, olio evo.</p>
-      <span class="chip-etna">Provala con impasto Etna</span>
-      <div class="row"><span class="price">11€</span><button class="btn btn-oro" type="button" data-add="tramonto">Aggiungi all'ordine</button></div>
+<!-- A CASA TUA -->
+<section class="topo" aria-label="Domicilio" style="padding-top:40px">
+  <div class="wrap home">
+    <div class="home-card" data-a="left">
+      <img src="assets/pizza-top.webp" alt="" width="900" height="900" loading="lazy">
+      <div class="t"><b>Mungibeddu a casa tua</b><span>Ordina ora!</span></div>
     </div>
-    <figure class="vis"><img src="assets/zucca.jpg" alt="Zucche e cannella su un tavolo di legno scuro" width="1200" height="852" loading="lazy"><figcaption>Zucca di stagione</figcaption></figure>
+    <div class="home-txt" data-a="right" style="--d:.15s">
+      <span class="lab">Domicilio</span>
+      <h3>I sapori dell'Etna, comodamente a casa tua</h3>
+      <p>Consegniamo a Milo e nei paesi vicini. Scegli dal menù, invia l'ordine su WhatsApp e ti confermiamo l'orario in chat.</p>
+      <a class="row" href="#ordina"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>Come ordinare</a>
+    </div>
   </div>
 </section>
 
-<section class="dark" aria-labelledby="sapuri-t">
+<!-- MENU -->
+<section class="light menu-sec" id="menu" aria-labelledby="menu-t">
   <div class="wrap">
-    <div class="sec-head"><h2 id="sapuri-t">Sapuri cunsigghiati</h2><span class="gloss" style="color:var(--muted-d)">Le pizze che vi consigliamo noi</span></div>
-    <div class="sapuri"><div class="ph"><img src="assets/bufala.jpg" alt="Pizza con mozzarella di bufala, pomodoro e basilico dal cornicione alveolato" width="1400" height="1867" loading="lazy"></div><div class="reel" id="reel"></div></div>
-  </div>
-</section>
-
-<section class="light" id="menu" aria-labelledby="menu-t">
-  <div class="wrap">
-    <div class="sec-head"><h2 id="menu-t">U Menù</h2><span class="gloss muted">Tocca + per aggiungere all'ordine</span></div>
+    <div class="head"><span class="caps" style="color:var(--bordeaux)" data-a="up">Tocca + per aggiungere all'ordine</span><h2 class="t-title" id="menu-t" data-a="up" style="--d:.1s">U Menù</h2></div>
     <div class="cats" id="cats" role="toolbar" aria-label="Categorie del menù"></div>
     <div id="menuList"></div>
-    <p class="allergeni">Per informazioni su allergeni e intolleranze chiedi al personale prima di ordinare. L'elenco completo degli allergeni sarà disponibile in questa pagina. Gli impasti contengono glutine.</p>
+    <p class="allergeni">Per informazioni su allergeni e intolleranze chiedi al personale prima di ordinare. Gli impasti contengono glutine.</p>
   </div>
 </section>
 
-<section class="dark" id="ordina" aria-labelledby="ordina-t">
+<!-- COME ORDINARE -->
+<section class="topo" id="ordina" aria-labelledby="ordina-t">
   <div class="wrap">
-    <div class="sec-head"><h2 id="ordina-t">Comu s'ordina</h2><span class="gloss" style="color:var(--muted-d)">Come ordinare, senza app e senza commissioni</span></div>
-    <div class="ordina-grid"><div class="ph"><img src="assets/asporto.jpg" alt="Pizza appena sfornata in un cartone da asporto" width="1400" height="933" loading="lazy"></div><div class="steps">
-      <div class="step"><h3>Scegli</h3><p>Aggiungi pizze, fritti e bibite dal menù. Per ogni pizza puoi scegliere l'impasto.</p></div>
-      <div class="step"><h3>Invia su WhatsApp</h3><p>Indica asporto o domicilio e l'orario. L'ordine arriva a noi già scritto, tu premi solo invia.</p></div>
-      <div class="step"><h3>Ritira o ricevi</h3><p>Ti confermiamo l'orario in chat. Passi a prenderla calda, oppure te la portiamo noi.</p></div>
-    </div></div>
+    <div class="steps-h"><h2 class="t-title" id="ordina-t" data-a="up">Comu s'ordina</h2><p data-a="up" style="--d:.1s">Senza app e senza commissioni, in tre passi.</p></div>
+    <div class="steps">
+      <div class="step" data-a="up"><h3>Scegli</h3><p>Aggiungi pizze, fritti e bibite dal menù. Per ogni pizza puoi scegliere l'impasto.</p></div>
+      <div class="step" data-a="up" style="--d:.15s"><h3>Invia su WhatsApp</h3><p>Indica asporto o domicilio e l'orario. L'ordine arriva a noi già scritto, tu premi solo invia.</p></div>
+      <div class="step" data-a="up" style="--d:.3s"><h3>Ritira o ricevi</h3><p>Ti confermiamo l'orario in chat. Passi a prenderla calda, oppure te la portiamo noi.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:44px" data-a="up"><button class="btn btn-oro" type="button" data-open-cart>Apri il tuo ordine</button></div>
   </div>
 </section>
 
-<section class="locale" aria-label="Il locale">
-  <figure>
-    <img src="assets/locale.jpg" alt="Interno della pizzeria: volte a botte, banconi rivestiti in pietra lavica illuminati dal basso, sgabelli in velluto bordeaux e il forno sul fondo" width="1272" height="1388">
-    <figcaption><div class="wrap">
-      <h2>Pietra lavica, volte e il calore del forno</h2>
-      <p>Banconi rivestiti di pietra dell'Etna, sgabelli in velluto per chi aspetta la sua pizza, e sul soffitto la mappa delle colate del vulcano.</p>
-      <small>Rendering del locale</small>
-    </div></figcaption>
-  </figure>
-</section>
+<!-- LOCALE PARALLASSE -->
+<div class="para" aria-label="Il locale" style="min-height:560px">
+  <div class="pbg" data-par=".22"><img src="assets/locale.jpg" alt="Interno della pizzeria con volte, banconi in pietra lavica e sgabelli bordeaux" width="1272" height="1388" loading="lazy"></div>
+  <div class="inner">
+    <span class="caps" data-a="up" style="color:var(--oro)">Rendering del locale</span>
+    <h2 data-a="up" style="--d:.1s">Pietra lavica, volte e il calore del forno</h2>
+    <p data-a="up" style="--d:.2s">Banconi in pietra dell'Etna, sgabelli in velluto per chi aspetta la sua pizza e, sul soffitto, la mappa delle colate del vulcano.</p>
+  </div>
+</div>
 
-<div class="etna-band" aria-hidden="true"><img src="assets/etna.jpg" alt="" width="1800" height="1200" loading="lazy"><p>Sutta a Muntagna</p></div>
+<!-- CONTATTI -->
 <section class="light" id="contatti" aria-labelledby="dove-t">
   <div class="wrap">
-    <div class="sec-head"><h2 id="dove-t">Unni semu</h2><span class="gloss muted">Dove siamo</span></div>
+    <div class="contact-h"><span class="caps" style="color:var(--bordeaux)" data-a="up">Sutta a Muntagna</span><h2 class="t-title" id="dove-t" data-a="up" style="--d:.1s">Unni semu</h2></div>
     <div class="info">
-      <div><h3>Indirizzo</h3><p>Milo (CT), alle pendici dell'Etna <span class="todo">via e civico</span></p><p><a href="https://www.google.com/maps/search/?api=1&query=Milo+CT" target="_blank" rel="noopener">Apri in Google Maps</a></p></div>
-      <div><h3>Orari</h3><p>Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Ordini consigliati con un po' di anticipo nel weekend.</p></div>
-      <div><h3>Ordini e domicilio</h3><p>WhatsApp e telefono <span class="todo">numero</span></p><p class="muted">Consegna a Milo e nei paesi vicini <span class="todo">zone e costo</span></p></div>
+      <div data-a="up"><h3>Indirizzo</h3><p>Milo (CT), alle pendici dell'Etna <span class="todo">via e civico</span></p><p><a href="https://www.google.com/maps/search/?api=1&query=Milo+CT" target="_blank" rel="noopener">Apri in Google Maps</a></p></div>
+      <div data-a="up" style="--d:.12s"><h3>Orari</h3><p>Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Nel weekend conviene ordinare con un po' di anticipo.</p></div>
+      <div data-a="up" style="--d:.24s"><h3>Ordini e domicilio</h3><p>WhatsApp e telefono <span class="todo">numero</span></p><p class="muted">Consegna a Milo e nei paesi vicini <span class="todo">zone e costo</span></p></div>
     </div>
   </div>
 </section>
 </main>
 
-<footer>
+<footer class="topo">
   <div class="wrap">
-    <img src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799" loading="lazy">
-    <nav aria-label="Link utili"><a href="#impasto">L'impasto</a><a href="#menu">Menù</a><a href="#contatti">Contatti</a><a href="#menu">Allergeni</a><a href="#top">Privacy</a><a href="#top">Cookie</a></nav>
+    <img class="logo" src="assets/logo-light.png" alt="Mungibeddu Pizzeria" width="1092" height="799" loading="lazy" data-a="zoom">
+    <p class="phil" data-a="up">Alle pendici dell'Etna trasformiamo la passione per la pizza in un'esperienza che valorizza le nostre radici siciliane, senza rinunciare all'innovazione.</p>
+    <div class="fcols" data-a="up">
+      <div><h4>Link rapidi</h4><ul><li><a href="#impasto">L'impasto</a></li><li><a href="#menu">Menù</a></li><li><a href="#ordina">Come ordinare</a></li><li><a href="#contatti">Contatti</a></li></ul></div>
+      <div><h4>Link utili</h4><ul><li><a href="#top">Privacy Policy</a></li><li><a href="#top">Cookie Policy</a></li><li><a href="#menu">Informativa allergeni</a></li></ul></div>
+    </div>
+    <div class="social" data-a="up">
+      <a href="#contatti" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l1.3-3.8A8 8 0 1 1 8 19z"/><path d="M9 9.5c.3 2 2.3 4.2 4.5 4.8l1.2-1.2 1.8.8c-.3 1.2-1.3 1.8-2.3 1.6-3.3-.6-5.8-3.2-6.3-6.3-.2-1 .5-2 1.6-2.3l.8 1.8z"/></svg></a>
+      <a href="#contatti" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="currentColor"/></svg></a>
+      <a href="#contatti" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+    </div>
     <small>© 2026 Mungibeddu Pizzeria · Milo (CT) · P.IVA da inserire</small>
   </div>
 </footer>
@@ -417,7 +596,7 @@ footer small{display:block;font-size:13px;opacity:.7}
     </div>
   </div>
   <div class="dfoot">
-    <div class="tot"><span>Totale</span><span data-total>0€</span></div>
+    <div class="tot"><span>Totale</span><b data-total>0€</b></div>
     <p class="err" id="err" role="status"></p>
     <a class="btn wa" id="sendWa" href="#" target="_blank" rel="noopener" aria-disabled="true">Invia ordine su WhatsApp</a>
     <p class="note">Paghi al ritiro o alla consegna. Ti confermiamo l'orario in chat.</p>
@@ -433,9 +612,9 @@ const CONFIG = {
 
 /* ===== Menù (dal menù cartaceo) ===== */
 const MENU = [
- {id:"spizzicari", t:"Pi spizzicari", g:"Da sgranocchiare", kind:"fritto", items:[
-  ["patatine","Patatine fritte",3],["patazest","Patazest","4","Lime e pepe"],["twister","Patatine twister",4],["anelli","Anelli di cipolla",4],["crocchette","Crocchette di patate",4]]},
- {id:"stissi", t:"Sempri i stissi", g:"Le classiche", kind:"pizza", items:[
+ {id:"spizzicari", t:"Pi spizzicari", g:"Da sgranocchiare", img:"cat-spizzicari.jpg", kind:"fritto", items:[
+  ["patatine","Patatine fritte",3],["patazest","Patazest",4,"Lime e pepe"],["twister","Patatine twister",4],["anelli","Anelli di cipolla",4],["crocchette","Crocchette di patate",4]]},
+ {id:"stissi", t:"Sempri i stissi", g:"Le classiche", img:"cat-stissi.jpg", kind:"pizza", items:[
   ["biancaneve","Biancaneve",5,"Doppia mozzarella fiordilatte, olio evo, basilico"],
   ["tedesca","Tedesca",7,"Salsa di pomodoro, mozzarella fiordilatte, würstel, patatine fritte, olio evo"],
   ["vulcanica","Vulcanica",7,"Salsa di pomodoro, mozzarella fiordilatte, salame piccante, olio evo, basilico","Etna"],
@@ -449,67 +628,107 @@ const MENU = [
   ["carrettiera","Carrettiera",9,"Mozzarella fiordilatte, provola affumicata, friarielli, patate al forno, salsiccia, olio evo"],
   ["pistacchiosa","Pistacchiosa",10,"Mozzarella fiordilatte, prosciutto cotto, scagliette di grana padano DOP, farina di pistacchio, pesto di pistacchio, olio evo"],
   ["versante","Versante ovest",12,"Crema di pistacchio artigianale, mozzarella fiordilatte, guanciale croccante, gocce di bufala DOP, pesto di pistacchio, farina di pistacchio, olio evo"]]},
- {id:"margheriti", t:"I Margheriti", g:"Le margherite", kind:"pizza", items:[
+ {id:"margheriti", t:"I Margheriti", g:"Le margherite", img:"cat-margheriti.jpg", kind:"pizza", items:[
   ["margherita","Margherita",6,"Salsa di pomodoro, mozzarella fiordilatte, olio evo, basilico"],
   ["giallognola","Giallognola",7,"Salsa di datterino giallo, mozzarella di bufala DOP, olio evo, basilico"],
   ["inversa","Inversa",6.5,"Mozzarella di bufala DOP, pomodoro ciliegino, olio evo, basilico"],
   ["provolata","Classica provolata",7,"Salsa di pomodoro, mozzarella fiordilatte, provola affumicata, olio evo, basilico"]]},
- {id:"cunsigghiati", t:"Sapuri cunsigghiati", g:"I consigliati", kind:"pizza", items:[
+ {id:"cunsigghiati", t:"Sapuri cunsigghiati", g:"I consigliati", img:"cat-cunsigghiati.jpg", kind:"pizza", items:[
   ["sfiziusa","Sfiziusa",13,"Mozzarella fiordilatte, provola affumicata, patate al forno, guanciale croccante, cipolletta fresca","cereali"],
   ["sbampanti","Sbampanti",13,"Salsa di pomodoro, mozzarella fiordilatte, salame piccante, cipolla rossa, olive nere, peperoncini sott'olio, olio evo, basilico","Etna"],
   ["curiusa","Curiusa",13,"Crema di pistacchio artigianale, provola affumicata, mozzarella fiordilatte, salsiccia, funghi porcini, olio evo"],
   ["salatazza","Salatazza",12,"Salsa di pomodoro, capuliato di pomodorini secchi, filetti di acciughe, olive nere, olio evo"],
   ["mungibeddu","Mungibeddu",14,"Salsa di pomodoro, mozzarella di bufala, funghi porcini, salsiccia, cipolletta fresca, scagliette di grana padano DOP, olio evo, basilico"]]},
- {id:"periudu", t:"Di stu periudu", g:"Di stagione", kind:"pizza", items:[
+ {id:"periudu", t:"Di stu periudu", g:"Di stagione", img:"zucca.jpg", kind:"pizza", items:[
   ["tramonto","Tramonto",11,"Crema di zucca gialla, provola affumicata, fiordilatte, salsiccia, granella di nocciole, olio evo","Etna"]]},
- {id:"biviri", t:"Pi bìviri", g:"Da bere", kind:"drink", items:[
+ {id:"biviri", t:"Pi bìviri", g:"Da bere", img:"cat-biviri.jpg", kind:"drink", items:[
   ["nat50","Acqua naturale 50 cl",1],["nat15","Acqua naturale 1,5 l",2],["friz50","Acqua frizzante 50 cl",1],["friz15","Acqua frizzante 1,5 l",2],
   ["lanna","Nda lanna",2,"In lattina: Coca-Cola, Fanta, Sprite, Chinotto"],["buttigghia","Nda buttigghia",3.5,"Coca-Cola in bottiglia"],
   ["canusciuti","Birri canusciuti",3,"Moretti, Heineken"],["putenti","Birri putenti",4,"Tennent's, Ceres"],["cca","Birri di cca",5,"Birrificio dell'Etna"]]}
 ];
-const ITEMS = {};
+const ITEMS={};
 MENU.forEach(c=>c.items.forEach(a=>{ITEMS[a[0]]={id:a[0],name:a[1],price:+a[2],desc:a[3]||"",tip:a[4]||"",kind:c.kind}}));
-
-const ICONS={
- fritto:`<svg viewBox="0 0 40 40" width="34" height="34" fill="none" stroke="#7A1E2B" stroke-width="2" stroke-linecap="round"><path d="M10 16h20l-3 18H13z" fill="#E3D6C2"/><path d="M14 16l-2-9M18 16l-1-11M22 16l1-10M26 16l2-8"/></svg>`,
- drink:`<svg viewBox="0 0 40 40" width="30" height="30" fill="none" stroke="#7A1E2B" stroke-width="2" stroke-linecap="round"><path d="M16 4h8v6l3 5v20H13V15l3-5z"/><path d="M13 22h14"/></svg>`
-};
-function spiga(color,fill){return `<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round"><path d="M20 37V10"/>${[0,1,2,3].map(i=>`<path d="M20 ${30-i*6}c-6 0-8-4-8-7 4 0 8 2 8 7zM20 ${30-i*6}c6 0 8-4 8-7-4 0-8 2-8 7z" fill="${fill}"/>`).join("")}<path d="M20 10c0-4 0-6 0-7"/></svg>`}
-
-/* ===== Render ===== */
 const euro=v=>(Number.isInteger(v)?v:v.toFixed(2).replace(".",","))+"€";
-document.querySelectorAll("[data-ico]").forEach((el,i)=>{el.innerHTML=spiga("#3B2318",i?"rgba(122,30,43,.25)":"none")});
-document.getElementById("track").innerHTML=Array(2).fill(["Grano antico Perciasacchi bio","Farine tipo 0 e tipo 1","Maturazione studiata","Prodotti del territorio","Birra dell'Etna","Asporto e domicilio a Milo"].map(s=>`<span>${s}</span>`).join("")).join("");
 
-const reel=document.getElementById("reel");
-reel.innerHTML=MENU.find(c=>c.id==="cunsigghiati").items.map(a=>{const it=ITEMS[a[0]];return `<article class="card"><h3>${it.name}</h3><p>${it.desc}</p>${it.tip?`<span class="sugg">Provala con impasto ${it.tip}</span>`:""}<div class="foot"><b>${euro(it.price)}</b><button class="add" type="button" data-add="${it.id}">Aggiungi</button></div></article>`}).join("");
+/* ===== Icone (linea oro) ===== */
+const G='fill="none" stroke="#D2A866" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS=[
+ ["Grano antico","Perciasacchi bio, coltivato in Sicilia",`<svg viewBox="0 0 80 80" ${G}><path d="M40 74V18"/>${[0,1,2,3].map(i=>`<path d="M40 ${60-i*11}c-9 0-13-6-13-11 6 0 13 3 13 11zM40 ${60-i*11}c9 0 13-6 13-11-6 0-13 3-13 11z"/>`).join("")}<path d="M40 18c0-5 0-8 0-11"/><path d="M33 14l-3-6M47 14l3-6"/></svg>`],
+ ["Maturazione","Tempo e lavorazione attenta",`<svg viewBox="0 0 80 80" ${G}><path d="M24 8h32M24 72h32"/><path d="M27 8c0 16 26 20 26 32S27 56 27 72M53 8c0 16-26 20-26 32s26 16 26 32"/><path d="M33 64c3-4 11-4 14 0"/><path d="M36 22h8"/></svg>`],
+ ["Cotta al momento","Cornicione alveolato e croccante",`<svg viewBox="0 0 80 80" ${G}><circle cx="40" cy="40" r="28"/><circle cx="40" cy="40" r="21"/><path d="M40 19v42M19 40h42M25 25l30 30M55 25L25 55"/><circle cx="33" cy="32" r="2.5"/><circle cx="48" cy="44" r="2.5"/><circle cx="36" cy="49" r="2"/></svg>`],
+ ["Birra dell'Etna","Birrificio dell'Etna",`<svg viewBox="0 0 80 80" ${G}><path d="M20 22h32v46a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4z"/><path d="M52 32h7a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6h-7"/><path d="M20 22c-4-8 6-14 12-9 4-6 14-5 16 2 6-1 9 5 4 7"/><path d="M29 34v28M36 34v28M43 34v28"/></svg>`],
+ ["Asporto e domicilio","Ordini su WhatsApp",`<svg viewBox="0 0 80 80" ${G}><path d="M10 30l30-14 30 14-30 14z"/><path d="M10 30v20l30 14 30-14V30"/><path d="M40 44v20"/><path d="M28 24l30 14v8"/></svg>`]
+];
+document.getElementById("icons").innerHTML=ICONS.map((x,i)=>`<div class="icon" data-a="up" style="--d:${i*.14}s">${x[2]}<h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
+function spiga(color,fill){return `<svg viewBox="0 0 40 40" width="34" height="34" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round"><path d="M20 37V10"/>${[0,1,2,3].map(i=>`<path d="M20 ${30-i*6}c-6 0-8-4-8-7 4 0 8 2 8 7zM20 ${30-i*6}c6 0 8-4 8-7-4 0-8 2-8 7z" fill="${fill}"/>`).join("")}</svg>`}
+document.querySelectorAll("[data-ico]").forEach((el,i)=>el.innerHTML=spiga("#3B2318",i?"rgba(122,30,43,.25)":"none"));
+document.getElementById("track").innerHTML=Array(2).fill(["Grano antico Perciasacchi","Farine tipo 0 e tipo 1","Maturazione studiata","Prodotti del territorio","Birra dell'Etna","Asporto e domicilio a Milo"].map(s=>`<span>${s}</span>`).join("")).join("");
 
+/* ===== Menù ===== */
 const cats=document.getElementById("cats"),list=document.getElementById("menuList");
 cats.innerHTML=MENU.map((c,i)=>`<button type="button" data-cat="${c.id}" aria-pressed="${i===0}">${c.t}</button>`).join("");
-const BANNER={spizzicari:["cat-spizzicari.jpg","Patatine fritte in un cestino"],stissi:["cat-stissi.jpg","Pizza rossa appena sfornata"],margheriti:["cat-margheriti.jpg","Pizza margherita tagliata a spicchi"],cunsigghiati:["cat-cunsigghiati.jpg","Pizza margherita servita al tavolo"],periudu:["zucca.jpg","Zucche di stagione"],biviri:["cat-biviri.jpg","Bottiglie di birra e bicchieri al bancone"]};
-list.innerHTML=MENU.map(c=>`<div class="mgroup" id="cat-${c.id}"><div class="banner"><img src="assets/${BANNER[c.id][0]}" alt="${BANNER[c.id][1]}" loading="lazy"><h3>${c.t}<span class="gloss">${c.g}</span></h3></div><div class="mlist">${c.items.map(a=>{const it=ITEMS[a[0]];
-  return `<div class="mi"><div><h4>${it.name}</h4>${it.desc?`<p>${it.desc}</p>`:""}${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}</div><div class="side"><b>${euro(it.price)}</b><button class="plus" type="button" data-add="${it.id}" aria-label="Aggiungi ${it.name}">+</button></div></div>`}).join("")}</div></div>`).join("");
-cats.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;document.getElementById("cat-"+b.dataset.cat).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})});
+list.innerHTML=MENU.map(c=>`<div class="mgroup" id="cat-${c.id}"><div class="banner" data-a="up"><img src="assets/${c.img}" alt="" loading="lazy" data-par=".1"><h3>${c.t}<small>${c.g}</small></h3></div><div class="mlist">${c.items.map((a,i)=>{const it=ITEMS[a[0]];
+  return `<div class="mi" data-a="up" style="--d:${(i%2)*.08}s"><div><h4>${it.name}</h4>${it.desc?`<p>${it.desc}</p>`:""}${it.tip?`<span class="tip">Provala con impasto ${it.tip}</span>`:""}</div><div class="side"><b>${euro(it.price)}</b><button class="plus" type="button" data-add="${it.id}" aria-label="Aggiungi ${it.name}">+</button></div></div>`}).join("")}</div></div>`).join("");
+cats.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(b)document.getElementById("cat-"+b.dataset.cat).scrollIntoView({behavior:"smooth"})});
 const groups=[...document.querySelectorAll(".mgroup")];
-addEventListener("scroll",()=>{let cur=groups[0].id;for(const g of groups)if(g.getBoundingClientRect().top<220)cur=g.id;cats.querySelectorAll("button").forEach(b=>{const on="cat-"+b.dataset.cat===cur;if(b.getAttribute("aria-pressed")!==String(on)){b.setAttribute("aria-pressed",on);if(on)b.scrollIntoView({block:"nearest",inline:"center"})}})},{passive:true});
+
+/* ===== Hero slider ===== */
+const slides=[...document.querySelectorAll("[data-slide]")],dots=document.getElementById("dots");let cur=0,timer;
+dots.innerHTML=slides.map((_,i)=>`<button class="dot${i?"":" on"}" type="button" aria-label="Vai alla slide ${i+1}"></button>`).join("");
+function go(n){cur=(n+slides.length)%slides.length;slides.forEach((s,i)=>{const on=i===cur;s.classList.toggle("on",on);s.setAttribute("aria-hidden",!on);s.querySelectorAll("a,button").forEach(el=>el.tabIndex=on?0:-1)});
+  [...dots.children].forEach((d,i)=>d.classList.toggle("on",i===cur));restart()}
+function restart(){clearInterval(timer);if(!matchMedia("(prefers-reduced-motion:reduce)").matches)timer=setInterval(()=>go(cur+1),7000)}
+document.getElementById("prev").onclick=()=>go(cur-1);document.getElementById("next").onclick=()=>go(cur+1);
+dots.addEventListener("click",e=>{const i=[...dots.children].indexOf(e.target);if(i>=0)go(i)});
+let sx=null;const hero=document.querySelector(".hero");hero.addEventListener("touchstart",e=>sx=e.touches[0].clientX,{passive:true});
+hero.addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)go(cur+(dx<0?1:-1));sx=null});
+restart();
+
+/* ===== Carosello ===== */
+const ct=document.getElementById("carTrack");const step=()=>ct.querySelector("figure").offsetWidth+18;
+document.getElementById("carPrev").onclick=()=>ct.scrollBy({left:-step(),behavior:"smooth"});
+document.getElementById("carNext").onclick=()=>ct.scrollBy({left:step(),behavior:"smooth"});
+
+/* ===== Ingressi allo scroll ===== */
+if(document.documentElement.classList.contains("anim")){
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{rootMargin:"0px 0px -8% 0px",threshold:.08});
+  document.querySelectorAll("[data-a]").forEach(el=>io.observe(el));
+}
+
+/* ===== Parallasse, header, categorie ===== */
+const pars=[...document.querySelectorAll("[data-par]")],bar=document.getElementById("top-bar");let ticking=false;
+const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function onScroll(){ticking=false;const vh=innerHeight;
+  bar.classList.toggle("solid",scrollY>40);
+  if(!still)for(const el of pars){const r=el.parentElement.getBoundingClientRect();if(r.bottom<-100||r.top>vh+100)continue;const off=(r.top+r.height/2-vh/2)*+el.dataset.par;el.style.transform=(el.classList.contains("mark")?"translateX(-50%) ":"")+`translate3d(0,${off.toFixed(1)}px,0)`}
+  let c=groups[0].id;for(const g of groups)if(g.getBoundingClientRect().top<240)c=g.id;
+  cats.querySelectorAll("button").forEach(b=>{const on="cat-"+b.dataset.cat===c;if(b.getAttribute("aria-pressed")!==String(on)){b.setAttribute("aria-pressed",on);if(on&&cats.getBoundingClientRect().top<200)cats.scrollTo({left:b.offsetLeft-20,behavior:"smooth"})}});
+}
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+
+/* ===== Menu mobile ===== */
+const burger=document.getElementById("burger"),ov=document.getElementById("menuOv");
+function setOv(o){document.body.classList.toggle("ov",o);ov.classList.toggle("open",o);burger.setAttribute("aria-expanded",o)}
+burger.onclick=()=>setOv(!ov.classList.contains("open"));ov.addEventListener("click",e=>{if(e.target.closest("a"))setOv(false)});
 
 /* ===== Carrello ===== */
-let cart=[];let mode="asporto";
+let cart=[],mode="asporto";
 try{cart=JSON.parse(localStorage.getItem("mb-cart")||"[]").filter(l=>ITEMS[l.id])}catch(e){}
 const save=()=>{try{localStorage.setItem("mb-cart",JSON.stringify(cart))}catch(e){}};
 function add(id){const it=ITEMS[id];const imp=it.kind==="pizza"?(it.tip==="Etna"?"Etna":it.tip==="cereali"?"Ai cereali":"Classico"):null;
-  const ex=cart.find(l=>l.id===id&&l.imp===imp);ex?ex.q++:cart.push({id,q:1,imp});save();render()}
+  const ex=cart.find(l=>l.id===id&&l.imp===imp);ex?ex.q++:cart.push({id,q:1,imp});save();render();
+  document.querySelectorAll(".cart-btn").forEach(b=>{b.classList.remove("bump");void b.offsetWidth;b.classList.add("bump")})}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;add(b.dataset.add);
-  const old=b.textContent;b.classList.add("done");b.textContent=b.classList.contains("plus")?"✓":"Aggiunta ✓";setTimeout(()=>{b.classList.remove("done");b.textContent=old},1100)});
+  if(b.classList.contains("plus")){b.classList.add("done");b.textContent="✓";setTimeout(()=>{b.classList.remove("done");b.textContent="+"},1100)}
+  else{const o=b.textContent;b.textContent="Aggiunta ✓";setTimeout(()=>b.textContent=o,1200)}});
 const total=()=>cart.reduce((s,l)=>s+ITEMS[l.id].price*l.q,0);
 function render(){
   const n=cart.reduce((s,l)=>s+l.q,0);
   document.querySelectorAll("[data-count]").forEach(el=>el.textContent=n);
   document.querySelectorAll("[data-total]").forEach(el=>el.textContent=euro(total()));
   document.getElementById("orderbar").classList.toggle("show",n>0);
-  const L=document.getElementById("lines");
   document.getElementById("checkout").hidden=!n;
-  L.innerHTML=n?cart.map((l,i)=>{const it=ITEMS[l.id];return `<div class="line"><div><h4>${it.name}</h4>${l.imp?`<label class="sr" style="font-size:12px;color:var(--muted-l)">Impasto <select data-imp="${i}" id="imp-${i}">${CONFIG.impasti.map(o=>`<option ${o===l.imp?"selected":""}>${o}</option>`).join("")}</select></label>`:""}</div><div class="pr">${euro(it.price*l.q)}</div><div></div><div class="qty"><button type="button" data-q="${i}" data-d="-1" aria-label="Togli uno">−</button><span>${l.q}</span><button type="button" data-q="${i}" data-d="1" aria-label="Aggiungi uno">+</button></div></div>`}).join(""):`<div class="empty"><b>Ancora vuoto</b>Scegli dal menù e tocca + per aggiungere.</div>`;
+  document.getElementById("lines").innerHTML=n?cart.map((l,i)=>{const it=ITEMS[l.id];return `<div class="line"><div><h4>${it.name}</h4>${l.imp?`<label for="imp-${i}">Impasto</label><select data-imp="${i}" id="imp-${i}">${CONFIG.impasti.map(o=>`<option ${o===l.imp?"selected":""}>${o}</option>`).join("")}</select>`:""}</div><div class="pr">${euro(it.price*l.q)}</div><div></div><div class="qty"><button type="button" data-q="${i}" data-d="-1" aria-label="Togli uno">−</button><span>${l.q}</span><button type="button" data-q="${i}" data-d="1" aria-label="Aggiungi uno">+</button></div></div>`}).join(""):`<div class="empty"><b>Ancora vuoto</b>Scegli dal menù e tocca + per aggiungere.</div>`;
   updateWa();
 }
 document.getElementById("lines").addEventListener("click",e=>{const b=e.target.closest("[data-q]");if(!b)return;const l=cart[+b.dataset.q];l.q+=+b.dataset.d;if(l.q<1)cart.splice(+b.dataset.q,1);save();render()});
@@ -518,37 +737,30 @@ function setMode(m){mode=m;document.getElementById("m-asporto").setAttribute("ar
 document.getElementById("m-asporto").onclick=()=>setMode("asporto");
 document.getElementById("m-domicilio").onclick=()=>setMode("domicilio");
 ["f-nome","f-indirizzo","f-ora","f-note"].forEach(id=>document.getElementById(id).addEventListener("input",updateWa));
+const val=id=>document.getElementById(id).value.trim();
 function message(){
-  const v=id=>document.getElementById(id).value.trim();
-  let m=`Ciao Mungibeddu! Vorrei ordinare:\n\n`;
+  let m="Ciao Mungibeddu! Vorrei ordinare:\n\n";
   cart.forEach(l=>{const it=ITEMS[l.id];m+=`• ${l.q}× ${it.name}${l.imp?` (impasto ${l.imp})`:""} — ${euro(it.price*l.q)}\n`});
-  m+=`\nTotale: ${euro(total())}\n${mode==="asporto"?"Ritiro in pizzeria":"Consegna a domicilio: "+v("f-indirizzo")}\nOrario: ${v("f-ora")}\nNome: ${v("f-nome")}`;
-  if(v("f-note"))m+=`\nNote: ${v("f-note")}`;
+  m+=`\nTotale: ${euro(total())}\n${mode==="asporto"?"Ritiro in pizzeria":"Consegna a domicilio: "+val("f-indirizzo")}\nOrario: ${val("f-ora")}\nNome: ${val("f-nome")}`;
+  if(val("f-note"))m+=`\nNote: ${val("f-note")}`;
   return m;
 }
 function updateWa(){
-  const a=document.getElementById("sendWa"),err=document.getElementById("err");
-  const v=id=>document.getElementById(id).value.trim();
-  let problem="";
-  if(!cart.length)problem=" ";
-  else if(!v("f-nome"))problem="Scrivi il tuo nome per completare l'ordine.";
-  else if(mode==="domicilio"&&!v("f-indirizzo"))problem="Scrivi l'indirizzo di consegna.";
-  else if(!CONFIG.whatsapp)problem="Anteprima: il numero WhatsApp della pizzeria non è ancora configurato.";
-  err.textContent=problem.trim();
-  a.setAttribute("aria-disabled",problem?"true":"false");
-  a.href=problem?"#":`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message())}`;
+  const a=document.getElementById("sendWa");let p="";
+  if(!cart.length)p=" ";
+  else if(!val("f-nome"))p="Scrivi il tuo nome per completare l'ordine.";
+  else if(mode==="domicilio"&&!val("f-indirizzo"))p="Scrivi l'indirizzo di consegna.";
+  else if(!CONFIG.whatsapp)p="Anteprima: il numero WhatsApp della pizzeria non è ancora configurato.";
+  document.getElementById("err").textContent=p.trim();
+  a.setAttribute("aria-disabled",p?"true":"false");
+  a.href=p?"#":`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message())}`;
 }
 const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim");
-function openCart(o){drawer.classList.toggle("open",o);scrim.classList.toggle("open",o);drawer.setAttribute("aria-hidden",!o);if(o)document.getElementById("closeCart").focus()}
-document.querySelectorAll("[data-open-cart]").forEach(b=>b.onclick=()=>openCart(true));
+function openCart(o){drawer.classList.toggle("open",o);scrim.classList.toggle("open",o);drawer.setAttribute("aria-hidden",!o);if(o){setOv(false);document.getElementById("closeCart").focus()}}
+document.querySelectorAll("[data-open-cart]").forEach(b=>b.addEventListener("click",()=>openCart(true)));
 document.getElementById("closeCart").onclick=()=>openCart(false);scrim.onclick=()=>openCart(false);
-addEventListener("keydown",e=>{if(e.key==="Escape")openCart(false)});
+addEventListener("keydown",e=>{if(e.key==="Escape"){openCart(false);setOv(false)}});
 render();
-
-/* ===== Reveal ===== */
-if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.remove("pre");io.unobserve(en.target)}}),{rootMargin:"0px 0px -10% 0px"});
-  document.querySelectorAll(".reveal").forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add("pre");io.observe(el)}})}
-
 </script>
 </body>
 </html>
