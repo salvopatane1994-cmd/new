@@ -375,8 +375,29 @@ footer small{display:block;font-size:13px;opacity:.75}
 .review-link{display:inline-flex;align-items:center;gap:8px;margin-top:4px}
 /* ---------- preloader: sfondo bianco, logo animato ---------- */
 html.loading,html.loading body{overflow:hidden}
-.pre{position:fixed;inset:0;z-index:200;background:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:opacity .8s var(--ease),transform .9s var(--ease)}
-.pre.done{opacity:0;transform:translateY(-4%);pointer-events:none}
+.pre{position:fixed;inset:0;z-index:200;background:#FFFFFF;display:grid;place-items:center;cursor:pointer;clip-path:inset(0 0 0 0)}
+.pre-wipe{position:fixed;inset:0;z-index:199;background:var(--bordeaux);clip-path:inset(0 0 0 0);pointer-events:none}
+.pre-in{transition:opacity .45s ease,transform .6s var(--ease)}
+/* uscita a sipario: il logo si allontana, il bianco sale, la fascia bordeaux lo segue e scopre il sito */
+.pre.done{pointer-events:none;clip-path:inset(0 0 100% 0);transition:clip-path 1s cubic-bezier(.77,0,.18,1) .35s}
+.pre.done .pre-in{opacity:0;transform:translateY(-40px) scale(.94)}
+.pre-wipe.done{clip-path:inset(0 0 100% 0);transition:clip-path 1s cubic-bezier(.77,0,.18,1) .55s}
+/* ingresso del sito dopo il sipario */
+html.intro .top{transform:translateY(-110%);opacity:0}
+html.intro .hero-bg{transform:scale(1.18);opacity:.2}
+html.intro .slide .media{transform:scale(.55) rotate(-70deg);opacity:0}
+html.intro .slide .inner > :not(.media){opacity:0;transform:translateY(36px)}
+html.intro .arrow,html.intro .scroll-hint{opacity:0}
+html.reveal .top{transition:transform 1s var(--ease) 1.25s,opacity 1s ease 1.25s}
+html.reveal .hero-bg{transition:transform 2.4s var(--ease) .5s,opacity 1.6s ease .5s}
+html.reveal .slide .media{transition:transform 1.5s cubic-bezier(.2,.9,.25,1.15) .85s,opacity .9s ease .85s}
+html.reveal .slide .inner > :not(.media){transition:opacity 1s var(--ease),transform 1s var(--ease)}
+html.reveal .slide .inner > :nth-child(2){transition-delay:1.15s}
+html.reveal .slide .inner > :nth-child(3){transition-delay:1.3s}
+html.reveal .slide .inner > :nth-child(4){transition-delay:1.45s}
+html.reveal .slide .inner > :nth-child(5){transition-delay:1.6s}
+html.reveal .slide .inner > :nth-child(6){transition-delay:1.75s}
+html.reveal .arrow,html.reveal .scroll-hint{transition:opacity 1s ease 1.9s}
 .pre-in{display:flex;flex-direction:column;align-items:center;gap:26px;padding-inline:24px}
 .pre-logo{position:relative;width:min(300px,68vw)}
 .pre-logo img{width:100%;height:auto;clip-path:inset(100% 0 0 0);animation:preRise 1.9s cubic-bezier(.65,0,.25,1) .25s forwards,preBreath 2.6s ease-in-out 2.3s infinite alternate}
@@ -390,12 +411,13 @@ html.loading,html.loading body{overflow:hidden}
 @keyframes preBar{to{transform:scaleX(1)}}
 .pre-txt{margin:0;font:500 11px var(--f-body);letter-spacing:.32em;text-transform:uppercase;color:#6E5A4C;opacity:0;animation:preTxt .8s ease 1.2s forwards}
 @keyframes preTxt{to{opacity:1}}
-@media (prefers-reduced-motion:reduce){.pre-logo img{clip-path:none}.pre-txt{opacity:1}.puff{display:none}}
+@media (prefers-reduced-motion:reduce){.pre-wipe{display:none}html.intro .top,html.intro .hero-bg,html.intro .slide .media,html.intro .slide .inner > *,html.intro .arrow{opacity:1!important;transform:none!important}.pre-logo img{clip-path:none}.pre-txt{opacity:1}.puff{display:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <!-- PRELOADER: durata in secondi qui sotto (PRE_SEC). Tocca per saltare. -->
+<div class="pre-wipe" id="preWipe" aria-hidden="true"></div>
 <div class="pre" id="preloader" role="status" aria-label="Caricamento di Mungibeddu Pizzeria">
   <div class="pre-in">
     <div class="pre-logo"><img src="assets/logo-dark.png" alt="Mungibeddu Pizzeria" width="1092" height="799"><span class="puff p1"></span><span class="puff p2"></span><span class="puff p3"></span></div>
@@ -406,9 +428,14 @@ html.loading,html.loading body{overflow:hidden}
 <script>
 (function(){
   var PRE_SEC=5, pre=document.getElementById("preloader"), root=document.documentElement, t=document.getElementById("preTxt");
-  root.classList.add("loading");pre.style.setProperty("--pre-dur",PRE_SEC+"s");
+  var wipe=document.getElementById("preWipe");
+  root.classList.add("loading","intro");pre.style.setProperty("--pre-dur",PRE_SEC+"s");
   setTimeout(function(){t.textContent="La pizza è pronta"},PRE_SEC*700);
-  function close(){if(pre.classList.contains("done"))return;pre.classList.add("done");root.classList.remove("loading");setTimeout(function(){pre.remove()},1000)}
+  function close(){if(pre.classList.contains("done"))return;
+    pre.classList.add("done");wipe.classList.add("done");root.classList.remove("loading");
+    root.classList.add("reveal");requestAnimationFrame(function(){root.classList.remove("intro")});
+    setTimeout(function(){pre.remove();wipe.remove()},1800);
+    setTimeout(function(){root.classList.remove("reveal");window.dispatchEvent(new Event("mb-ready"))},3600)}
   setTimeout(close,PRE_SEC*1000);pre.addEventListener("click",close);
 })();
 </script>
@@ -829,8 +856,9 @@ const groups=[...document.querySelectorAll(".mgroup")];
   vp.addEventListener("dragstart",e=>e.preventDefault());
   vp.addEventListener("keydown",e=>{if(e.key==="ArrowRight")go(pos+1);if(e.key==="ArrowLeft")go(pos-1)});
   addEventListener("resize",()=>place(false));
-  document.addEventListener("visibilitychange",()=>document.hidden?clearInterval(timer):restart());
-  place(false);requestAnimationFrame(mark);restart();
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)clearInterval(timer);else if(!document.getElementById("preloader"))restart()});
+  place(false);requestAnimationFrame(mark);
+  if(document.documentElement.classList.contains("loading"))addEventListener("mb-ready",restart,{once:true});else restart();
 })();
 
 /* ===== Carosello ===== */
