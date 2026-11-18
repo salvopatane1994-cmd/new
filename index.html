@@ -502,10 +502,12 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 <script>
 (function(){
   var PRE_SEC=5, pre=document.getElementById("preloader"), root=document.documentElement, t=document.getElementById("preTxt");
-  // Preloader solo alla prima visita della giornata: chi torna a riordinare entra subito.
-  var oggi=new Date().toDateString(),visto=null;try{visto=localStorage.getItem("mb-pre")}catch(e){}
-  if(visto===oggi&&location.hash!=="#intro"&&!/[?&]intro\b/.test(location.search)){pre.remove();return}
-  try{localStorage.setItem("mb-pre",oggi)}catch(e){}
+  // Preloader solo alla prima visita della giornata: per ora DISATTIVATO (si vede sempre).
+  // Per riattivarlo mettere SOLO_PRIMA_VISITA=true.
+  var SOLO_PRIMA_VISITA=false;
+  if(SOLO_PRIMA_VISITA){var oggi=new Date().toDateString(),visto=null;try{visto=localStorage.getItem("mb-pre")}catch(e){}
+    if(visto===oggi&&location.hash!=="#intro"&&!/[?&]intro\b/.test(location.search)){pre.remove();return}
+    try{localStorage.setItem("mb-pre",oggi)}catch(e){}}
   root.classList.add("loading","intro");pre.style.setProperty("--pre-dur",PRE_SEC+"s");
   setTimeout(function(){t.textContent="La pizza è pronta"},PRE_SEC*700);
   var still=matchMedia("(prefers-reduced-motion:reduce)").matches;
