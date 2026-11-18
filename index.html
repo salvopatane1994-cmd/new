@@ -240,7 +240,6 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 
 /* ---------- a casa tua ---------- */
 .home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:70px}
-#ordina .notify{margin-top:70px}
 .home > *{min-width:0}
 .home-card{position:relative;border-radius:26px;overflow:hidden;background:var(--lava-3);min-height:340px;display:flex;align-items:center;padding:40px}
 .home-card img{position:absolute;right:-18%;top:50%;width:70%;margin-top:-35%;border-radius:50%;box-shadow:0 20px 50px rgba(0,0,0,.6)}
@@ -387,7 +386,6 @@ footer small{display:block;font-size:13.5px;opacity:.85}
 .st::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--muted-d)}
 .st.open::before{background:#5BC26A;box-shadow:0 0 0 4px rgba(91,194,106,.18);animation:pulse 2s ease-in-out infinite}
 .st.closed::before{background:#D9534F}
-.st.soon::before{background:var(--oro);box-shadow:0 0 0 4px rgba(210,168,102,.18)}
 @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(91,194,106,0)}}
 .top .st{margin-left:6px;padding:7px 12px;border:1px solid rgba(210,168,102,.3);border-radius:999px;background:rgba(23,18,17,.35);white-space:nowrap}
 @media (max-width:1060px){.top .st{display:none}}
@@ -437,19 +435,9 @@ footer small{display:block;font-size:13.5px;opacity:.85}
 .err{color:var(--bordeaux);font-size:14px;margin:0 0 10px;min-height:1em}
 
 
-/* ---------- lancio: conto alla rovescia e avvisami ---------- */
-.launch{display:flex;flex-direction:column;align-items:center;gap:14px;margin:4px 0 26px}
-.launch .when{font:italic 500 clamp(20px,2.4vw,26px) var(--f-title);color:var(--crema)}
-.cd{display:flex;gap:10px}
-.cd div{min-width:64px;padding:10px 8px 8px;border:1px solid rgba(210,168,102,.4);border-radius:14px;background:rgba(23,18,17,.45);backdrop-filter:blur(6px)}
-.cd b{display:block;font:italic 600 30px/1 var(--f-title);color:var(--oro);font-variant-numeric:tabular-nums}
-.cd small{font:500 10px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d)}
+/* ---------- pulsanti prima schermata e consenso ---------- */
 .launch-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.notify{text-align:center}
 .home-txt .btn{margin-top:4px}
-.notify .box{max-width:760px;margin:0 auto;padding:50px 28px;border-radius:28px;background:var(--bordeaux);background-image:radial-gradient(80% 120% at 100% 0%,rgba(232,102,42,.35),transparent 60%);display:flex;flex-direction:column;align-items:center;gap:16px}
-.notify h2{font:italic 500 clamp(34px,4.6vw,52px)/1.05 var(--f-title)}
-.notify p{margin:0;max-width:32em;color:#f1dccb}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted-l);margin:4px 0 6px;line-height:1.4}
 .consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--bordeaux);flex:none}
 .review-link{display:inline-flex;align-items:center;gap:8px;margin-top:4px}
@@ -591,11 +579,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
           <div class="media hero-pizza"><img src="assets/pizza-top.webp" alt="Pizza margherita con bufala e basilico vista dall'alto" width="760" height="760"></div>
           <h1>La nostra terra, i nostri sapori.</h1>
           <p>Pizza d'asporto e a domicilio alle pendici dell'Etna, con grano antico siciliano Perciasacchi.</p>
-          <div class="launch" data-launch hidden>
-            <span class="when" data-when></span>
-            <div class="cd" data-cd hidden><div><b data-u="d">0</b><small>Giorni</small></div><div><b data-u="h">0</b><small>Ore</small></div><div><b data-u="m">0</b><small>Min</small></div><div><b data-u="s">0</b><small>Sec</small></div></div>
-          </div>
-          <div class="launch-row"><a class="btn btn-oro" href="#menu">Scopri il menù</a><a class="btn btn-line" href="#" data-notify data-launch hidden>Avvisami all'apertura</a></div>
+          <div class="launch-row"><a class="btn btn-oro" href="#menu">Scopri il menù</a></div>
           <div class="sdots"></div>
         </div>
       </div>
@@ -706,13 +690,6 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
         <button class="btn btn-oro" type="button" data-open-cart>Apri il tuo ordine</button>
       </div>
     </div>
-    <div class="notify" data-launch hidden>
-      <div class="box" data-a="up">
-        <span class="caps" style="color:var(--oro)">Stamu arrivannu</span>
-        <h2 id="notify-t" data-when-long>Stiamo per aprire</h2>
-        <p>Iscriviti al nostro canale WhatsApp: ti avvisiamo il giorno dell'apertura e ti mandiamo le offerte della settimana d'inaugurazione.</p>
-        <a class="btn btn-oro" href="#" data-notify>Avvisami su WhatsApp</a>
-      </div>
     </div>
   </div>
 </section>
@@ -802,9 +779,6 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
 /* ===== Configurazione: da completare con i dati reali ===== */
 const CONFIG = {
   whatsapp: "",            // es. "393331234567" (senza + e spazi)
-  apertura: "",            // es. "2026-12-12T18:00" — attiva conto alla rovescia e "Avvisami"; dopo questa data spariscono da soli
-  aperturaMese: "dicembre 2026", // testo mostrato finché la data esatta non è decisa
-  canaleWhatsapp: "",      // link del canale WhatsApp, es. "https://whatsapp.com/channel/..."
   recensioniGoogle: "",    // link breve "Chiedi recensioni" dal Profilo dell'attività su Google
   instagram: "", facebook: "",
   // Orari per giorno (0 = domenica … 6 = sabato). Più fasce possibili; se si chiude dopo mezzanotte scrivere es. ["18:30","00:30"].
@@ -820,8 +794,6 @@ const CONFIG = {
 const GIORNI=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
 const toMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
 function statoNegozio(now=new Date()){
-  const ap=CONFIG.apertura?new Date(CONFIG.apertura):null;
-  if(!ap||ap>now){const f=ap?ap.toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"}):CONFIG.aperturaMese;return{cls:"soon",txt:(ap?"Apriamo ":"Apriamo a ")+f}}
   const O=CONFIG.orari||{};if(!Object.keys(O).length)return null;
   const d=now.getDay(),nm=now.getHours()*60+now.getMinutes(),sl=k=>(O[(k+7)%7]||[]);
   for(const [a,b] of sl(d)){const A=toMin(a),B=toMin(b);if(nm>=A&&(B>A?nm<B:true))return{cls:"open",txt:"Aperto ora · chiude alle "+b}}
@@ -837,26 +809,10 @@ function aggiornaStato(){const st=statoNegozio();
     ul.innerHTML=[1,2,3,4,5,6,0].map(g=>`<li${g===today?' class="today"':""}><span>${GIORNI[g][0].toUpperCase()+GIORNI[g].slice(1)}</span><span>${(O[g]||[]).length?O[g].map(([a,b])=>a+"–"+b).join(", "):"chiuso"}</span></li>`).join("")}}
 aggiornaStato();setInterval(aggiornaStato,60000);
 
-/* ===== Lancio: conto alla rovescia, avvisami, link ===== */
+/* ===== Link: recensioni Google e social ===== */
 (function(){
-  const open=CONFIG.apertura?new Date(CONFIG.apertura):null;
-  const pre=!open||open>new Date();
-  document.querySelectorAll("[data-launch]").forEach(el=>el.hidden=!pre);
-  if(pre){
-    const fmt=open?open.toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"}):CONFIG.aperturaMese;
-    document.querySelectorAll("[data-when]").forEach(el=>el.textContent=(open?"Apriamo ":"Apriamo a ")+fmt);
-    document.querySelectorAll("[data-when-long]").forEach(el=>el.textContent=(open?"Apriamo ":"Apriamo a ")+fmt);
-    const notify=CONFIG.canaleWhatsapp||(CONFIG.whatsapp?`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Ciao Mungibeddu! Avvisatemi quando aprite 🍕")}`:"");
-    document.querySelectorAll("[data-notify]").forEach(a=>{if(notify){a.href=notify;a.target="_blank";a.rel="noopener"}else{a.href="#contatti"}});
-    if(open){document.querySelectorAll("[data-cd]").forEach(c=>c.hidden=false);
-      const u=k=>({set textContent(v){document.querySelectorAll(`[data-u="${k}"]`).forEach(el=>el.textContent=v)}});
-      const tick=()=>{let t=Math.max(0,open-new Date());if(!t){location.reload();return}
-        const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);
-        u("d").textContent=d;u("h").textContent=String(h).padStart(2,"0");u("m").textContent=String(m).padStart(2,"0");u("s").textContent=String(s).padStart(2,"0")};
-      tick();setInterval(tick,1000)}
-  }
   if(CONFIG.recensioniGoogle){document.querySelectorAll("[data-review]").forEach(p=>{p.hidden=false;p.querySelector("a").href=CONFIG.recensioniGoogle})}
-  const soc={instagram:CONFIG.instagram,facebook:CONFIG.facebook,whatsapp:CONFIG.canaleWhatsapp||(CONFIG.whatsapp&&"https://wa.me/"+CONFIG.whatsapp)};
+  const soc={instagram:CONFIG.instagram,facebook:CONFIG.facebook,whatsapp:CONFIG.whatsapp&&"https://wa.me/"+CONFIG.whatsapp};
   document.querySelectorAll(".social a").forEach(a=>{const k=a.getAttribute("aria-label").toLowerCase();if(soc[k]){a.href=soc[k];a.target="_blank";a.rel="noopener"}});
 })();
 
