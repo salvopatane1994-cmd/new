@@ -20,3 +20,4 @@ Da sostituire con le foto reali di Mungibeddu appena disponibili.
 
 `locale-*.webp` è il rendering del locale fornito dal cliente; `logo-*-sm.png`, favicon e icone dal logo del cliente; `og.jpg` è l'immagine di anteprima per la condivisione.
 Gli originali ad alta risoluzione restano nella cronologia del repository.
+| grano-700.webp | https://www.pexels.com/photo/32555711/ |

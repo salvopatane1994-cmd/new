@@ -202,6 +202,44 @@ a:hover > .go,.go:hover{transform:translateX(6px)}
 .feature .row b{font:italic 600 34px var(--f-title)}
 @media (max-width:760px){.feature{grid-template-columns:1fr}.feature .im{min-height:0;aspect-ratio:16/10}.feature .tx{padding:24px}}
 
+/* ---------- presentazione a scorrimento ---------- */
+.presenta{position:relative;height:420svh;background:var(--lava);padding:0}
+.show-pin{position:sticky;top:0;height:100svh;overflow:hidden}
+.show-glow{position:absolute;inset:-20%;background:radial-gradient(40% 40% at var(--gx,30%) 60%,rgba(232,102,42,.20),transparent 70%),radial-gradient(35% 35% at 75% 30%,rgba(122,30,43,.35),transparent 70%);pointer-events:none;transition:opacity .4s}
+.show-statement{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:22px;padding:90px max(22px,calc(50% - 560px)) 60px;will-change:opacity,transform}
+.show-statement .caps{color:var(--oro)}
+.words{margin:0;font:italic 500 clamp(36px,6.4vw,84px)/1.08 var(--f-title);text-wrap:balance}
+.words .w{opacity:.14;transition:opacity .35s ease,color .35s ease}
+.words .w.on{opacity:1}
+.words .w.hot{color:var(--oro)}
+.show-track{position:absolute;top:0;left:0;height:100%;display:flex;will-change:transform}
+.chap{flex:0 0 100vw;height:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw;padding:100px max(22px,calc(50vw - 560px)) 90px}
+.chap > *{min-width:0}
+.chap-img{justify-self:center;width:min(40vw,440px);aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(210,168,102,.25)}
+.chap-img img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.chap .num{display:block;font:italic 500 clamp(80px,12vw,170px)/.8 var(--f-title);color:transparent;-webkit-text-stroke:1px rgba(210,168,102,.7);margin-bottom:10px}
+.chap h3{font:italic 500 clamp(44px,6vw,76px)/1 var(--f-title);color:var(--crema)}
+.chap p{font-size:clamp(17px,1.7vw,20px);color:var(--muted-d);max-width:30em;margin:18px 0 26px}
+.chap p strong{color:var(--crema);font-weight:500}
+.show-prog{position:absolute;left:max(22px,calc(50% - 560px));right:max(22px,calc(50% - 560px));bottom:calc(28px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:12px;font:500 11px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d)}
+.show-prog::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(246,238,224,.18)}
+.show-prog i{position:absolute;left:0;top:0;height:1px;width:100%;background:var(--oro);transform-origin:left;transform:scaleX(0)}
+.show-prog span.on{color:var(--oro)}
+@media (max-width:760px){
+  .presenta{height:400svh}
+  .chap{grid-template-columns:1fr;align-content:center;gap:22px;padding:96px 22px 96px;text-align:left}
+  .chap-img{width:min(54vw,260px,32svh)}
+  .chap .num{font-size:96px}
+  .chap p{margin:12px 0 20px}
+  .show-prog{font-size:9.5px;letter-spacing:.14em}
+}
+@media (prefers-reduced-motion:reduce){
+  .presenta{height:auto}.show-pin{position:static;height:auto}
+  .show-statement{position:static;padding-block:90px 20px}.words .w{opacity:1}
+  .show-track{position:static;flex-direction:column}.chap{flex:none;height:auto;padding-block:40px}
+  .show-prog{display:none}
+}
+
 /* ---------- fasce parallasse ---------- */
 .para{position:relative;overflow:hidden;min-height:440px;display:grid;place-items:center;text-align:center;padding-block:90px}
 .para .pbg{position:absolute;left:0;right:0;top:-22%;height:144%;will-change:transform}
@@ -633,9 +671,30 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   <span class="scroll-hint">Scorri</span>
 </section>
 
-<!-- PUNTI DI FORZA (striscia compatta) -->
-<section class="topo strip" aria-label="Perché Mungibeddu">
-  <div class="wrap"><div class="icons" id="icons"></div></div>
+<!-- PRESENTAZIONE A SCORRIMENTO: frase che si accende + tre capitoli in orizzontale -->
+<section class="presenta" id="presentazione" aria-label="La nostra pizza in tre capitoli">
+  <div class="show-pin">
+    <div class="show-glow" aria-hidden="true"></div>
+    <div class="show-statement" id="showStatement">
+      <span class="caps">Mungibeddu · Milo, Etna</span>
+      <p class="words" id="showWords">Grano antico, tempo e fuoco. Alle pendici dell'Etna nasce una pizza leggera, profumata, siciliana fino all'ultimo morso.</p>
+    </div>
+    <div class="show-track" id="showTrack">
+      <article class="chap">
+        <div class="chap-img"><img src="assets/grano-700.webp" alt="Spighe di grano dorate" width="700" height="700" loading="lazy" decoding="async"></div>
+        <div class="chap-tx"><span class="num">01</span><h3>U granu<span class="tr">Il grano</span></h3><p>Farine tipo 0 e tipo 1 con una percentuale di <strong>Perciasacchi</strong>, antico grano duro siciliano da agricoltura biologica. Fibre, profumo e carattere.</p></div>
+      </article>
+      <article class="chap">
+        <div class="chap-img"><img src="assets/farina-800.webp" alt="Mani che lavorano l'impasto nella farina" width="800" height="534" loading="lazy" decoding="async"></div>
+        <div class="chap-tx"><span class="num">02</span><h3>U tempu<span class="tr">Il tempo</span></h3><p>Lavorazione attenta e <strong>maturazione studiata</strong>: l'impasto riposa il tempo che serve per diventare leggero, fragrante e digeribile.</p></div>
+      </article>
+      <article class="chap">
+        <div class="chap-img"><img src="assets/slide-spicchi.webp" alt="Spicchi di pizza dal cornicione alveolato" width="760" height="760" loading="lazy" decoding="async"></div>
+        <div class="chap-tx"><span class="num">03</span><h3>U focu<span class="tr">Il fuoco</span></h3><p>Cotta al momento: <strong>cornicione soffice e alveolato</strong>, croccante fuori. Pronta per il ritiro o per arrivare calda a casa tua.</p><a class="btn btn-oro" href="#menu">Scopri u menù</a></div>
+      </article>
+    </div>
+    <div class="show-prog" aria-hidden="true"><span>01 U granu</span><span>02 U tempu</span><span>03 U focu</span><i id="showBar"></i></div>
+  </div>
 </section>
 
 <!-- MENU (subito dopo la prima schermata) -->
@@ -909,7 +968,7 @@ const ICONS=[
  ["Birra dell'Etna","Birrificio dell'Etna",`<svg viewBox="0 0 80 80" ${G}><path d="M20 22h32v46a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4z"/><path d="M52 32h7a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6h-7"/><path d="M20 22c-4-8 6-14 12-9 4-6 14-5 16 2 6-1 9 5 4 7"/><path d="M29 34v28M36 34v28M43 34v28"/></svg>`],
  ["Asporto e domicilio","Ordini su WhatsApp",`<svg viewBox="0 0 80 80" ${G}><path d="M10 30l30-14 30 14-30 14z"/><path d="M10 30v20l30 14 30-14V30"/><path d="M40 44v20"/><path d="M28 24l30 14v8"/></svg>`]
 ];
-document.getElementById("icons").innerHTML=[ICONS[0],ICONS[2],ICONS[4]].map((x,i)=>`<div class="icon" data-a="up" style="--d:${i*.14}s">${x[2]}<h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
+const iconsEl=document.getElementById("icons");if(iconsEl)iconsEl.innerHTML=[ICONS[0],ICONS[2],ICONS[4]].map((x,i)=>`<div class="icon" data-a="up" style="--d:${i*.14}s">${x[2]}<h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
 function spiga(color,fill){return `<svg viewBox="0 0 40 40" width="34" height="34" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round"><path d="M20 37V10"/>${[0,1,2,3].map(i=>`<path d="M20 ${30-i*6}c-6 0-8-4-8-7 4 0 8 2 8 7zM20 ${30-i*6}c6 0 8-4 8-7-4 0-8 2-8 7z" fill="${fill}"/>`).join("")}</svg>`}
 document.querySelectorAll("[data-ico]").forEach((el,i)=>el.innerHTML=spiga("#3B2318",i?"rgba(122,30,43,.25)":"none"));
 document.getElementById("track").innerHTML=Array(2).fill(["Grano antico Perciasacchi","Farine tipo 0 e tipo 1","Maturazione studiata","Prodotti del territorio","Birra dell'Etna","Asporto e domicilio a Milo"].map(s=>`<span>${s}</span>`).join("")).join("");
@@ -943,6 +1002,33 @@ cats.addEventListener("keydown",e=>{const bs=[...cats.querySelectorAll("[role=ta
   if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();const n=bs[(k+(e.key==="ArrowRight"?1:-1)+bs.length)%bs.length];showTab(n.dataset.cat,true)}});
 // i link "#cat-..." (es. dalla prima schermata) aprono la scheda giusta
 document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#cat-"]');if(!a)return;const id=a.getAttribute("href").slice(5);if(TAB_ORDER.includes(id)){e.preventDefault();document.getElementById("menu").scrollIntoView({behavior:"smooth"});setTimeout(()=>showTab(id),400)}});
+
+/* ===== Presentazione a scorrimento ===== */
+(function(){
+  const sec=document.getElementById("presentazione");if(!sec)return;
+  const words=document.getElementById("showWords"),st=document.getElementById("showStatement"),track=document.getElementById("showTrack");
+  const bar=document.getElementById("showBar"),labels=[...sec.querySelectorAll(".show-prog span")],imgs=[...track.querySelectorAll(".chap-img img")];
+  const HOT=["Grano","antico,","tempo","fuoco.","siciliana"];
+  words.innerHTML=words.textContent.trim().split(/\s+/).map(w=>`<span class="w${HOT.includes(w)?" hot":""}">${w}</span> `).join("");
+  const W=[...words.querySelectorAll(".w")];
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const A=.34,B=.40; // frase fino al 34% dello scorrimento, capitoli dal 40%
+  let tick=false;
+  function upd(){tick=false;const r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;
+    const p=Math.min(1,Math.max(0,-r.top/tot));if(r.bottom<0||r.top>innerHeight)return;
+    const n=Math.round(Math.min(1,p/A*1.05)*W.length);W.forEach((w,i)=>w.classList.toggle("on",i<n));
+    const raw=Math.min(1,Math.max(0,(p-B)/(.94-B)));
+    // ogni capitolo resta fermo e centrato per un tratto, poi scorre al successivo
+    const seg=raw*2,ix=Math.min(1,Math.floor(seg)),fr=seg-ix,t=Math.min(1,Math.max(0,(fr-.22)/.56)),q=raw>=1?1:(ix+t*t*(3-2*t))/2;
+    const fade=Math.min(1,Math.max(0,(p-A)/(B-A)));
+    st.style.opacity=1-fade;st.style.transform=`translateY(${-fade*40}px)`;
+    const vw=innerWidth;track.style.transform=`translate3d(${vw*(1-fade)-q*(track.scrollWidth-vw)}px,0,0)`;
+    imgs.forEach((im,i)=>{const k=q*2-i;im.style.transform=`rotate(${k*40}deg) scale(1.08)`});
+    bar.style.transform=`scaleX(${q})`;const ch=Math.min(2,Math.round(q*2));labels.forEach((l,i)=>l.classList.toggle("on",p>B-.02&&i===ch));
+    sec.querySelector(".show-glow").style.setProperty("--gx",(20+q*60)+"%");
+  }
+  addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});addEventListener("resize",upd);upd();
+})();
 
 /* ===== Hero slider: trascinamento col dito/mouse, giro infinito ===== */
 (function(){
