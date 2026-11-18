@@ -365,10 +365,27 @@ footer .phil{max-width:34em;margin:0 auto 46px}
 footer small{display:block;font-size:13px;opacity:.75}
 
 /* ---------- barra ordine mobile ---------- */
-.orderbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom,0px)) var(--gutter);background:linear-gradient(transparent,rgba(23,18,17,.96) 35%);transform:translateY(110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
-.orderbar button{width:100%;justify-content:center;padding:16px}
+.orderbar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:22px var(--gutter-r) calc(10px + env(safe-area-inset-bottom,0px)) var(--gutter);background:linear-gradient(transparent,rgba(23,18,17,.97) 32%);transform:translateY(110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
+.ob-in{display:flex;align-items:center;gap:12px}
+.ob-in .st{flex:0 1 auto;max-width:46%}
+.ob-in .btn{flex:1;justify-content:center;padding:15px 12px;white-space:nowrap;letter-spacing:.14em}
 .orderbar.show{transform:none;visibility:visible;transition:transform .5s var(--ease)}
 @media (min-width:861px){.orderbar{display:none}}
+
+/* ---------- stato aperto / chiuso ---------- */
+.st{display:inline-flex;align-items:center;gap:8px;font:500 12.5px/1.3 var(--f-body);color:var(--crema)}
+.st::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--muted-d)}
+.st.open::before{background:#5BC26A;box-shadow:0 0 0 4px rgba(91,194,106,.18);animation:pulse 2s ease-in-out infinite}
+.st.closed::before{background:#D9534F}
+.st.soon::before{background:var(--oro);box-shadow:0 0 0 4px rgba(210,168,102,.18)}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(91,194,106,0)}}
+.top .st{margin-left:6px;padding:7px 12px;border:1px solid rgba(210,168,102,.3);border-radius:999px;background:rgba(23,18,17,.35);white-space:nowrap}
+@media (max-width:1060px){.top .st{display:none}}
+.orari-list{list-style:none;margin:4px 0 8px;padding:0;display:grid;gap:3px;font-size:15px}
+.orari-list li{display:flex;justify-content:space-between;gap:12px}
+.orari-list li.today{font-weight:500;color:var(--bordeaux)}
+.orari-list span:last-child{font-variant-numeric:tabular-nums;text-align:right}
+.light .st{color:var(--inchiostro);margin-bottom:8px}
 
 /* ---------- carrello ---------- */
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;opacity:0;pointer-events:none;transition:opacity .35s}
@@ -395,9 +412,12 @@ footer small{display:block;font-size:13px;opacity:.75}
 .seg button[aria-pressed="true"]{background:var(--inchiostro);color:var(--crema)}
 .fld{display:grid;gap:4px;margin-bottom:10px}
 .fld label{font:500 11.5px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted-l)}
+.fld select{font:400 16px var(--f-body);border:1px solid rgba(59,35,24,.3);border-radius:10px;padding:10px 12px;background:var(--crema);color:var(--inchiostro);width:100%}
 .fld input,.fld textarea{font:400 16px var(--f-body);border:1px solid rgba(59,35,24,.3);border-radius:10px;padding:10px 12px;background:var(--crema);color:var(--inchiostro);width:100%}
 .fld textarea{min-height:64px;resize:vertical}
 .dfoot{padding:16px 24px 20px;border-top:1px solid rgba(59,35,24,.12);background:var(--pietra)}
+.fee{display:flex;justify-content:space-between;font-size:14px;color:var(--muted-l);margin-bottom:4px}
+.drawer .st{color:var(--inchiostro);margin:0 0 10px}
 .tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font:500 14px var(--f-body);letter-spacing:.2em;text-transform:uppercase}
 .tot b{font:italic 600 28px var(--f-title);letter-spacing:0}
 .wa{width:100%;justify-content:center;background:#1f8f4e;color:#fff}
@@ -546,6 +566,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
       <a href="#ordina">Ordina</a>
       <a href="#contatti">Dove siamo</a>
     </nav>
+    <span class="st" data-status hidden></span>
     <button class="cart-btn" type="button" data-open-cart aria-label="Apri il tuo ordine">Ordine <span class="n" data-count>0</span></button>
     <button class="burger" type="button" id="burger" aria-label="Apri il menù di navigazione" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
@@ -698,7 +719,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
     <div class="contact-h"><span class="caps" style="color:var(--bordeaux)" data-a="up">Sutta a Muntagna</span><h2 class="t-title" id="dove-t" data-a="up" style="--d:.1s">Unni semu</h2></div>
     <div class="info">
       <div data-a="up"><h3>Indirizzo</h3><p>Milo (CT), alle pendici dell'Etna <span class="todo">via e civico</span></p><p><a href="https://www.google.com/maps/search/?api=1&query=Milo+CT" target="_blank" rel="noopener">Apri in Google Maps</a></p></div>
-      <div data-a="up" style="--d:.12s"><h3>Orari</h3><p>Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Nel weekend conviene ordinare con un po' di anticipo.</p></div>
+      <div data-a="up" style="--d:.12s"><h3>Orari</h3><span class="st" data-status hidden></span><ul class="orari-list" id="orariList" hidden></ul><p id="orariTodo">Giorni e orari di apertura <span class="todo">da completare</span></p><p class="muted">Nel weekend conviene ordinare con un po' di anticipo.</p></div>
       <div data-a="up" style="--d:.24s"><h3>Ordini e domicilio</h3><p>WhatsApp e telefono <span class="todo">numero</span></p><p class="muted">Consegna a Milo e nei paesi vicini <span class="todo">zone e costo</span></p><p data-review hidden><a class="review-link" href="#" target="_blank" rel="noopener">★ Lascia una recensione su Google</a></p></div>
     </div>
   </div>
@@ -722,7 +743,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
   </div>
 </footer>
 
-<div class="orderbar" id="orderbar"><button class="btn btn-oro" type="button" data-open-cart>Vedi ordine · <span data-total>0€</span></button></div>
+<div class="orderbar" id="orderbar"><div class="ob-in"><span class="st" data-status hidden></span><button class="btn btn-oro" type="button" id="obBtn">Ordina ora</button></div></div>
 
 <div class="sh-scrim" id="shScrim"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" aria-hidden="true">
@@ -756,6 +777,7 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
         <button type="button" id="m-domicilio" aria-pressed="false">Domicilio</button>
       </div>
       <div class="fld"><label for="f-nome">Nome</label><input id="f-nome" autocomplete="name" placeholder="Il tuo nome"></div>
+      <div class="fld" id="zonaWrap" hidden><label for="f-zona">Paese di consegna</label><select id="f-zona"></select></div>
       <div class="fld" id="addrWrap" hidden><label for="f-indirizzo">Indirizzo di consegna</label><input id="f-indirizzo" autocomplete="street-address" placeholder="Via, civico, paese"></div>
       <div class="fld"><label for="f-ora">Orario desiderato</label><input id="f-ora" type="time" value="20:30"></div>
       <div class="fld"><label for="f-note">Note</label><textarea id="f-note" placeholder="Citofono, allergie, pizza tagliata…"></textarea></div>
@@ -763,6 +785,8 @@ html.reveal .arrow,html.reveal .scroll-hint{transition:opacity .8s ease .8s}
     </div>
   </div>
   <div class="dfoot">
+    <span class="st" data-status hidden></span>
+    <div class="fee" id="feeRow" hidden><span>Consegna</span><span id="feeVal"></span></div>
     <div class="tot"><span>Totale</span><b data-total>0€</b></div>
     <p class="err" id="err" role="status"></p>
     <a class="btn wa" id="sendWa" href="#" target="_blank" rel="noopener" aria-disabled="true">Invia ordine su WhatsApp</a>
@@ -779,8 +803,35 @@ const CONFIG = {
   canaleWhatsapp: "",      // link del canale WhatsApp, es. "https://whatsapp.com/channel/..."
   recensioniGoogle: "",    // link breve "Chiedi recensioni" dal Profilo dell'attività su Google
   instagram: "", facebook: "",
+  // Orari per giorno (0 = domenica … 6 = sabato). Più fasce possibili; se si chiude dopo mezzanotte scrivere es. ["18:30","00:30"].
+  // Esempio: orari: {0:[["18:30","23:30"]], 1:[], 2:[["18:30","23:30"]], …}  — vuoto = stato e orari nascosti
+  orari: {},
+  // Paesi serviti a domicilio e costo di consegna in euro. Esempio: [{paese:"Milo",costo:0},{paese:"Zafferana Etnea",costo:2}]
+  zone: [],
+  minimoDomicilio: 0,      // ordine minimo per il domicilio in euro (0 = nessuno)
   impasti: ["Classico", "Etna", "Ai cereali"]
 };
+
+/* ===== Stato aperto / chiuso in tempo reale ===== */
+const GIORNI=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+const toMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
+function statoNegozio(now=new Date()){
+  const ap=CONFIG.apertura?new Date(CONFIG.apertura):null;
+  if(!ap||ap>now){const f=ap?ap.toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"}):CONFIG.aperturaMese;return{cls:"soon",txt:(ap?"Apriamo ":"Apriamo a ")+f}}
+  const O=CONFIG.orari||{};if(!Object.keys(O).length)return null;
+  const d=now.getDay(),nm=now.getHours()*60+now.getMinutes(),sl=k=>(O[(k+7)%7]||[]);
+  for(const [a,b] of sl(d)){const A=toMin(a),B=toMin(b);if(nm>=A&&(B>A?nm<B:true))return{cls:"open",txt:"Aperto ora · chiude alle "+b}}
+  for(const [a,b] of sl(d-1)){const A=toMin(a),B=toMin(b);if(B<=A&&nm<B)return{cls:"open",txt:"Aperto ora · chiude alle "+b}}
+  for(let k=0;k<8;k++){const day=(d+k)%7;for(const [a] of sl(day)){if(k===0&&toMin(a)<=nm)continue;
+    return{cls:"closed",txt:"Chiuso · riapre "+(k===0?"oggi":k===1?"domani":GIORNI[day])+" alle "+a}}}
+  return{cls:"closed",txt:"Chiuso"};
+}
+function aggiornaStato(){const st=statoNegozio();
+  document.querySelectorAll("[data-status]").forEach(el=>{el.hidden=!st;if(st){el.textContent=st.txt;el.className="st "+st.cls}});
+  const O=CONFIG.orari||{},ul=document.getElementById("orariList");
+  if(Object.keys(O).length){const today=new Date().getDay();ul.hidden=false;document.getElementById("orariTodo").hidden=true;
+    ul.innerHTML=[1,2,3,4,5,6,0].map(g=>`<li${g===today?' class="today"':""}><span>${GIORNI[g][0].toUpperCase()+GIORNI[g].slice(1)}</span><span>${(O[g]||[]).length?O[g].map(([a,b])=>a+"–"+b).join(", "):"chiuso"}</span></li>`).join("")}}
+aggiornaStato();setInterval(aggiornaStato,60000);
 
 /* ===== Lancio: conto alla rovescia, avvisami, link ===== */
 (function(){
@@ -995,18 +1046,31 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet();
  sheet.addEventListener("touchend",()=>{if(y0===null)return;sheet.style.transition="";sheet.style.transform="";if(dy>110)closeSheet();y0=null})}
 
 const total=()=>cart.reduce((s,l)=>s+ITEMS[l.id].price*l.q,0);
+const ZONE=CONFIG.zone||[];
+const zona=()=>mode==="domicilio"&&ZONE.length?ZONE[+document.getElementById("f-zona").value]||null:null;
+const fee=()=>zona()?+zona().costo||0:0;
+const grand=()=>total()+(cart.length?fee():0);
+document.getElementById("f-zona").innerHTML=ZONE.map((z,i)=>`<option value="${i}">${z.paese} — ${+z.costo?"consegna "+euro(+z.costo):"consegna gratuita"}</option>`).join("");
+document.getElementById("f-zona").addEventListener("change",()=>{render()});
+// barra "Ordina" fissa su telefono: compare dopo la prima schermata, o subito se c'è qualcosa nel carrello
+const obBar=document.getElementById("orderbar"),obBtn=document.getElementById("obBtn"),heroEl=document.querySelector(".hero");
+function obUpdate(){const n=cart.reduce((s,l)=>s+l.q,0);obBar.classList.toggle("show",n>0||scrollY>heroEl.offsetHeight*.6);
+  obBtn.textContent=n?`Vedi ordine · ${euro(grand())}`:"Ordina ora"}
+obBtn.addEventListener("click",()=>{if(cart.length)openCart(true);else document.getElementById("menu").scrollIntoView({behavior:"smooth"})});
+addEventListener("scroll",obUpdate,{passive:true});
 function render(){
   const n=cart.reduce((s,l)=>s+l.q,0);
   document.querySelectorAll("[data-count]").forEach(el=>el.textContent=n);
-  document.querySelectorAll("[data-total]").forEach(el=>el.textContent=euro(total()));
-  document.getElementById("orderbar").classList.toggle("show",n>0);
+  document.querySelectorAll("[data-total]").forEach(el=>el.textContent=euro(grand()));
+  const fr=document.getElementById("feeRow");fr.hidden=!(n&&zona());if(zona())document.getElementById("feeVal").textContent=fee()?euro(fee()):"gratuita";
+  obUpdate();
   document.getElementById("checkout").hidden=!n;
   document.getElementById("lines").innerHTML=n?cart.map((l,i)=>{const it=ITEMS[l.id];return `<div class="line"><div><h4>${it.name}</h4>${l.imp?`<label for="imp-${i}">Impasto</label><select data-imp="${i}" id="imp-${i}">${CONFIG.impasti.map(o=>`<option ${o===l.imp?"selected":""}>${o}</option>`).join("")}</select>`:""}</div><div class="pr">${euro(it.price*l.q)}</div><div></div><div class="qty"><button type="button" data-q="${i}" data-d="-1" aria-label="Togli uno">−</button><span>${l.q}</span><button type="button" data-q="${i}" data-d="1" aria-label="Aggiungi uno">+</button></div></div>`}).join(""):`<div class="empty"><b>Ancora vuoto</b>Scegli dal menù e tocca + per aggiungere.</div>`;
   updateWa();
 }
 document.getElementById("lines").addEventListener("click",e=>{const b=e.target.closest("[data-q]");if(!b)return;const l=cart[+b.dataset.q];l.q+=+b.dataset.d;if(l.q<1)cart.splice(+b.dataset.q,1);save();render()});
 document.getElementById("lines").addEventListener("change",e=>{const s=e.target.closest("[data-imp]");if(!s)return;cart[+s.dataset.imp].imp=s.value;save();updateWa()});
-function setMode(m){mode=m;document.getElementById("m-asporto").setAttribute("aria-pressed",m==="asporto");document.getElementById("m-domicilio").setAttribute("aria-pressed",m==="domicilio");document.getElementById("addrWrap").hidden=m!=="domicilio";updateWa()}
+function setMode(m){mode=m;document.getElementById("m-asporto").setAttribute("aria-pressed",m==="asporto");document.getElementById("m-domicilio").setAttribute("aria-pressed",m==="domicilio");document.getElementById("addrWrap").hidden=m!=="domicilio";document.getElementById("zonaWrap").hidden=!(m==="domicilio"&&ZONE.length);render()}
 document.getElementById("m-asporto").onclick=()=>setMode("asporto");
 document.getElementById("m-domicilio").onclick=()=>setMode("domicilio");
 ["f-nome","f-indirizzo","f-ora","f-note","f-consenso"].forEach(id=>document.getElementById(id).addEventListener("input",updateWa));
@@ -1015,7 +1079,9 @@ const val=id=>document.getElementById(id).value.trim();
 function message(){
   let m="Ciao Mungibeddu! Vorrei ordinare:\n\n";
   cart.forEach(l=>{const it=ITEMS[l.id];m+=`• ${l.q}× ${it.name}${l.imp?` (impasto ${l.imp})`:""} — ${euro(it.price*l.q)}\n`});
-  m+=`\nTotale: ${euro(total())}\n${mode==="asporto"?"Ritiro in pizzeria":"Consegna a domicilio: "+val("f-indirizzo")}\nOrario: ${val("f-ora")}\nNome: ${val("f-nome")}`;
+  const z=zona();
+  if(z)m+=`\nConsegna a ${z.paese}: ${fee()?euro(fee()):"gratuita"}`;
+  m+=`\nTotale: ${euro(grand())}\n${mode==="asporto"?"Ritiro in pizzeria":"Consegna a domicilio: "+val("f-indirizzo")+(z?", "+z.paese:"")}\nOrario: ${val("f-ora")}\nNome: ${val("f-nome")}`;
   if(val("f-note"))m+=`\nNote: ${val("f-note")}`;
   if(document.getElementById("f-consenso").checked)m+=`\n\n✔ Acconsento a ricevere novità e offerte su WhatsApp.`;
   return m;
@@ -1025,6 +1091,7 @@ function updateWa(){
   if(!cart.length)p=" ";
   else if(!val("f-nome"))p="Scrivi il tuo nome per completare l'ordine.";
   else if(mode==="domicilio"&&!val("f-indirizzo"))p="Scrivi l'indirizzo di consegna.";
+  else if(mode==="domicilio"&&CONFIG.minimoDomicilio&&total()<CONFIG.minimoDomicilio)p=`Per il domicilio l'ordine minimo è ${euro(CONFIG.minimoDomicilio)}: mancano ${euro(CONFIG.minimoDomicilio-total())}.`;
   else if(!CONFIG.whatsapp)p="Anteprima: il numero WhatsApp della pizzeria non è ancora configurato.";
   document.getElementById("err").textContent=p.trim();
   a.setAttribute("aria-disabled",p?"true":"false");
